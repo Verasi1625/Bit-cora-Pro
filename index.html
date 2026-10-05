@@ -1480,11 +1480,35 @@ function renderCotizaciones(){
                         <br>
 
                         Total:
-                        <strong>
-                            ${moneda(c.total)}
-                        </strong>
+<strong>
+    ${moneda(c.total)}
+</strong>
 
-                        <br>
+<br>
+
+Partidas:
+${c.partidas.length}
+
+${
+    c.estado === "Pagada"
+    ?
+    `
+    <br>
+    💰 Forma de pago:
+    <strong>${escapeHTML(c.formaPago || "No registrada")}</strong>
+
+    <br>
+    📅 Fecha de pago:
+    ${escapeHTML(c.fechaPago || "")}
+    `
+    :
+    ""
+}
+                        
+                            
+                        
+
+
 
                         Partidas:
                         ${c.partidas.length}
@@ -1607,7 +1631,20 @@ TOTAL: ${moneda(c.total)}
 
 Estado: ${c.estado}
 
+${
+    c.estado === "Pagada"
+    ?
+    `
+Forma de pago: ${c.formaPago || "No registrada"}
+Fecha de pago: ${c.fechaPago || ""}
+`
+    :
+    ""
+}
+
 Observaciones:
+
+
 ${c.observaciones || "Sin observaciones"}`
     );
 }
