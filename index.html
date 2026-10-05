@@ -1318,8 +1318,49 @@ function marcarPagada(id){
 
     if(!c) return;
 
-    c.estado =
-        "Pagada";
+    const formaPago =
+        prompt(
+`¿Cuál fue la forma de pago?
+
+1. Efectivo
+2. Tarjeta
+3. Transferencia
+
+Escribe 1, 2 o 3:`
+        );
+
+    if(formaPago === null){
+        return;
+    }
+
+    let pago = "";
+
+    if(formaPago === "1"){
+        pago = "Efectivo";
+    }
+
+    if(formaPago === "2"){
+        pago = "Tarjeta";
+    }
+
+    if(formaPago === "3"){
+        pago = "Transferencia";
+    }
+
+    if(!pago){
+
+        alert(
+            "Selecciona una opción válida: 1, 2 o 3."
+        );
+
+        return;
+    }
+
+    c.estado = "Pagada";
+
+    c.formaPago = pago;
+
+    c.fechaPago = fechaHoy();
 
     guardarDatos();
 
@@ -1328,6 +1369,13 @@ function marcarPagada(id){
     renderCXC();
 
     actualizarPanel();
+
+    alert(
+`Pago registrado correctamente.
+
+Forma de pago: ${pago}
+Total: ${moneda(c.total)}`
+    );
 }
 
 
