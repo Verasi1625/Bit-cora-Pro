@@ -3,280 +3,414 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VERASI PC">
+<meta name="theme-color" content="#111827">
 
 <title>Bitácora Pro - Control Verasi</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
 
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-background:#f1f5f9;
-color:#0f172a;
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#f3f4f6;
+    color:#111827;
 }
 
 header{
-background:#0f172a;
-color:#fff;
-padding:18px 16px;
-position:sticky;
-top:0;
-z-index:20;
+    background:#111827;
+    color:white;
+    padding:18px 15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:50;
 }
 
-header h1{margin:0;font-size:21px}
-header p{margin:4px 0 0;color:#cbd5e1;font-size:13px}
+header h1{
+    margin:0;
+    font-size:21px;
+}
+
+header p{
+    margin:4px 0 0;
+    font-size:13px;
+    opacity:.8;
+}
 
 nav{
-display:flex;
-gap:7px;
-overflow-x:auto;
-padding:10px;
-background:#fff;
-border-bottom:1px solid #e2e8f0;
-position:sticky;
-top:75px;
-z-index:19;
+    display:flex;
+    overflow-x:auto;
+    background:#1f2937;
+    padding:8px;
+    gap:6px;
+    position:sticky;
+    top:73px;
+    z-index:49;
 }
 
 nav button{
-border:0;
-background:#e2e8f0;
-padding:9px 12px;
-border-radius:9px;
-white-space:nowrap;
-font-weight:600;
-color:#334155;
+    border:0;
+    background:#374151;
+    color:white;
+    padding:10px 13px;
+    border-radius:10px;
+    white-space:nowrap;
+    font-weight:600;
 }
 
 nav button.active{
-background:#0f172a;
-color:#fff;
+    background:#2563eb;
 }
 
 main{
-padding:16px;
-max-width:1100px;
-margin:auto;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
 }
 
-section{display:none}
-section.active{display:block}
+section{
+    display:none;
+}
+
+section.active{
+    display:block;
+}
 
 .card{
-background:#fff;
-border-radius:14px;
-padding:16px;
-margin-bottom:14px;
-box-shadow:0 2px 8px rgba(15,23,42,.06);
+    background:white;
+    border-radius:15px;
+    padding:16px;
+    margin-bottom:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,.07);
 }
 
-h2{margin:0 0 14px;font-size:20px}
-h3{margin:0 0 10px}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:12px;
+.card h2{
+    margin-top:0;
+    font-size:19px;
 }
 
 label{
-display:block;
-font-size:13px;
-font-weight:700;
-margin-bottom:5px;
-color:#475569;
+    display:block;
+    font-weight:600;
+    margin:12px 0 6px;
+    font-size:14px;
 }
 
-input,select,textarea{
-width:100%;
-padding:11px;
-border:1px solid #cbd5e1;
-border-radius:9px;
-font-size:15px;
-background:#fff;
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:16px;
+    background:white;
 }
 
 textarea{
-min-height:90px;
-resize:vertical;
+    min-height:80px;
+    resize:vertical;
 }
 
-button{cursor:pointer}
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
 
 .btn{
-border:0;
-border-radius:9px;
-padding:10px 13px;
-font-weight:700;
+    border:0;
+    border-radius:10px;
+    padding:11px 14px;
+    font-weight:700;
+    margin:4px 3px 4px 0;
 }
 
-.btn-primary{background:#0f172a;color:#fff}
-.btn-secondary{background:#e2e8f0;color:#0f172a}
-.btn-success{background:#16a34a;color:#fff}
-.btn-warning{background:#f59e0b;color:#fff}
-.btn-danger{background:#dc2626;color:#fff}
-.btn-info{background:#0284c7;color:#fff}
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
 
-.actions{
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-margin-top:12px;
+.btn-success{
+    background:#16a34a;
+    color:white;
+}
+
+.btn-warning{
+    background:#f59e0b;
+    color:#111827;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-info{
+    background:#0891b2;
+    color:white;
+}
+
+.btn-secondary{
+    background:#6b7280;
+    color:white;
+}
+
+.btn-dark{
+    background:#111827;
+    color:white;
+}
+
+.btn-light{
+    background:#e5e7eb;
+    color:#111827;
 }
 
 .client-select-row{
-display:grid;
-grid-template-columns:1fr auto;
-gap:8px;
-align-items:end;
+    display:flex;
+    gap:8px;
+    align-items:center;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
+.client-select-row select{
+    flex:1;
 }
 
-th,td{
-padding:9px 7px;
-border-bottom:1px solid #e2e8f0;
-text-align:left;
-font-size:13px;
-vertical-align:top;
+.partida{
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:12px;
+    margin:10px 0;
+    background:#fafafa;
 }
 
-th{background:#f8fafc}
-
-.table-wrap{overflow-x:auto}
-
-.badge{
-display:inline-block;
-padding:5px 8px;
-border-radius:999px;
-font-size:11px;
-font-weight:800;
-}
-
-.pendiente{background:#fef3c7;color:#92400e}
-.aceptada{background:#dbeafe;color:#1e40af}
-.realizada{background:#dcfce7;color:#166534}
-.pagada{background:#ede9fe;color:#6d28d9}
-
-.stat{
-background:#fff;
-border-radius:14px;
-padding:15px;
-box-shadow:0 2px 8px rgba(15,23,42,.06);
-}
-
-.stat small{
-display:block;
-color:#64748b;
-}
-
-.stat strong{
-display:block;
-font-size:23px;
-margin-top:5px;
-}
-
-.item-row{
-display:grid;
-grid-template-columns:2fr .7fr .9fr .9fr auto;
-gap:8px;
-align-items:end;
-margin-bottom:8px;
-}
-
-.muted{
-color:#64748b;
-font-size:13px;
+.partida-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
 }
 
 .total-box{
-font-size:18px;
-font-weight:800;
-text-align:right;
+    background:#111827;
+    color:white;
+    border-radius:14px;
+    padding:15px;
+    margin-top:15px;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    padding:4px 0;
+}
+
+.total-final{
+    font-size:21px;
+    font-weight:800;
+    border-top:1px solid #4b5563;
+    margin-top:7px;
+    padding-top:9px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.badge-pendiente{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge-aceptada{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.badge-realizada{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge-pagada{
+    background:#d1fae5;
+    color:#065f46;
+}
+
+.badge-anticipo{
+    background:#ede9fe;
+    color:#6d28d9;
+}
+
+.quote-card{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:12px;
+    background:white;
+}
+
+.quote-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.quote-title{
+    font-weight:800;
+}
+
+.quote-total{
+    font-size:18px;
+    font-weight:800;
+}
+
+.small{
+    font-size:13px;
+    color:#6b7280;
+}
+
+.actions{
+    margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:3px;
+}
+
+.stat-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.stat{
+    background:white;
+    padding:15px;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.stat-title{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.stat-value{
+    font-size:21px;
+    font-weight:800;
+    margin-top:4px;
 }
 
 .empty{
-padding:20px;
-text-align:center;
-color:#64748b;
+    text-align:center;
+    padding:25px;
+    color:#6b7280;
 }
 
 .modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(15,23,42,.65);
-z-index:100;
-padding:15px;
-overflow:auto;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:100;
+    padding:15px;
+    overflow:auto;
 }
 
 .modal.show{
-display:block;
+    display:block;
 }
 
 .modal-box{
-background:#fff;
-max-width:700px;
-margin:30px auto;
-border-radius:16px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.25);
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    border-radius:18px;
+    padding:18px;
 }
 
-.detail-title{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:flex-start;
-margin-bottom:15px;
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
-.detail-line{
-padding:8px 0;
-border-bottom:1px solid #e2e8f0;
+.modal-header h2{
+    margin:0;
 }
 
-.detail-total{
-font-size:22px;
-font-weight:800;
-text-align:right;
-margin-top:15px;
+.close{
+    border:0;
+    background:#e5e7eb;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    font-size:20px;
 }
 
-@media(max-width:700px){
-
-.item-row{
-grid-template-columns:1fr 1fr;
+.payment-history{
+    margin-top:12px;
 }
 
-.item-row .wide{
-grid-column:1/-1;
+.payment-item{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:10px;
+    margin:7px 0;
 }
 
-.client-select-row{
-grid-template-columns:1fr;
+.payment-item strong{
+    display:block;
 }
 
-.modal-box{
-margin:10px auto;
+hr{
+    border:0;
+    border-top:1px solid #e5e7eb;
+    margin:15px 0;
 }
 
+table{
+    width:100%;
+    border-collapse:collapse;
 }
 
-@media print{
-nav,header{display:none}
+th,td{
+    text-align:left;
+    padding:9px 6px;
+    border-bottom:1px solid #e5e7eb;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+    .client-select-row{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .client-select-row button{
+        width:100%;
+    }
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .btn{
+        font-size:14px;
+    }
 }
 </style>
 </head>
@@ -284,2357 +418,2886 @@ nav,header{display:none}
 <body>
 
 <header>
-<h1>VERASI PC</h1>
-<p>SOLUCIONES INFORMÁTICAS · Bitácora Pro - Control Verasi</p>
+    <h1>VERASI PC</h1>
+    <p>SOLUCIONES INFORMÁTICAS · Bitácora Pro</p>
 </header>
 
 <nav>
-
-<button id="nav-inicio" onclick="mostrar('inicio')">Inicio</button>
-
-<button id="nav-clientes" onclick="mostrar('clientes')">Clientes</button>
-
-<button id="nav-cotizacion" onclick="mostrar('cotizacion')">Cotización</button>
-
-<button id="nav-historial" onclick="mostrar('historial')">Historial</button>
-
-<button id="nav-cxc" onclick="mostrar('cxc')">Cuentas por cobrar</button>
-
-<button id="nav-cobranza" onclick="mostrar('cobranza')">Cobranza</button>
-
+    <button onclick="mostrarSeccion('inicio',this)" class="active">Inicio</button>
+    <button onclick="mostrarSeccion('clientes',this)">Clientes</button>
+    <button onclick="mostrarSeccion('cotizacion',this)">Cotización</button>
+    <button onclick="mostrarSeccion('historial',this)">Historial</button>
+    <button onclick="mostrarSeccion('cxc',this)">Por cobrar</button>
+    <button onclick="mostrarSeccion('cobranza',this)">Cobranza</button>
 </nav>
 
 <main>
 
-<!-- INICIO -->
+<!-- ================= INICIO ================= -->
 
 <section id="inicio" class="active">
 
-<div class="card">
+    <div class="card">
+        <h2>Panel de control</h2>
+        <p class="small">Control de clientes, cotizaciones y cobranza.</p>
+    </div>
 
-<h2>Panel principal</h2>
+    <div class="stat-grid">
 
-<div class="grid">
+        <div class="stat">
+            <div class="stat-title">Clientes</div>
+            <div class="stat-value" id="statClientes">$0</div>
+        </div>
 
-<div class="stat">
-<small>Clientes</small>
-<strong id="totalClientes">0</strong>
-</div>
+        <div class="stat">
+            <div class="stat-title">Cotizaciones</div>
+            <div class="stat-value" id="statCotizaciones">0</div>
+        </div>
 
-<div class="stat">
-<small>Cotizaciones</small>
-<strong id="totalCotizaciones">0</strong>
-</div>
+        <div class="stat">
+            <div class="stat-title">Por cobrar</div>
+            <div class="stat-value" id="statPorCobrar">$0</div>
+        </div>
 
-<div class="stat">
-<small>Por cobrar</small>
-<strong id="totalCobrar">$0.00</strong>
-</div>
+        <div class="stat">
+            <div class="stat-title">Cobrado</div>
+            <div class="stat-value" id="statCobrado">$0</div>
+        </div>
 
-<div class="stat">
-<small>Total cobrado</small>
-<strong id="totalCobrado">$0.00</strong>
-</div>
-
-</div>
-</div>
+    </div>
 
 </section>
 
 
-<!-- CLIENTES -->
+<!-- ================= CLIENTES ================= -->
 
 <section id="clientes">
 
-<div class="card">
+    <div class="card">
 
-<h2>Clientes</h2>
+        <h2>Nuevo cliente</h2>
 
-<div class="grid">
+        <label>Nombre</label>
+        <input id="clienteNombre" placeholder="Nombre del cliente">
 
-<div>
-<label>Nombre / Razón social</label>
-<input id="clienteNombre">
-</div>
+        <label>Teléfono</label>
+        <input id="clienteTelefono" type="tel" placeholder="Teléfono">
 
-<div>
-<label>Teléfono</label>
-<input id="clienteTelefono" type="tel">
-</div>
+        <label>Correo</label>
+        <input id="clienteCorreo" type="email" placeholder="Correo">
 
-<div>
-<label>Correo</label>
-<input id="clienteCorreo" type="email">
-</div>
+        <label>Dirección</label>
+        <textarea id="clienteDireccion" placeholder="Dirección"></textarea>
 
-<div>
-<label>Dirección</label>
-<input id="clienteDireccion">
-</div>
+        <button class="btn btn-success" onclick="guardarCliente()">
+            Guardar cliente
+        </button>
 
-</div>
+    </div>
 
-<div class="actions">
+    <div class="card">
 
-<button class="btn btn-primary" onclick="guardarCliente()">
-Guardar cliente
-</button>
+        <h2>Clientes registrados</h2>
 
-<button class="btn btn-secondary" onclick="limpiarCliente()">
-Limpiar
-</button>
+        <div id="listaClientes"></div>
 
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Clientes registrados</h3>
-
-<div id="tablaClientes"></div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- COTIZACION -->
+<!-- ================= COTIZACIÓN ================= -->
 
 <section id="cotizacion">
 
-<div class="card">
+    <div class="card">
 
-<h2>Nueva cotización</h2>
+        <h2>Nueva cotización</h2>
 
-<div class="grid">
+        <label>Cliente</label>
 
-<div>
+        <div class="client-select-row">
 
-<label>Cliente</label>
+            <select id="cotCliente">
+                <option value="">Selecciona un cliente</option>
+            </select>
 
-<div class="client-select-row">
+            <button
+                type="button"
+                class="btn btn-info"
+                onclick="nuevoClienteDesdeCotizacion()">
+                + Nuevo cliente
+            </button>
 
-<select id="cotCliente">
-<option value="">Selecciona un cliente</option>
-</select>
+        </div>
 
-<button
-type="button"
-class="btn btn-info"
-onclick="nuevoClienteDesdeCotizacion()">
+        <label>Fecha</label>
+        <input id="cotFecha" type="date">
 
-+ Nuevo cliente
+        <label>Concepto / descripción</label>
+        <textarea
+            id="cotDescripcion"
+            placeholder="Descripción general de la cotización"></textarea>
 
-</button>
+        <hr>
 
-</div>
+        <h3>Partidas</h3>
 
-</div>
+        <div id="partidas"></div>
 
+        <button class="btn btn-primary" onclick="agregarPartida()">
+            + Agregar partida
+        </button>
 
-<div>
+        <div class="total-box">
 
-<label>Fecha</label>
+            <div class="total-row">
+                <span>Subtotal</span>
+                <strong id="subtotal">$0.00</strong>
+            </div>
 
-<input id="cotFecha" type="date">
+            <div class="total-row">
+                <span>IVA</span>
+                <strong id="iva">$0.00</strong>
+            </div>
 
-</div>
+            <div class="total-row total-final">
+                <span>Total</span>
+                <strong id="total">$0.00</strong>
+            </div>
 
+        </div>
 
-<div>
+        <br>
 
-<label>Vigencia (días)</label>
+        <button class="btn btn-success" onclick="guardarCotizacion()">
+            Guardar cotización
+        </button>
 
-<input id="cotVigencia" type="number" value="15">
+        <button class="btn btn-light" onclick="limpiarCotizacion()">
+            Limpiar
+        </button>
 
-</div>
-
-</div>
-
-
-<h3 style="margin-top:18px">
-Partidas
-</h3>
-
-<div id="partidas"></div>
-
-<div class="actions">
-
-<button
-class="btn btn-secondary"
-onclick="agregarPartida()">
-
-+ Agregar partida
-
-</button>
-
-</div>
-
-
-<div
-class="grid"
-style="margin-top:15px">
-
-<div>
-
-<label>Observaciones</label>
-
-<textarea id="cotObservaciones"></textarea>
-
-</div>
-
-
-<div
-class="card"
-style="margin:0;background:#f8fafc">
-
-<div>
-Subtotal:
-<strong id="cotSubtotal">$0.00</strong>
-</div>
-
-<div>
-IVA (16%):
-<strong id="cotIVA">$0.00</strong>
-</div>
-
-<div class="total-box">
-Total:
-<span id="cotTotal">$0.00</span>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="actions">
-
-<button
-class="btn btn-primary"
-onclick="guardarCotizacion()">
-
-Guardar cotización
-
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="limpiarCotizacion()">
-
-Limpiar
-
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- HISTORIAL -->
+<!-- ================= HISTORIAL ================= -->
 
 <section id="historial">
 
-<div class="card">
+    <div class="card">
 
-<h2>Historial de cotizaciones</h2>
+        <h2>Historial de cotizaciones</h2>
 
-<div id="tablaCotizaciones"></div>
+        <div id="listaCotizaciones"></div>
 
-</div>
+    </div>
 
 </section>
 
 
-<!-- CXC -->
+<!-- ================= CUENTAS POR COBRAR ================= -->
 
 <section id="cxc">
 
-<div class="card">
+    <div class="card">
 
-<h2>Cuentas por cobrar</h2>
+        <h2>Cuentas por cobrar</h2>
 
-<p class="muted">
+        <p class="small">
+            Aquí aparecen únicamente los trabajos realizados que todavía tienen saldo pendiente.
+        </p>
 
-Aquí aparecen únicamente las cotizaciones marcadas como
-<b>Realizada</b>.
+        <div id="listaCXC"></div>
 
-Al registrar el pago pasan a Cobranza.
-
-</p>
-
-<div id="tablaCXC"></div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- COBRANZA -->
+<!-- ================= COBRANZA ================= -->
 
 <section id="cobranza">
 
-<div class="card">
+    <div class="card">
 
-<h2>Cobranza / pagos</h2>
+        <h2>Cobranza</h2>
 
-<p class="muted">
+        <label>Fecha inicial</label>
+        <input id="reporteInicio" type="date">
 
-Los pagos registrados permanecen en el historial aunque la cuenta ya esté pagada.
+        <label>Fecha final</label>
+        <input id="reporteFin" type="date">
 
-</p>
+        <button class="btn btn-primary" onclick="generarReporte()">
+            Generar reporte
+        </button>
 
-<div class="grid">
+        <button class="btn btn-dark" onclick="reporteHoy()">
+            Hoy
+        </button>
 
-<div>
-<label>Desde</label>
-<input id="reporteDesde" type="date">
-</div>
+    </div>
 
-<div>
-<label>Hasta</label>
-<input id="reporteHasta" type="date">
-</div>
+    <div class="card">
 
-</div>
+        <div id="resultadoReporte">
+            <div class="empty">
+                Selecciona un rango y genera el reporte.
+            </div>
+        </div>
 
-<div class="actions">
-
-<button
-class="btn btn-primary"
-onclick="generarReporte()">
-
-Generar reporte
-
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="reporteHoy()">
-
-Reporte de hoy
-
-</button>
-
-<button
-class="btn btn-info"
-onclick="exportarReportePDF()">
-
-Exportar PDF
-
-</button>
-
-</div>
-
-<div id="resumenCobranza" style="margin-top:15px"></div>
-
-<div id="tablaCobranza" style="margin-top:15px"></div>
-
-</div>
+    </div>
 
 </section>
 
 </main>
 
 
-<!-- MODAL DETALLE -->
-
-<div id="modalDetalle" class="modal">
-
-<div class="modal-box">
-
-<div class="detail-title">
-
-<div>
-<h2 id="detalleTitulo">Detalle de cotización</h2>
-</div>
-
-<button
-class="btn btn-secondary"
-onclick="cerrarDetalle()">
-
-Cerrar
-
-</button>
-
-</div>
-
-<div id="detalleContenido"></div>
-
-<div class="actions">
-
-<button
-class="btn btn-primary"
-id="detallePDF">
-
-📄 Exportar PDF
-
-</button>
-
-<button
-class="btn btn-success"
-id="detalleWhatsApp">
-
-📲 WhatsApp
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- MODAL NUEVO CLIENTE -->
+<!-- ================= MODAL NUEVO CLIENTE ================= -->
 
 <div id="modalCliente" class="modal">
 
-<div class="modal-box">
+    <div class="modal-box">
 
-<h2>Nuevo cliente</h2>
+        <div class="modal-header">
 
-<div class="grid">
+            <h2>Nuevo cliente</h2>
 
-<div>
-<label>Nombre / Razón social</label>
-<input id="nuevoClienteNombre">
-</div>
+            <button class="close" onclick="cerrarModal('modalCliente')">
+                ×
+            </button>
 
-<div>
-<label>Teléfono</label>
-<input id="nuevoClienteTelefono" type="tel">
-</div>
+        </div>
 
-<div>
-<label>Correo</label>
-<input id="nuevoClienteCorreo" type="email">
-</div>
+        <label>Nombre</label>
+        <input id="nuevoClienteNombre">
 
-<div>
-<label>Dirección</label>
-<input id="nuevoClienteDireccion">
-</div>
+        <label>Teléfono</label>
+        <input id="nuevoClienteTelefono" type="tel">
 
-</div>
+        <label>Correo</label>
+        <input id="nuevoClienteCorreo" type="email">
 
-<div class="actions">
+        <label>Dirección</label>
+        <textarea id="nuevoClienteDireccion"></textarea>
 
-<button
-class="btn btn-primary"
-onclick="guardarClienteDesdeCotizacion()">
+        <br>
 
-Guardar cliente
+        <button
+            class="btn btn-success"
+            onclick="guardarClienteDesdeCotizacion()">
+            Guardar y seleccionar
+        </button>
 
-</button>
+        <button
+            class="btn btn-light"
+            onclick="cerrarModal('modalCliente')">
+            Cancelar
+        </button>
 
-<button
-class="btn btn-secondary"
-onclick="cerrarModalCliente()">
-
-Cancelar
-
-</button>
+    </div>
 
 </div>
 
+
+<!-- ================= MODAL DETALLE ================= -->
+
+<div id="modalDetalle" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="detalleTitulo">Cotización</h2>
+
+            <button class="close" onclick="cerrarModal('modalDetalle')">
+                ×
+            </button>
+
+        </div>
+
+        <div id="detalleContenido"></div>
+
+        <hr>
+
+        <button
+            id="detallePDF"
+            class="btn btn-danger">
+            📄 PDF
+        </button>
+
+        <button
+            id="detalleWhatsApp"
+            class="btn btn-success">
+            📲 WhatsApp
+        </button>
+
+        <button
+            class="btn btn-light"
+            onclick="cerrarModal('modalDetalle')">
+            Cerrar
+        </button>
+
+    </div>
+
 </div>
+
+
+<!-- ================= MODAL PAGO ================= -->
+
+<div id="modalPago" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="pagoTitulo">Registrar pago</h2>
+
+            <button class="close" onclick="cerrarModal('modalPago')">
+                ×
+            </button>
+
+        </div>
+
+        <div id="pagoInfo"></div>
+
+        <label>Monto</label>
+        <input id="pagoMonto" type="number" step="0.01" min="0">
+
+        <label>Fecha</label>
+        <input id="pagoFecha" type="date">
+
+        <label>Forma de pago</label>
+
+        <select id="pagoForma">
+            <option value="Efectivo">Efectivo</option>
+            <option value="Tarjeta">Tarjeta</option>
+            <option value="Transferencia">Transferencia</option>
+        </select>
+
+        <br><br>
+
+        <button
+            class="btn btn-success"
+            onclick="guardarPago()">
+            💰 Registrar pago
+        </button>
+
+        <button
+            class="btn btn-light"
+            onclick="cerrarModal('modalPago')">
+            Cancelar
+        </button>
+
+    </div>
 
 </div>
 
 
 <script>
 
-const STORAGE_CLIENTES="bitacora_clientes";
-const STORAGE_COTIZACIONES="bitacora_cotizaciones";
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
 
-let clientes=JSON.parse(
-localStorage.getItem(STORAGE_CLIENTES)||"[]"
-);
+const KEY_CLIENTES = "bitacora_clientes";
+const KEY_COTIZACIONES = "bitacora_cotizaciones";
 
-let cotizaciones=JSON.parse(
-localStorage.getItem(STORAGE_COTIZACIONES)||"[]"
-);
+let clientes = JSON.parse(localStorage.getItem(KEY_CLIENTES) || "[]");
+let cotizaciones = JSON.parse(localStorage.getItem(KEY_COTIZACIONES) || "[]");
 
-let partidas=[];
+let partidasActuales = [];
 
+let cotizacionPagoActual = null;
+let tipoPagoActual = "Pago";
+
+
+/* =========================================================
+   UTILIDADES
+========================================================= */
 
 function guardarDatos(){
 
-localStorage.setItem(
-STORAGE_CLIENTES,
-JSON.stringify(clientes)
-);
+    localStorage.setItem(
+        KEY_CLIENTES,
+        JSON.stringify(clientes)
+    );
 
-localStorage.setItem(
-STORAGE_COTIZACIONES,
-JSON.stringify(cotizaciones)
-);
-
-}
-
-
-function moneda(n){
-
-return new Intl.NumberFormat(
-"es-MX",
-{
-style:"currency",
-currency:"MXN"
-}
-).format(Number(n)||0);
+    localStorage.setItem(
+        KEY_COTIZACIONES,
+        JSON.stringify(cotizaciones)
+    );
 
 }
 
+function moneda(valor){
+
+    return Number(valor || 0).toLocaleString(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    );
+
+}
 
 function fechaHoy(){
 
-const d=new Date();
+    const d = new Date();
 
-return d.getFullYear()
-+"-"+
-String(d.getMonth()+1).padStart(2,"0")
-+"-"+
-String(d.getDate()).padStart(2,"0");
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+
+    return `${y}-${m}-${day}`;
+
+}
+
+function esc(texto){
+
+    return String(texto ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+function idUnico(){
+
+    return Date.now().toString() +
+        Math.random().toString(36).substring(2,8);
+
+}
+
+function cerrarModal(id){
+
+    document.getElementById(id).classList.remove("show");
 
 }
 
 
-function fechaMX(f){
+/* =========================================================
+   NAVEGACIÓN
+========================================================= */
 
-if(!f)return "";
+function mostrarSeccion(id, boton){
 
-const p=String(f).split("-");
+    document.querySelectorAll("section")
+        .forEach(s => s.classList.remove("active"));
 
-if(p.length!==3)return f;
+    document.getElementById(id)
+        .classList.add("active");
 
-return p[2]+"/"+p[1]+"/"+p[0];
+    document.querySelectorAll("nav button")
+        .forEach(b => b.classList.remove("active"));
 
-}
+    if(boton){
+        boton.classList.add("active");
+    }
 
+    if(id === "historial"){
+        renderCotizaciones();
+    }
 
-function escapeHTML(v){
+    if(id === "cxc"){
+        renderCXC();
+    }
 
-return String(v??"").replace(
-/[&<>"']/g,
-m=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[m])
-);
-
-}
-
-
-function mostrar(id){
-
-document.querySelectorAll("section")
-.forEach(s=>s.classList.remove("active"));
-
-document.getElementById(id)
-.classList.add("active");
-
-document.querySelectorAll("nav button")
-.forEach(b=>b.classList.remove("active"));
-
-const btn=document.getElementById("nav-"+id);
-
-if(btn)btn.classList.add("active");
-
-if(id==="clientes")renderClientes();
-
-if(id==="cotizacion")prepararCotizacion();
-
-if(id==="historial")renderCotizaciones();
-
-if(id==="cxc")renderCXC();
-
-if(id==="cobranza"){
-
-if(!document.getElementById("reporteDesde").value){
-
-reporteHoy();
-
-}else{
-
-generarReporte();
-
-}
-
-}
-
-actualizarPanel();
+    if(id === "cobranza"){
+        generarReporte();
+    }
 
 }
 
 
-function actualizarPanel(){
-
-document.getElementById("totalClientes")
-.textContent=clientes.length;
-
-document.getElementById("totalCotizaciones")
-.textContent=cotizaciones.length;
-
-const cobrar=cotizaciones
-.filter(c=>c.estado==="Realizada")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-const cobrado=cotizaciones
-.filter(c=>c.estado==="Pagada")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-document.getElementById("totalCobrar")
-.textContent=moneda(cobrar);
-
-document.getElementById("totalCobrado")
-.textContent=moneda(cobrado);
-
-}
-
-
-/* =========================
-CLIENTES
-========================= */
-
+/* =========================================================
+   CLIENTES
+========================================================= */
 
 function guardarCliente(){
 
-const nombre=document
-.getElementById("clienteNombre")
-.value.trim();
+    const nombre =
+        document.getElementById("clienteNombre").value.trim();
 
-if(!nombre){
+    if(!nombre){
 
-alert("Escribe el nombre del cliente.");
+        alert("Escribe el nombre del cliente.");
 
-return;
+        return;
 
-}
+    }
 
-const nuevo={
+    const cliente = {
 
-id:Date.now(),
+        id:idUnico(),
 
-nombre:nombre,
+        nombre,
 
-telefono:document
-.getElementById("clienteTelefono")
-.value.trim(),
+        telefono:
+            document.getElementById("clienteTelefono").value.trim(),
 
-correo:document
-.getElementById("clienteCorreo")
-.value.trim(),
+        correo:
+            document.getElementById("clienteCorreo").value.trim(),
 
-direccion:document
-.getElementById("clienteDireccion")
-.value.trim()
+        direccion:
+            document.getElementById("clienteDireccion").value.trim()
 
-};
+    };
 
-clientes.push(nuevo);
+    clientes.push(cliente);
 
-guardarDatos();
+    guardarDatos();
 
-limpiarCliente();
+    document.getElementById("clienteNombre").value="";
+    document.getElementById("clienteTelefono").value="";
+    document.getElementById("clienteCorreo").value="";
+    document.getElementById("clienteDireccion").value="";
 
-renderClientes();
+    renderClientes();
+    llenarSelectClientes();
 
-llenarSelectClientes();
-
-actualizarPanel();
-
-alert("Cliente guardado correctamente.");
+    alert("Cliente guardado correctamente.");
 
 }
-
-
-function limpiarCliente(){
-
-[
-"clienteNombre",
-"clienteTelefono",
-"clienteCorreo",
-"clienteDireccion"
-]
-.forEach(id=>{
-document.getElementById(id).value="";
-});
-
-}
-
 
 function renderClientes(){
 
-const el=document.getElementById("tablaClientes");
+    const cont =
+        document.getElementById("listaClientes");
 
-if(!clientes.length){
+    if(!clientes.length){
 
-el.innerHTML=
-'<div class="empty">No hay clientes registrados.</div>';
+        cont.innerHTML =
+            `<div class="empty">No hay clientes registrados.</div>`;
 
-return;
+        return;
 
-}
+    }
 
-el.innerHTML=`
+    cont.innerHTML = clientes.map(c => `
 
-<div class="table-wrap">
+        <div class="quote-card">
 
-<table>
+            <div class="quote-title">
+                ${esc(c.nombre)}
+            </div>
 
-<thead>
+            <div class="small">
+                ${esc(c.telefono || "Sin teléfono")}
+            </div>
 
-<tr>
-<th>Cliente</th>
-<th>Teléfono</th>
-<th>Correo</th>
-<th>Dirección</th>
-</tr>
+            <div class="small">
+                ${esc(c.correo || "Sin correo")}
+            </div>
 
-</thead>
+            <div class="small">
+                ${esc(c.direccion || "Sin dirección")}
+            </div>
 
-<tbody>
+        </div>
 
-${clientes.map(c=>`
-
-<tr>
-
-<td><b>${escapeHTML(c.nombre)}</b></td>
-
-<td>${escapeHTML(c.telefono)}</td>
-
-<td>${escapeHTML(c.correo)}</td>
-
-<td>${escapeHTML(c.direccion)}</td>
-
-</tr>
-
-`).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
+    `).join("");
 
 }
-
 
 function llenarSelectClientes(){
 
-const select=document.getElementById("cotCliente");
+    const select =
+        document.getElementById("cotCliente");
 
-const actual=select.value;
+    const valorActual = select.value;
 
-select.innerHTML=
-'<option value="">Selecciona un cliente</option>'
-+
-clientes.map(c=>`
+    select.innerHTML =
+        `<option value="">Selecciona un cliente</option>` +
+        clientes.map(c =>
+            `<option value="${c.id}">
+                ${esc(c.nombre)}
+            </option>`
+        ).join("");
 
-<option value="${c.id}">
-${escapeHTML(c.nombre)}
-</option>
-
-`).join("");
-
-if(clientes.some(c=>String(c.id)===String(actual))){
-
-select.value=actual;
+    if(clientes.some(c => c.id === valorActual)){
+        select.value = valorActual;
+    }
 
 }
-
-}
-
-
-/* =========================
-NUEVO CLIENTE DESDE COTIZACION
-========================= */
-
 
 function nuevoClienteDesdeCotizacion(){
 
-document.getElementById("nuevoClienteNombre").value="";
-document.getElementById("nuevoClienteTelefono").value="";
-document.getElementById("nuevoClienteCorreo").value="";
-document.getElementById("nuevoClienteDireccion").value="";
+    document.getElementById("nuevoClienteNombre").value="";
+    document.getElementById("nuevoClienteTelefono").value="";
+    document.getElementById("nuevoClienteCorreo").value="";
+    document.getElementById("nuevoClienteDireccion").value="";
 
-document.getElementById("modalCliente")
-.classList.add("show");
-
-}
-
-
-function cerrarModalCliente(){
-
-document.getElementById("modalCliente")
-.classList.remove("show");
+    document.getElementById("modalCliente")
+        .classList.add("show");
 
 }
-
 
 function guardarClienteDesdeCotizacion(){
 
-const nombre=document
-.getElementById("nuevoClienteNombre")
-.value.trim();
+    const nombre =
+        document.getElementById("nuevoClienteNombre")
+        .value.trim();
 
-if(!nombre){
+    if(!nombre){
 
-alert("Escribe el nombre del cliente.");
+        alert("Escribe el nombre del cliente.");
 
-return;
+        return;
 
-}
+    }
 
-const nuevo={
+    const cliente = {
 
-id:Date.now(),
+        id:idUnico(),
 
-nombre:nombre,
+        nombre,
 
-telefono:document
-.getElementById("nuevoClienteTelefono")
-.value.trim(),
+        telefono:
+            document.getElementById("nuevoClienteTelefono")
+            .value.trim(),
 
-correo:document
-.getElementById("nuevoClienteCorreo")
-.value.trim(),
+        correo:
+            document.getElementById("nuevoClienteCorreo")
+            .value.trim(),
 
-direccion:document
-.getElementById("nuevoClienteDireccion")
-.value.trim()
+        direccion:
+            document.getElementById("nuevoClienteDireccion")
+            .value.trim()
 
-};
+    };
 
-clientes.push(nuevo);
+    clientes.push(cliente);
 
-guardarDatos();
+    guardarDatos();
 
-llenarSelectClientes();
+    llenarSelectClientes();
 
-document.getElementById("cotCliente").value=
-String(nuevo.id);
+    document.getElementById("cotCliente").value =
+        cliente.id;
 
-renderClientes();
+    renderClientes();
 
-actualizarPanel();
-
-cerrarModalCliente();
-
-alert(
-"Cliente creado y seleccionado para la cotización."
-);
+    cerrarModal("modalCliente");
 
 }
 
 
-/* =========================
-COTIZACION
-========================= */
-
-
-function prepararCotizacion(){
-
-llenarSelectClientes();
-
-if(!document.getElementById("cotFecha").value){
-
-document.getElementById("cotFecha").value=fechaHoy();
-
-}
-
-if(!partidas.length){
-
-partidas=[{
-descripcion:"",
-cantidad:1,
-precio:0
-}];
-
-}
-
-renderPartidas();
-
-}
-
-
-function agregarPartida(){
-
-partidas.push({
-descripcion:"",
-cantidad:1,
-precio:0
-});
-
-renderPartidas();
-
-}
-
-
-function eliminarPartida(i){
-
-partidas.splice(i,1);
-
-if(!partidas.length){
-
-partidas.push({
-descripcion:"",
-cantidad:1,
-precio:0
-});
-
-}
-
-renderPartidas();
-
-}
-
-
-function renderPartidas(){
-
-const el=document.getElementById("partidas");
-
-el.innerHTML=partidas.map((p,i)=>`
-
-<div class="item-row">
-
-<div class="wide">
-
-<label>Descripción</label>
-
-<input
-value="${escapeHTML(p.descripcion)}"
-oninput="
-partidas[${i}].descripcion=this.value;
-calcularTotales()
-">
-
-</div>
-
-<div>
-
-<label>Cantidad</label>
-
-<input
-type="number"
-min="0"
-step="1"
-value="${p.cantidad}"
-oninput="
-partidas[${i}].cantidad=Number(this.value)||0;
-calcularTotales()
-">
-
-</div>
-
-<div>
-
-<label>Precio</label>
-
-<input
-type="number"
-min="0"
-step="0.01"
-value="${p.precio}"
-oninput="
-partidas[${i}].precio=Number(this.value)||0;
-calcularTotales()
-">
-
-</div>
-
-<div>
-
-<label>Importe</label>
-
-<input
-value="${moneda(
-(p.cantidad||0)*(p.precio||0)
-)}"
-disabled>
-
-</div>
-
-<button
-class="btn btn-danger"
-onclick="eliminarPartida(${i})">
-
-X
-
-</button>
-
-</div>
-
-`).join("");
-
-calcularTotales();
-
-}
-
-
-function calcularTotales(){
-
-const subtotal=partidas.reduce(
-(s,p)=>
-s+
-(Number(p.cantidad)||0)*
-(Number(p.precio)||0),
-0
-);
-
-const iva=subtotal*.16;
-const total=subtotal+iva;
-
-document.getElementById("cotSubtotal")
-.textContent=moneda(subtotal);
-
-document.getElementById("cotIVA")
-.textContent=moneda(iva);
-
-document.getElementById("cotTotal")
-.textContent=moneda(total);
-
-}
-
-
-function limpiarCotizacion(){
-
-document.getElementById("cotCliente").value="";
-
-document.getElementById("cotFecha").value=fechaHoy();
-
-document.getElementById("cotVigencia").value=15;
-
-document.getElementById("cotObservaciones").value="";
-
-partidas=[{
-descripcion:"",
-cantidad:1,
-precio:0
-}];
-
-renderPartidas();
-
-}
-
+/* =========================================================
+   COTIZACIÓN
+========================================================= */
 
 function siguienteFolio(){
 
-const nums=cotizaciones.map(
-c=>
-parseInt(
-String(c.folio||"").replace(/\D/g,"")
-)||0
-);
+    let max = 0;
 
-const n=Math.max(0,...nums)+1;
+    cotizaciones.forEach(c => {
 
-return "COT-"+String(n).padStart(4,"0");
+        const numero =
+            parseInt(
+                String(c.folio || "")
+                .replace(/\D/g,"")
+            ) || 0;
+
+        if(numero > max){
+            max = numero;
+        }
+
+    });
+
+    return "COT-" +
+        String(max + 1).padStart(4,"0");
 
 }
 
+function prepararCotizacion(){
+
+    partidasActuales = [];
+
+    document.getElementById("cotFecha").value =
+        fechaHoy();
+
+    document.getElementById("cotDescripcion").value="";
+
+    renderPartidas();
+
+}
+
+function agregarPartida(){
+
+    partidasActuales.push({
+
+        id:idUnico(),
+
+        descripcion:"",
+
+        cantidad:1,
+
+        precio:0
+
+    });
+
+    renderPartidas();
+
+}
+
+function eliminarPartida(id){
+
+    partidasActuales =
+        partidasActuales.filter(p => p.id !== id);
+
+    renderPartidas();
+
+}
+
+function actualizarPartida(id,campo,valor){
+
+    const p =
+        partidasActuales.find(x => x.id === id);
+
+    if(!p) return;
+
+    if(campo === "descripcion"){
+        p.descripcion = valor;
+    }
+
+    if(campo === "cantidad"){
+        p.cantidad = Number(valor) || 0;
+    }
+
+    if(campo === "precio"){
+        p.precio = Number(valor) || 0;
+    }
+
+    calcularTotales();
+
+}
+
+function renderPartidas(){
+
+    const cont =
+        document.getElementById("partidas");
+
+    if(!partidasActuales.length){
+
+        cont.innerHTML =
+            `<div class="empty">
+                Agrega una partida a la cotización.
+            </div>`;
+
+        calcularTotales();
+
+        return;
+
+    }
+
+    cont.innerHTML =
+        partidasActuales.map((p,i) => `
+
+        <div class="partida">
+
+            <div class="partida-header">
+
+                <strong>
+                    Partida ${i+1}
+                </strong>
+
+                <button
+                    class="btn btn-danger"
+                    onclick="eliminarPartida('${p.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+            <label>Descripción</label>
+
+            <input
+                value="${esc(p.descripcion)}"
+                oninput="actualizarPartida(
+                    '${p.id}',
+                    'descripcion',
+                    this.value
+                )">
+
+            <label>Cantidad</label>
+
+            <input
+                type="number"
+                min="0"
+                step="1"
+                value="${p.cantidad}"
+                oninput="actualizarPartida(
+                    '${p.id}',
+                    'cantidad',
+                    this.value
+                )">
+
+            <label>Precio unitario</label>
+
+            <input
+                type="number"
+                min="0"
+                step="0.01"
+                value="${p.precio}"
+                oninput="actualizarPartida(
+                    '${p.id}',
+                    'precio',
+                    this.value
+                )">
+
+            <div style="margin-top:8px;text-align:right;font-weight:800;">
+                Importe:
+                ${moneda(
+                    Number(p.cantidad || 0) *
+                    Number(p.precio || 0)
+                )}
+            </div>
+
+        </div>
+
+    `).join("");
+
+    calcularTotales();
+
+}
+
+function calcularTotales(){
+
+    let subtotal = 0;
+
+    partidasActuales.forEach(p => {
+
+        subtotal +=
+            Number(p.cantidad || 0) *
+            Number(p.precio || 0);
+
+    });
+
+    const iva = subtotal * 0.16;
+
+    const total = subtotal + iva;
+
+    document.getElementById("subtotal").textContent =
+        moneda(subtotal);
+
+    document.getElementById("iva").textContent =
+        moneda(iva);
+
+    document.getElementById("total").textContent =
+        moneda(total);
+
+    return {
+        subtotal,
+        iva,
+        total
+    };
+
+}
 
 function guardarCotizacion(){
 
-const clienteId=Number(
-document.getElementById("cotCliente").value
-);
+    const clienteId =
+        document.getElementById("cotCliente").value;
 
-const cliente=clientes.find(
-c=>c.id===clienteId
-);
+    if(!clienteId){
 
-if(!cliente){
+        alert("Selecciona un cliente.");
 
-alert("Selecciona un cliente.");
+        return;
 
-return;
+    }
+
+    if(!partidasActuales.length){
+
+        alert("Agrega al menos una partida.");
+
+        return;
+
+    }
+
+    const validas =
+        partidasActuales.filter(p =>
+            p.descripcion.trim() &&
+            Number(p.cantidad) > 0
+        );
+
+    if(!validas.length){
+
+        alert("Agrega una partida válida.");
+
+        return;
+
+    }
+
+    const cliente =
+        clientes.find(c => c.id === clienteId);
+
+    if(!cliente){
+
+        alert("Cliente no encontrado.");
+
+        return;
+
+    }
+
+    const totales = calcularTotales();
+
+    const cotizacion = {
+
+        id:idUnico(),
+
+        folio:siguienteFolio(),
+
+        clienteId,
+
+        clienteNombre:cliente.nombre,
+
+        fecha:
+            document.getElementById("cotFecha").value ||
+            fechaHoy(),
+
+        descripcion:
+            document.getElementById("cotDescripcion")
+            .value.trim(),
+
+        partidas:JSON.parse(
+            JSON.stringify(partidasActuales)
+        ),
+
+        subtotal:totales.subtotal,
+
+        iva:totales.iva,
+
+        total:totales.total,
+
+        estado:"Pendiente",
+
+        pagos:[]
+
+    };
+
+    cotizaciones.push(cotizacion);
+
+    guardarDatos();
+
+    alert(
+        `Cotización ${cotizacion.folio} guardada correctamente.`
+    );
+
+    limpiarCotizacion();
+
+    renderCotizaciones();
+
+    actualizarPanel();
 
 }
 
-const validas=partidas.filter(
-p=>
-String(p.descripcion).trim() &&
-Number(p.cantidad)>0 &&
-Number(p.precio)>=0
-);
+function limpiarCotizacion(){
 
-if(!validas.length){
+    document.getElementById("cotCliente").value="";
 
-alert("Agrega al menos una partida válida.");
+    document.getElementById("cotDescripcion").value="";
 
-return;
+    document.getElementById("cotFecha").value =
+        fechaHoy();
 
-}
+    partidasActuales=[];
 
-const subtotal=validas.reduce(
-(s,p)=>
-s+
-(Number(p.cantidad)||0)*
-(Number(p.precio)||0),
-0
-);
-
-const iva=subtotal*.16;
-const total=subtotal+iva;
-
-const c={
-
-id:Date.now(),
-
-folio:siguienteFolio(),
-
-fecha:
-document.getElementById("cotFecha").value||fechaHoy(),
-
-vigencia:
-Number(document.getElementById("cotVigencia").value)||15,
-
-clienteId,
-
-cliente:{...cliente},
-
-partidas:validas.map(p=>({...p})),
-
-subtotal,
-iva,
-total,
-
-observaciones:
-document.getElementById("cotObservaciones")
-.value.trim(),
-
-estado:"Pendiente",
-
-formaPago:"",
-fechaPago:""
-
-};
-
-cotizaciones.unshift(c);
-
-guardarDatos();
-
-limpiarCotizacion();
-
-actualizarPanel();
-
-alert(
-"Cotización guardada correctamente.\n\nFolio: "+c.folio
-);
-
-mostrar("historial");
-
-}
-
-
-/* =========================
-HISTORIAL
-========================= */
-
-
-function estadoBadge(estado){
-
-const cls={
-Pendiente:"pendiente",
-Aceptada:"aceptada",
-Realizada:"realizada",
-Pagada:"pagada"
-}[estado]||"pendiente";
-
-return `
-<span class="badge ${cls}">
-${escapeHTML(estado)}
-</span>
-`;
+    renderPartidas();
 
 }
 
 
-function renderCotizaciones(){
+/* =========================================================
+   PAGOS / ANTICIPOS
+========================================================= */
 
-const el=document.getElementById("tablaCotizaciones");
+/*
+   Esta función hace compatibles cotizaciones nuevas
+   y cotizaciones antiguas que todavía no tienen "pagos".
+*/
 
-if(!cotizaciones.length){
+function obtenerPagos(c){
 
-el.innerHTML=
-'<div class="empty">No hay cotizaciones registradas.</div>';
+    if(Array.isArray(c.pagos)){
+        return c.pagos;
+    }
 
-return;
+    const pagos = [];
 
-}
+    /*
+       Compatibilidad con cotizaciones antiguas
+       que ya estaban marcadas como pagadas.
+    */
 
-el.innerHTML=`
+    if(
+        c.estado === "Pagada" &&
+        c.formaPago &&
+        c.fechaPago
+    ){
 
-<div class="table-wrap">
+        pagos.push({
 
-<table>
+            id:"legacy-"+c.id,
 
-<thead>
+            tipo:"Pago final",
 
-<tr>
-<th>Folio</th>
-<th>Fecha</th>
-<th>Cliente</th>
-<th>Total</th>
-<th>Estado</th>
-<th>Pago</th>
-<th>Acciones</th>
-</tr>
+            monto:Number(c.total || 0),
 
-</thead>
+            fecha:c.fechaPago,
 
-<tbody>
+            formaPago:c.formaPago
 
-${cotizaciones.map(c=>{
+        });
 
-let acciones="";
+    }
 
-if(c.estado==="Pendiente"){
-
-acciones+=`
-<button
-class="btn btn-info"
-onclick="aceptarCotizacion(${c.id})">
-
-Aceptar
-
-</button>
-`;
+    return pagos;
 
 }
 
-if(c.estado==="Aceptada"){
+function totalPagado(c){
 
-acciones+=`
-<button
-class="btn btn-success"
-onclick="marcarRealizada(${c.id})">
-
-Realizada
-
-</button>
-`;
+    return obtenerPagos(c)
+        .reduce(
+            (s,p) => s + Number(p.monto || 0),
+            0
+        );
 
 }
 
-if(c.estado==="Realizada"){
+function saldoCotizacion(c){
 
-acciones+=`
-<button
-class="btn btn-warning"
-onclick="marcarPagada(${c.id})">
-
-Registrar pago
-
-</button>
-`;
+    return Math.max(
+        0,
+        Number(c.total || 0) - totalPagado(c)
+    );
 
 }
 
-acciones+=`
+function totalAnticipos(c){
 
-<button
-class="btn btn-secondary"
-onclick="verCotizacion(${c.id})">
-
-Ver detalle
-
-</button>
-
-<button
-class="btn btn-primary"
-onclick="exportarPDF(${c.id})">
-
-PDF
-
-</button>
-
-<button
-class="btn btn-success"
-onclick="compartirWhatsApp(${c.id})">
-
-WhatsApp
-
-</button>
-
-`;
-
-const pago=c.estado==="Pagada"
-?
-`${escapeHTML(c.formaPago||"Sin dato")}<br>
-<small>${fechaMX(c.fechaPago)}</small>`
-:"-";
-
-return `
-
-<tr>
-
-<td><b>${escapeHTML(c.folio)}</b></td>
-
-<td>${fechaMX(c.fecha)}</td>
-
-<td>${escapeHTML(c.cliente?.nombre||"")}</td>
-
-<td>${moneda(c.total)}</td>
-
-<td>${estadoBadge(c.estado)}</td>
-
-<td>${pago}</td>
-
-<td>
-
-<div class="actions">
-
-${acciones}
-
-</div>
-
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
+    return obtenerPagos(c)
+        .filter(p => p.tipo === "Anticipo")
+        .reduce(
+            (s,p) => s + Number(p.monto || 0),
+            0
+        );
 
 }
 
 
-/* =========================
-ESTADOS
-========================= */
-
+/* =========================================================
+   ACEPTAR COTIZACIÓN
+========================================================= */
 
 function aceptarCotizacion(id){
 
-const c=cotizaciones.find(x=>x.id===id);
+    const c =
+        cotizaciones.find(x => x.id === id);
 
-if(!c)return;
+    if(!c) return;
 
-c.estado="Aceptada";
+    c.estado = "Aceptada";
 
-guardarDatos();
+    if(!Array.isArray(c.pagos)){
+        c.pagos = [];
+    }
 
-renderCotizaciones();
+    guardarDatos();
 
-actualizarPanel();
+    renderCotizaciones();
+
+    actualizarPanel();
+
+    alert(
+        `La cotización ${c.folio} fue aceptada.`
+    );
 
 }
 
+
+/* =========================================================
+   REGISTRAR ANTICIPO
+========================================================= */
+
+function registrarAnticipo(id){
+
+    const c =
+        cotizaciones.find(x => x.id === id);
+
+    if(!c) return;
+
+    if(c.estado !== "Aceptada"){
+
+        alert(
+            "El anticipo se puede registrar cuando la cotización está aceptada."
+        );
+
+        return;
+
+    }
+
+    const saldo =
+        saldoCotizacion(c);
+
+    if(saldo <= 0){
+
+        alert("Esta cotización ya está liquidada.");
+
+        return;
+
+    }
+
+    abrirModalPago(
+        id,
+        "Anticipo"
+    );
+
+}
+
+
+/* =========================================================
+   MARCAR REALIZADA
+========================================================= */
 
 function marcarRealizada(id){
 
-const c=cotizaciones.find(x=>x.id===id);
+    const c =
+        cotizaciones.find(x => x.id === id);
 
-if(!c)return;
+    if(!c) return;
 
-c.estado="Realizada";
+    c.estado = "Realizada";
 
-guardarDatos();
+    if(!Array.isArray(c.pagos)){
+        c.pagos=[];
+    }
 
-renderCotizaciones();
+    /*
+       Si ya quedó liquidada mediante anticipos,
+       la marcamos como Pagada.
+    */
 
-renderCXC();
+    if(saldoCotizacion(c) <= 0){
 
-actualizarPanel();
+        c.estado = "Pagada";
 
-}
+        if(!c.fechaPago){
+            c.fechaPago = fechaHoy();
+        }
 
+    }
 
-function marcarPagada(id){
+    guardarDatos();
 
-const c=cotizaciones.find(x=>x.id===id);
+    renderCotizaciones();
+    renderCXC();
+    actualizarPanel();
 
-if(!c)return;
-
-const formaPago=prompt(
-`¿Cuál fue la forma de pago?
-
-1. Efectivo
-2. Tarjeta
-3. Transferencia
-
-Escribe 1, 2 o 3:`
-);
-
-if(formaPago===null)return;
-
-let pago="";
-
-if(formaPago==="1")pago="Efectivo";
-if(formaPago==="2")pago="Tarjeta";
-if(formaPago==="3")pago="Transferencia";
-
-if(!pago){
-
-alert("Selecciona una opción válida: 1, 2 o 3.");
-
-return;
-
-}
-
-c.estado="Pagada";
-c.formaPago=pago;
-c.fechaPago=fechaHoy();
-
-guardarDatos();
-
-renderCotizaciones();
-renderCXC();
-actualizarPanel();
-
-alert(
-`Pago registrado correctamente.
-
-Forma de pago: ${pago}
-Total: ${moneda(c.total)}`
-);
+    alert(
+        `La cotización ${c.folio} quedó como realizada.`
+    );
 
 }
 
 
-/* =========================
-CUENTAS POR COBRAR
-========================= */
+/* =========================================================
+   PAGO FINAL / PAGO PARCIAL
+========================================================= */
 
+function abrirPagoFinal(id){
+
+    const c =
+        cotizaciones.find(x => x.id === id);
+
+    if(!c) return;
+
+    if(c.estado !== "Realizada"){
+
+        alert(
+            "Primero marca la cotización como Realizada."
+        );
+
+        return;
+
+    }
+
+    if(saldoCotizacion(c) <= 0){
+
+        alert("Esta cotización ya está liquidada.");
+
+        return;
+
+    }
+
+    abrirModalPago(
+        id,
+        "Pago final"
+    );
+
+}
+
+function abrirModalPago(id,tipo){
+
+    const c =
+        cotizaciones.find(x => x.id === id);
+
+    if(!c) return;
+
+    cotizacionPagoActual = id;
+
+    tipoPagoActual = tipo;
+
+    const saldo =
+        saldoCotizacion(c);
+
+    document.getElementById("pagoTitulo")
+        .textContent =
+        tipo === "Anticipo"
+            ? "💰 Registrar anticipo"
+            : "💳 Registrar pago";
+
+    document.getElementById("pagoInfo")
+        .innerHTML = `
+
+            <div class="card" style="margin:0;background:#f9fafb;">
+
+                <strong>${esc(c.folio)}</strong>
+
+                <div class="small">
+                    ${esc(c.clienteNombre)}
+                </div>
+
+                <hr>
+
+                <div>
+                    Total:
+                    <strong>${moneda(c.total)}</strong>
+                </div>
+
+                <div>
+                    Anticipos:
+                    <strong>${moneda(totalAnticipos(c))}</strong>
+                </div>
+
+                <div>
+                    Pagado:
+                    <strong>${moneda(totalPagado(c))}</strong>
+                </div>
+
+                <div style="margin-top:6px;font-size:18px;">
+                    Saldo:
+                    <strong>${moneda(saldo)}</strong>
+                </div>
+
+            </div>
+
+        `;
+
+    document.getElementById("pagoMonto").value =
+        saldo.toFixed(2);
+
+    document.getElementById("pagoMonto").max =
+        saldo;
+
+    document.getElementById("pagoFecha").value =
+        fechaHoy();
+
+    document.getElementById("pagoForma").value =
+        "Efectivo";
+
+    document.getElementById("modalPago")
+        .classList.add("show");
+
+}
+
+function guardarPago(){
+
+    if(!cotizacionPagoActual){
+
+        alert("No se encontró la cotización.");
+
+        return;
+
+    }
+
+    const c =
+        cotizaciones.find(
+            x => x.id === cotizacionPagoActual
+        );
+
+    if(!c) return;
+
+    let monto =
+        Number(
+            document.getElementById("pagoMonto").value
+        );
+
+    const fecha =
+        document.getElementById("pagoFecha").value ||
+        fechaHoy();
+
+    const formaPago =
+        document.getElementById("pagoForma").value;
+
+    const saldo =
+        saldoCotizacion(c);
+
+    if(!monto || monto <= 0){
+
+        alert("Escribe un monto válido.");
+
+        return;
+
+    }
+
+    if(monto > saldo + 0.01){
+
+        alert(
+            `El monto no puede ser mayor al saldo pendiente de ${moneda(saldo)}.`
+        );
+
+        return;
+
+    }
+
+    if(!Array.isArray(c.pagos)){
+        c.pagos=[];
+    }
+
+    const pago = {
+
+        id:idUnico(),
+
+        tipo:tipoPagoActual,
+
+        monto,
+
+        fecha,
+
+        formaPago
+
+    };
+
+    c.pagos.push(pago);
+
+    /*
+       Mantener compatibilidad con la estructura anterior.
+    */
+
+    if(tipoPagoActual === "Pago final"){
+
+        c.formaPago = formaPago;
+
+        c.fechaPago = fecha;
+
+    }
+
+    const nuevoSaldo =
+        saldoCotizacion(c);
+
+    /*
+       Si ya no queda saldo:
+       Pagada.
+       Si queda saldo:
+       - Si era anticipo y todavía no está realizada,
+         permanece Aceptada.
+       - Si era pago final sobre Realizada,
+         sigue Realizada.
+    */
+
+    if(nuevoSaldo <= 0){
+
+        c.estado = "Pagada";
+
+        c.fechaPago = fecha;
+
+        c.formaPago = formaPago;
+
+    }
+
+    guardarDatos();
+
+    cerrarModal("modalPago");
+
+    cotizacionPagoActual=null;
+
+    renderCotizaciones();
+    renderCXC();
+    actualizarPanel();
+    generarReporte();
+
+    alert(
+        `${tipoPagoActual} registrado por ${moneda(monto)}.`
+    );
+
+}
+
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+function renderCotizaciones(){
+
+    const cont =
+        document.getElementById("listaCotizaciones");
+
+    if(!cotizaciones.length){
+
+        cont.innerHTML =
+            `<div class="empty">
+                No hay cotizaciones registradas.
+            </div>`;
+
+        return;
+
+    }
+
+    const ordenadas =
+        [...cotizaciones].reverse();
+
+    cont.innerHTML =
+        ordenadas.map(c => {
+
+            const pagado =
+                totalPagado(c);
+
+            const saldo =
+                saldoCotizacion(c);
+
+            const anticipos =
+                totalAnticipos(c);
+
+            let badge = "badge-pendiente";
+
+            if(c.estado === "Aceptada"){
+                badge="badge-aceptada";
+            }
+
+            if(c.estado === "Realizada"){
+                badge="badge-realizada";
+            }
+
+            if(c.estado === "Pagada"){
+                badge="badge-pagada";
+            }
+
+            let botones = "";
+
+            if(c.estado === "Pendiente"){
+
+                botones += `
+                    <button
+                        class="btn btn-success"
+                        onclick="aceptarCotizacion('${c.id}')">
+                        ✓ Aceptar
+                    </button>
+                `;
+
+            }
+
+            if(c.estado === "Aceptada"){
+
+                botones += `
+                    <button
+                        class="btn btn-warning"
+                        onclick="registrarAnticipo('${c.id}')">
+                        💰 Registrar anticipo
+                    </button>
+
+                    <button
+                        class="btn btn-success"
+                        onclick="marcarRealizada('${c.id}')">
+                        ✓ Marcar realizada
+                    </button>
+                `;
+
+            }
+
+            if(c.estado === "Realizada"){
+
+                botones += `
+                    <button
+                        class="btn btn-primary"
+                        onclick="abrirPagoFinal('${c.id}')">
+                        💳 Registrar pago
+                    </button>
+                `;
+
+            }
+
+            return `
+
+                <div class="quote-card">
+
+                    <div class="quote-top">
+
+                        <div>
+
+                            <div class="quote-title">
+                                ${esc(c.folio)}
+                            </div>
+
+                            <div class="small">
+                                ${esc(c.clienteNombre)}
+                            </div>
+
+                            <div class="small">
+                                ${esc(c.fecha)}
+                            </div>
+
+                        </div>
+
+                        <div style="text-align:right">
+
+                            <div class="quote-total">
+                                ${moneda(c.total)}
+                            </div>
+
+                            <span class="badge ${badge}">
+                                ${esc(c.estado)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    ${
+                        anticipos > 0
+                        ?
+                        `
+                        <div class="small" style="margin-top:10px;">
+                            Anticipos:
+                            <strong>${moneda(anticipos)}</strong>
+                            · Saldo:
+                            <strong>${moneda(saldo)}</strong>
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+                    ${
+                        pagado > 0 && anticipos === 0
+                        ?
+                        `
+                        <div class="small" style="margin-top:10px;">
+                            Pagado:
+                            <strong>${moneda(pagado)}</strong>
+                            · Saldo:
+                            <strong>${moneda(saldo)}</strong>
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+                    <div class="actions">
+
+                        ${botones}
+
+                        <button
+                            class="btn btn-dark"
+                            onclick="verCotizacion('${c.id}')">
+                            👁 Ver detalle
+                        </button>
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="exportarPDF('${c.id}')">
+                            📄 PDF
+                        </button>
+
+                        <button
+                            class="btn btn-info"
+                            onclick="compartirWhatsApp('${c.id}')">
+                            📲 WhatsApp
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   CUENTAS POR COBRAR
+========================================================= */
 
 function renderCXC(){
 
-const el=document.getElementById("tablaCXC");
+    const cont =
+        document.getElementById("listaCXC");
 
-const lista=cotizaciones.filter(
-c=>c.estado==="Realizada"
-);
+    const pendientes =
+        cotizaciones.filter(c =>
+            c.estado === "Realizada" &&
+            saldoCotizacion(c) > 0
+        );
 
-if(!lista.length){
+    if(!pendientes.length){
 
-el.innerHTML=
-'<div class="empty">No hay cuentas por cobrar.</div>';
+        cont.innerHTML =
+            `<div class="empty">
+                🎉 No tienes cuentas por cobrar.
+            </div>`;
 
-return;
+        return;
 
-}
+    }
 
-el.innerHTML=`
+    cont.innerHTML =
+        pendientes.map(c => {
 
-<div class="table-wrap">
+            const anticipos =
+                totalAnticipos(c);
 
-<table>
+            const pagado =
+                totalPagado(c);
 
-<thead>
+            const saldo =
+                saldoCotizacion(c);
 
-<tr>
-<th>Folio</th>
-<th>Cliente</th>
-<th>Total</th>
-<th>Acción</th>
-</tr>
+            return `
 
-</thead>
+                <div class="quote-card">
 
-<tbody>
+                    <div class="quote-top">
 
-${lista.map(c=>`
+                        <div>
 
-<tr>
+                            <div class="quote-title">
+                                ${esc(c.folio)}
+                            </div>
 
-<td>${escapeHTML(c.folio)}</td>
+                            <div class="small">
+                                ${esc(c.clienteNombre)}
+                            </div>
 
-<td>${escapeHTML(c.cliente?.nombre||"")}</td>
+                        </div>
 
-<td>${moneda(c.total)}</td>
+                        <div style="text-align:right">
 
-<td>
+                            <div class="small">
+                                Saldo pendiente
+                            </div>
 
-<button
-class="btn btn-warning"
-onclick="marcarPagada(${c.id})">
+                            <div class="quote-total">
+                                ${moneda(saldo)}
+                            </div>
 
-Registrar pago
+                        </div>
 
-</button>
+                    </div>
 
-</td>
+                    <hr>
 
-</tr>
+                    <div class="small">
+                        Total:
+                        <strong>${moneda(c.total)}</strong>
+                    </div>
 
-`).join("")}
+                    <div class="small">
+                        Anticipo:
+                        <strong>${moneda(anticipos)}</strong>
+                    </div>
 
-</tbody>
+                    <div class="small">
+                        Total pagado:
+                        <strong>${moneda(pagado)}</strong>
+                    </div>
 
-</table>
+                    <div class="actions">
 
-</div>
+                        <button
+                            class="btn btn-primary"
+                            onclick="abrirPagoFinal('${c.id}')">
+                            💳 Registrar pago
+                        </button>
 
-`;
+                        <button
+                            class="btn btn-dark"
+                            onclick="verCotizacion('${c.id}')">
+                            👁 Ver detalle
+                        </button>
 
-}
+                    </div>
 
+                </div>
 
-/* =========================
-COBRANZA
-========================= */
+            `;
 
-
-function pagosPagados(){
-
-return cotizaciones.filter(
-c=>c.estado==="Pagada"&&c.fechaPago
-);
-
-}
-
-
-function reporteHoy(){
-
-const h=fechaHoy();
-
-document.getElementById("reporteDesde").value=h;
-document.getElementById("reporteHasta").value=h;
-
-generarReporte();
-
-}
-
-
-function generarReporte(){
-
-const desde=document.getElementById("reporteDesde").value;
-const hasta=document.getElementById("reporteHasta").value;
-
-if(!desde||!hasta){
-
-alert("Selecciona las fechas del reporte.");
-
-return;
-
-}
-
-if(desde>hasta){
-
-alert("La fecha inicial no puede ser mayor que la fecha final.");
-
-return;
-
-}
-
-renderReporte();
+        }).join("");
 
 }
 
 
-function datosReporte(){
-
-const desde=document.getElementById("reporteDesde").value;
-const hasta=document.getElementById("reporteHasta").value;
-
-return pagosPagados().filter(
-c=>c.fechaPago>=desde&&c.fechaPago<=hasta
-);
-
-}
-
-
-function renderReporte(){
-
-const lista=datosReporte();
-
-const efectivo=lista
-.filter(c=>c.formaPago==="Efectivo")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-const tarjeta=lista
-.filter(c=>c.formaPago==="Tarjeta")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-const transferencia=lista
-.filter(c=>c.formaPago==="Transferencia")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-const total=efectivo+tarjeta+transferencia;
-
-document.getElementById("resumenCobranza").innerHTML=`
-
-<div class="grid">
-
-<div class="stat">
-<small>Total cobrado</small>
-<strong>${moneda(total)}</strong>
-</div>
-
-<div class="stat">
-<small>Efectivo</small>
-<strong>${moneda(efectivo)}</strong>
-</div>
-
-<div class="stat">
-<small>Tarjeta</small>
-<strong>${moneda(tarjeta)}</strong>
-</div>
-
-<div class="stat">
-<small>Transferencia</small>
-<strong>${moneda(transferencia)}</strong>
-</div>
-
-</div>
-
-`;
-
-if(!lista.length){
-
-document.getElementById("tablaCobranza").innerHTML=
-'<div class="empty">No hay pagos registrados en este periodo.</div>';
-
-return;
-
-}
-
-document.getElementById("tablaCobranza").innerHTML=`
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Folio</th>
-<th>Cliente</th>
-<th>Fecha pago</th>
-<th>Forma de pago</th>
-<th>Importe</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-${lista.map(c=>`
-
-<tr>
-
-<td><b>${escapeHTML(c.folio)}</b></td>
-
-<td>${escapeHTML(c.cliente?.nombre||"")}</td>
-
-<td>${fechaMX(c.fechaPago)}</td>
-
-<td>${escapeHTML(c.formaPago||"")}</td>
-
-<td>${moneda(c.total)}</td>
-
-</tr>
-
-`).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================
-DETALLE DE COTIZACION
-========================= */
-
+/* =========================================================
+   DETALLE COTIZACIÓN
+========================================================= */
 
 function verCotizacion(id){
 
-const c=cotizaciones.find(x=>x.id===id);
+    const c =
+        cotizaciones.find(x => x.id === id);
 
-if(!c)return;
+    if(!c) return;
 
-document.getElementById("detalleTitulo").textContent=
-`Cotización ${c.folio}`;
+    const pagos =
+        obtenerPagos(c);
 
-let html=`
+    const anticipos =
+        totalAnticipos(c);
 
-<div class="detail-line">
-<b>Cliente:</b><br>
-${escapeHTML(c.cliente?.nombre||"")}
-</div>
+    const pagado =
+        totalPagado(c);
 
-<div class="detail-line">
-<b>Teléfono:</b><br>
-${escapeHTML(c.cliente?.telefono||"")}
-</div>
+    const saldo =
+        saldoCotizacion(c);
 
-<div class="detail-line">
-<b>Correo:</b><br>
-${escapeHTML(c.cliente?.correo||"")}
-</div>
+    document.getElementById("detalleTitulo")
+        .textContent =
+        `${c.folio} · ${c.clienteNombre}`;
 
-<div class="detail-line">
-<b>Dirección:</b><br>
-${escapeHTML(c.cliente?.direccion||"")}
-</div>
+    let html = `
 
-<div class="detail-line">
-<b>Fecha:</b> ${fechaMX(c.fecha)}
-</div>
+        <div class="card" style="margin:0;background:#f9fafb;">
 
-<div class="detail-line">
-<b>Vigencia:</b> ${c.vigencia} días
-</div>
+            <strong>Cliente</strong>
 
-<div class="detail-line">
-<b>Estado:</b> ${estadoBadge(c.estado)}
-</div>
+            <div>
+                ${esc(c.clienteNombre)}
+            </div>
 
-<h3 style="margin-top:18px">
-Partidas
-</h3>
+            <div class="small">
+                Fecha: ${esc(c.fecha)}
+            </div>
 
-<div class="table-wrap">
+            <div class="small">
+                Estado: ${esc(c.estado)}
+            </div>
 
-<table>
+        </div>
 
-<thead>
+        <br>
 
-<tr>
-<th>Descripción</th>
-<th>Cant.</th>
-<th>Precio</th>
-<th>Importe</th>
-</tr>
+        ${
+            c.descripcion
+            ?
+            `
+            <div>
+                <strong>Descripción</strong>
+                <p>${esc(c.descripcion)}</p>
+            </div>
+            `
+            :
+            ""
+        }
 
-</thead>
+        <h3>Conceptos</h3>
 
-<tbody>
+        <table>
 
-${(c.partidas||[]).map(p=>`
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Cant.</th>
+                    <th>Precio</th>
+                    <th>Importe</th>
+                </tr>
+            </thead>
 
-<tr>
+            <tbody>
 
-<td>${escapeHTML(p.descripcion||"")}</td>
+                ${
+                    (c.partidas || []).map(p => `
 
-<td>${p.cantidad}</td>
+                        <tr>
 
-<td>${moneda(p.precio)}</td>
+                            <td>
+                                ${esc(p.descripcion)}
+                            </td>
 
-<td>
-${moneda(
-(Number(p.cantidad)||0)*
-(Number(p.precio)||0)
-)}
-</td>
+                            <td>
+                                ${p.cantidad}
+                            </td>
 
-</tr>
+                            <td>
+                                ${moneda(p.precio)}
+                            </td>
 
-`).join("")}
+                            <td>
+                                ${moneda(
+                                    Number(p.cantidad || 0) *
+                                    Number(p.precio || 0)
+                                )}
+                            </td>
 
-</tbody>
+                        </tr>
 
-</table>
+                    `).join("")
+                }
 
-</div>
+            </tbody>
 
-<div class="detail-line" style="margin-top:15px">
-Subtotal: <b>${moneda(c.subtotal)}</b>
-</div>
+        </table>
 
-<div class="detail-line">
-IVA (16%): <b>${moneda(c.iva)}</b>
-</div>
+        <br>
 
-<div class="detail-total">
-TOTAL: ${moneda(c.total)}
-</div>
+        <div style="text-align:right;">
 
-`;
+            <div>
+                Subtotal:
+                <strong>${moneda(c.subtotal)}</strong>
+            </div>
 
-if(c.observaciones){
+            <div>
+                IVA:
+                <strong>${moneda(c.iva)}</strong>
+            </div>
 
-html+=`
+            <div style="font-size:20px;margin-top:6px;">
+                Total:
+                <strong>${moneda(c.total)}</strong>
+            </div>
 
-<div class="detail-line" style="margin-top:15px">
+        </div>
 
-<b>Observaciones:</b><br>
+        <hr>
 
-${escapeHTML(c.observaciones)}
+        <h3>💰 Pagos</h3>
 
-</div>
+        <div class="small">
+            Anticipos:
+            <strong>${moneda(anticipos)}</strong>
+        </div>
 
-`;
+        <div class="small">
+            Total pagado:
+            <strong>${moneda(pagado)}</strong>
+        </div>
+
+        <div style="font-size:20px;margin-top:6px;">
+            Saldo:
+            <strong>${moneda(saldo)}</strong>
+        </div>
+
+    `;
+
+    if(pagos.length){
+
+        html += `
+
+            <div class="payment-history">
+
+                <h4>Historial de pagos</h4>
+
+                ${
+                    pagos.map(p => `
+
+                        <div class="payment-item">
+
+                            <strong>
+                                ${
+                                    p.tipo === "Anticipo"
+                                    ? "💰 Anticipo"
+                                    : "💳 Pago final"
+                                }
+                            </strong>
+
+                            <div>
+                                ${moneda(p.monto)}
+                            </div>
+
+                            <div class="small">
+                                Fecha: ${esc(p.fecha)}
+                            </div>
+
+                            <div class="small">
+                                Forma de pago:
+                                ${esc(p.formaPago)}
+                            </div>
+
+                        </div>
+
+                    `).join("")
+                }
+
+            </div>
+
+        `;
+
+    }
+
+    document.getElementById("detalleContenido")
+        .innerHTML = html;
+
+    document.getElementById("detallePDF")
+        .onclick = () => exportarPDF(id);
+
+    document.getElementById("detalleWhatsApp")
+        .onclick = () => compartirWhatsApp(id);
+
+    document.getElementById("modalDetalle")
+        .classList.add("show");
 
 }
 
-if(c.estado==="Pagada"){
 
-html+=`
-
-<div class="detail-line" style="margin-top:15px">
-
-<b>Forma de pago:</b>
-${escapeHTML(c.formaPago||"Sin dato")}
-
-<br>
-
-<b>Fecha de pago:</b>
-${fechaMX(c.fechaPago)}
-
-</div>
-
-`;
-
-}
-
-document.getElementById("detalleContenido")
-.innerHTML=html;
-
-document.getElementById("detallePDF")
-.onclick=()=>exportarPDF(id);
-
-document.getElementById("detalleWhatsApp")
-.onclick=()=>compartirWhatsApp(id);
-
-document.getElementById("modalDetalle")
-.classList.add("show");
-
-}
-
-
-function cerrarDetalle(){
-
-document.getElementById("modalDetalle")
-.classList.remove("show");
-
-}
-
-
-/* =========================
-PDF COTIZACION
-========================= */
-
+/* =========================================================
+   PDF COTIZACIÓN
+========================================================= */
 
 function crearPDF(c){
 
-if(!window.jspdf){
+    const { jsPDF } = window.jspdf;
 
-alert("No se pudo cargar el módulo PDF. Verifica tu conexión a Internet.");
+    const doc =
+        new jsPDF();
 
-return null;
+    let y = 18;
+
+    doc.setFontSize(20);
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "VERASI PC",
+        15,
+        y
+    );
+
+    y += 8;
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica","normal");
+
+    doc.text(
+        "SOLUCIONES INFORMÁTICAS",
+        15,
+        y
+    );
+
+    y += 10;
+
+    doc.setFontSize(14);
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        `COTIZACIÓN ${c.folio}`,
+        15,
+        y
+    );
+
+    y += 8;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica","normal");
+
+    doc.text(
+        `Cliente: ${c.clienteNombre}`,
+        15,
+        y
+    );
+
+    y += 6;
+
+    doc.text(
+        `Fecha: ${c.fecha}`,
+        15,
+        y
+    );
+
+    y += 10;
+
+    if(c.descripcion){
+
+        doc.setFont("helvetica","bold");
+
+        doc.text(
+            "Descripción:",
+            15,
+            y
+        );
+
+        y += 5;
+
+        doc.setFont("helvetica","normal");
+
+        const desc =
+            doc.splitTextToSize(
+                c.descripcion,
+                180
+            );
+
+        doc.text(
+            desc,
+            15,
+            y
+        );
+
+        y += desc.length * 5 + 5;
+
+    }
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "Conceptos",
+        15,
+        y
+    );
+
+    y += 7;
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Descripción",
+        15,
+        y
+    );
+
+    doc.text(
+        "Cant.",
+        120,
+        y
+    );
+
+    doc.text(
+        "Precio",
+        140,
+        y
+    );
+
+    doc.text(
+        "Importe",
+        170,
+        y
+    );
+
+    y += 5;
+
+    doc.setFont("helvetica","normal");
+
+    (c.partidas || []).forEach(p => {
+
+        if(y > 270){
+
+            doc.addPage();
+
+            y=20;
+
+        }
+
+        const descripcion =
+            doc.splitTextToSize(
+                String(p.descripcion || ""),
+                95
+            );
+
+        doc.text(
+            descripcion,
+            15,
+            y
+        );
+
+        doc.text(
+            String(p.cantidad),
+            120,
+            y
+        );
+
+        doc.text(
+            moneda(p.precio),
+            140,
+            y
+        );
+
+        doc.text(
+            moneda(
+                Number(p.cantidad || 0) *
+                Number(p.precio || 0)
+            ),
+            170,
+            y
+        );
+
+        y += Math.max(
+            6,
+            descripcion.length * 5
+        );
+
+    });
+
+    y += 5;
+
+    if(y > 250){
+
+        doc.addPage();
+
+        y=20;
+
+    }
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        `Subtotal: ${moneda(c.subtotal)}`,
+        130,
+        y
+    );
+
+    y += 6;
+
+    doc.text(
+        `IVA: ${moneda(c.iva)}`,
+        130,
+        y
+    );
+
+    y += 7;
+
+    doc.setFontSize(13);
+
+    doc.text(
+        `TOTAL: ${moneda(c.total)}`,
+        130,
+        y
+    );
+
+    y += 12;
+
+    doc.setFontSize(10);
+
+    doc.setFont("helvetica","normal");
+
+    const pagos =
+        obtenerPagos(c);
+
+    if(pagos.length){
+
+        doc.setFont("helvetica","bold");
+
+        doc.text(
+            "Pagos registrados:",
+            15,
+            y
+        );
+
+        y += 6;
+
+        doc.setFont("helvetica","normal");
+
+        pagos.forEach(p => {
+
+            doc.text(
+                `${p.tipo}: ${moneda(p.monto)} · ${p.fecha} · ${p.formaPago}`,
+                15,
+                y
+            );
+
+            y += 5;
+
+        });
+
+        y += 4;
+
+    }
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        `Total pagado: ${moneda(totalPagado(c))}`,
+        15,
+        y
+    );
+
+    y += 6;
+
+    doc.text(
+        `Saldo pendiente: ${moneda(saldoCotizacion(c))}`,
+        15,
+        y
+    );
+
+    return doc;
 
 }
-
-const {jsPDF}=window.jspdf;
-
-const doc=new jsPDF();
-
-let y=18;
-
-doc.setFontSize(20);
-doc.setFont("helvetica","bold");
-
-doc.text("VERASI PC",14,y);
-
-y+=7;
-
-doc.setFontSize(11);
-doc.setFont("helvetica","normal");
-
-doc.text("SOLUCIONES INFORMÁTICAS",14,y);
-
-doc.setFontSize(16);
-doc.setFont("helvetica","bold");
-
-doc.text("COTIZACIÓN",145,18);
-
-doc.setFontSize(10);
-doc.setFont("helvetica","normal");
-
-doc.text(`Folio: ${c.folio}`,145,25);
-doc.text(`Fecha: ${fechaMX(c.fecha)}`,145,31);
-doc.text(`Estado: ${c.estado}`,145,37);
-
-y=52;
-
-doc.setFont("helvetica","bold");
-doc.text("CLIENTE",14,y);
-
-y+=6;
-
-doc.setFont("helvetica","normal");
-
-doc.text(
-`Nombre: ${c.cliente?.nombre||""}`,
-14,y
-);
-
-y+=5;
-
-doc.text(
-`Teléfono: ${c.cliente?.telefono||""}`,
-14,y
-);
-
-y+=5;
-
-doc.text(
-`Correo: ${c.cliente?.correo||""}`,
-14,y
-);
-
-y+=5;
-
-doc.text(
-`Dirección: ${c.cliente?.direccion||""}`,
-14,y
-);
-
-y+=10;
-
-doc.setFont("helvetica","bold");
-
-doc.text("DESCRIPCIÓN",14,y);
-doc.text("CANT.",125,y);
-doc.text("PRECIO",145,y);
-doc.text("IMPORTE",175,y);
-
-y+=5;
-
-doc.setFont("helvetica","normal");
-
-(c.partidas||[]).forEach(p=>{
-
-if(y>265){
-
-doc.addPage();
-
-y=20;
-
-}
-
-const desc=String(p.descripcion||"");
-
-const lines=doc.splitTextToSize(desc,100);
-
-doc.text(lines,14,y);
-
-doc.text(String(p.cantidad),125,y);
-
-doc.text(moneda(p.precio),145,y);
-
-doc.text(
-moneda(
-(Number(p.cantidad)||0)*
-(Number(p.precio)||0)
-),
-175,y
-);
-
-y+=Math.max(6,lines.length*5);
-
-});
-
-y+=5;
-
-doc.line(14,y,196,y);
-
-y+=8;
-
-doc.text(
-`Subtotal: ${moneda(c.subtotal)}`,
-145,y
-);
-
-y+=6;
-
-doc.text(
-`IVA (16%): ${moneda(c.iva)}`,
-145,y
-);
-
-y+=7;
-
-doc.setFont("helvetica","bold");
-
-doc.text(
-`TOTAL: ${moneda(c.total)}`,
-145,y
-);
-
-y+=12;
-
-doc.setFont("helvetica","normal");
-
-if(c.observaciones){
-
-doc.setFont("helvetica","bold");
-
-doc.text("OBSERVACIONES",14,y);
-
-y+=6;
-
-doc.setFont("helvetica","normal");
-
-const obs=doc.splitTextToSize(
-c.observaciones,
-180
-);
-
-doc.text(obs,14,y);
-
-y+=obs.length*5+8;
-
-}
-
-if(c.estado==="Pagada"){
-
-doc.setFont("helvetica","bold");
-
-doc.text("PAGO REGISTRADO",14,y);
-
-y+=6;
-
-doc.setFont("helvetica","normal");
-
-doc.text(
-`Forma de pago: ${c.formaPago||"Sin dato"}`,
-14,y
-);
-
-y+=5;
-
-doc.text(
-`Fecha de pago: ${fechaMX(c.fechaPago)}`,
-14,y
-);
-
-y+=8;
-
-}
-
-doc.setFontSize(9);
-doc.setTextColor(100);
-
-doc.text(
-"VERASI PC · SOLUCIONES INFORMÁTICAS",
-14,287
-);
-
-doc.text(
-"Gracias por su preferencia.",
-14,292
-);
-
-return doc;
-
-}
-
 
 function exportarPDF(id){
 
-const c=cotizaciones.find(x=>x.id===id);
+    const c =
+        cotizaciones.find(x => x.id === id);
 
-if(!c)return;
+    if(!c) return;
 
-const doc=crearPDF(c);
+    const doc =
+        crearPDF(c);
 
-if(!doc)return;
-
-doc.save(
-`${c.folio}_VERASI_PC.pdf`
-);
+    doc.save(
+        `${c.folio}_VERASI_PC.pdf`
+    );
 
 }
 
 
-/* =========================
-WHATSAPP
-========================= */
-
+/* =========================================================
+   WHATSAPP
+========================================================= */
 
 async function compartirWhatsApp(id){
 
-const c=cotizaciones.find(x=>x.id===id);
+    const c =
+        cotizaciones.find(x => x.id === id);
 
-if(!c)return;
+    if(!c) return;
 
-const doc=crearPDF(c);
+    const doc =
+        crearPDF(c);
 
-if(!doc)return;
+    const blob =
+        doc.output("blob");
 
-const texto=
-`Hola, te comparto la cotización ${c.folio} de VERASI PC por ${moneda(c.total)}.`;
+    const file =
+        new File(
+            [blob],
+            `${c.folio}_VERASI_PC.pdf`,
+            {
+                type:"application/pdf"
+            }
+        );
 
-const blob=doc.output("blob");
+    const texto =
+        `Hola, te comparto la cotización ${c.folio} de VERASI PC por ${moneda(c.total)}.`;
 
-const file=new File(
-[blob],
-`${c.folio}_VERASI_PC.pdf`,
-{
-type:"application/pdf"
+    try{
+
+        if(
+            navigator.share &&
+            navigator.canShare &&
+            navigator.canShare({
+                files:[file]
+            })
+        ){
+
+            await navigator.share({
+
+                title:
+                    `Cotización ${c.folio}`,
+
+                text:texto,
+
+                files:[file]
+
+            });
+
+            return;
+
+        }
+
+    }catch(e){
+
+        if(e.name === "AbortError"){
+            return;
+        }
+
+    }
+
+    doc.save(
+        `${c.folio}_VERASI_PC.pdf`
+    );
+
+    window.open(
+        "https://wa.me/?text=" +
+        encodeURIComponent(texto),
+        "_blank"
+    );
+
 }
-);
 
-try{
 
-if(
-navigator.share &&
-navigator.canShare &&
-navigator.canShare({files:[file]})
-){
+/* =========================================================
+   COBRANZA
+========================================================= */
 
-await navigator.share({
+function todosLosMovimientos(){
 
-title:`Cotización ${c.folio}`,
+    const movimientos=[];
 
-text:texto,
+    cotizaciones.forEach(c => {
 
-files:[file]
+        const pagos =
+            obtenerPagos(c);
 
-});
+        pagos.forEach(p => {
 
-return;
+            movimientos.push({
 
-}
+                cotizacionId:c.id,
 
-}catch(e){
+                folio:c.folio,
 
-if(e.name==="AbortError"){
+                cliente:c.clienteNombre,
 
-return;
+                tipo:p.tipo,
 
-}
+                monto:Number(p.monto || 0),
 
-}
+                fecha:p.fecha,
 
-doc.save(
-`${c.folio}_VERASI_PC.pdf`
-);
+                formaPago:p.formaPago
 
-const wa=
-"https://wa.me/?text="+
-encodeURIComponent(texto);
+            });
 
-window.open(wa,"_blank");
+        });
+
+    });
+
+    return movimientos;
 
 }
 
+function datosReporte(inicio,fin){
 
-/* =========================
-PDF COBRANZA
-========================= */
+    return todosLosMovimientos()
+        .filter(m =>
+            m.fecha >= inicio &&
+            m.fecha <= fin
+        )
+        .sort((a,b) =>
+            String(a.fecha)
+            .localeCompare(String(b.fecha))
+        );
 
+}
+
+function reporteHoy(){
+
+    const hoy=fechaHoy();
+
+    document.getElementById("reporteInicio")
+        .value=hoy;
+
+    document.getElementById("reporteFin")
+        .value=hoy;
+
+    generarReporte();
+
+}
+
+function generarReporte(){
+
+    const inicio =
+        document.getElementById("reporteInicio").value;
+
+    const fin =
+        document.getElementById("reporteFin").value;
+
+    if(!inicio || !fin){
+
+        return;
+
+    }
+
+    const datos =
+        datosReporte(inicio,fin);
+
+    renderReporte(datos,inicio,fin);
+
+}
+
+function renderReporte(datos,inicio,fin){
+
+    const cont =
+        document.getElementById("resultadoReporte");
+
+    const total =
+        datos.reduce(
+            (s,x) => s + x.monto,
+            0
+        );
+
+    const efectivo =
+        datos
+            .filter(x => x.formaPago === "Efectivo")
+            .reduce((s,x) => s+x.monto,0);
+
+    const tarjeta =
+        datos
+            .filter(x => x.formaPago === "Tarjeta")
+            .reduce((s,x) => s+x.monto,0);
+
+    const transferencia =
+        datos
+            .filter(x => x.formaPago === "Transferencia")
+            .reduce((s,x) => s+x.monto,0);
+
+    cont.innerHTML = `
+
+        <h3>
+            Reporte de cobranza
+        </h3>
+
+        <div class="small">
+            Del ${esc(inicio)}
+            al ${esc(fin)}
+        </div>
+
+        <br>
+
+        <div class="stat-grid">
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Total cobrado
+                </div>
+
+                <div class="stat-value">
+                    ${moneda(total)}
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Efectivo
+                </div>
+
+                <div class="stat-value">
+                    ${moneda(efectivo)}
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Tarjeta
+                </div>
+
+                <div class="stat-value">
+                    ${moneda(tarjeta)}
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Transferencia
+                </div>
+
+                <div class="stat-value">
+                    ${moneda(transferencia)}
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        ${
+            datos.length
+            ?
+            `
+            <h3>Movimientos</h3>
+
+            <div style="overflow-x:auto;">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Folio</th>
+                            <th>Cliente</th>
+                            <th>Tipo</th>
+                            <th>Forma</th>
+                            <th>Monto</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            datos.map(x => `
+
+                                <tr>
+
+                                    <td>
+                                        ${esc(x.fecha)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(x.folio)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(x.cliente)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(x.tipo)}
+                                    </td>
+
+                                    <td>
+                                        ${esc(x.formaPago)}
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            ${moneda(x.monto)}
+                                        </strong>
+                                    </td>
+
+                                </tr>
+
+                            `).join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <br>
+
+            <button
+                class="btn btn-danger"
+                onclick="exportarReportePDF()">
+                📄 Exportar PDF
+            </button>
+            `
+            :
+            `
+            <div class="empty">
+                No hay movimientos de cobranza en este periodo.
+            </div>
+            `
+        }
+
+    `;
+
+}
+
+
+/* =========================================================
+   PDF COBRANZA
+========================================================= */
 
 function exportarReportePDF(){
 
-const lista=datosReporte();
+    const inicio =
+        document.getElementById("reporteInicio").value;
 
-if(!lista.length){
+    const fin =
+        document.getElementById("reporteFin").value;
 
-alert("No hay pagos en el periodo seleccionado.");
+    if(!inicio || !fin){
 
-return;
+        alert("Selecciona el periodo.");
+
+        return;
+
+    }
+
+    const datos =
+        datosReporte(inicio,fin);
+
+    const { jsPDF } =
+        window.jspdf;
+
+    const doc =
+        new jsPDF();
+
+    let y=18;
+
+    doc.setFontSize(20);
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "VERASI PC",
+        15,
+        y
+    );
+
+    y+=7;
+
+    doc.setFontSize(11);
+    doc.setFont("helvetica","normal");
+
+    doc.text(
+        "SOLUCIONES INFORMÁTICAS",
+        15,
+        y
+    );
+
+    y+=10;
+
+    doc.setFontSize(15);
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "REPORTE DE COBRANZA",
+        15,
+        y
+    );
+
+    y+=7;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica","normal");
+
+    doc.text(
+        `Periodo: ${inicio} al ${fin}`,
+        15,
+        y
+    );
+
+    y+=10;
+
+    const total =
+        datos.reduce(
+            (s,x)=>s+x.monto,
+            0
+        );
+
+    const efectivo =
+        datos
+            .filter(x=>x.formaPago==="Efectivo")
+            .reduce((s,x)=>s+x.monto,0);
+
+    const tarjeta =
+        datos
+            .filter(x=>x.formaPago==="Tarjeta")
+            .reduce((s,x)=>s+x.monto,0);
+
+    const transferencia =
+        datos
+            .filter(x=>x.formaPago==="Transferencia")
+            .reduce((s,x)=>s+x.monto,0);
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        `TOTAL COBRADO: ${moneda(total)}`,
+        15,
+        y
+    );
+
+    y+=6;
+
+    doc.setFont("helvetica","normal");
+
+    doc.text(
+        `Efectivo: ${moneda(efectivo)}`,
+        15,
+        y
+    );
+
+    y+=5;
+
+    doc.text(
+        `Tarjeta: ${moneda(tarjeta)}`,
+        15,
+        y
+    );
+
+    y+=5;
+
+    doc.text(
+        `Transferencia: ${moneda(transferencia)}`,
+        15,
+        y
+    );
+
+    y+=10;
+
+    doc.setFont("helvetica","bold");
+
+    doc.text(
+        "Movimientos",
+        15,
+        y
+    );
+
+    y+=7;
+
+    doc.setFontSize(8);
+
+    doc.text("Fecha",15,y);
+    doc.text("Folio",40,y);
+    doc.text("Cliente",70,y);
+    doc.text("Tipo",125,y);
+    doc.text("Forma",150,y);
+    doc.text("Monto",180,y);
+
+    y+=5;
+
+    doc.setFont("helvetica","normal");
+
+    datos.forEach(x => {
+
+        if(y > 275){
+
+            doc.addPage();
+
+            y=20;
+
+        }
+
+        doc.text(
+            String(x.fecha),
+            15,
+            y
+        );
+
+        doc.text(
+            String(x.folio),
+            40,
+            y
+        );
+
+        const cliente =
+            doc.splitTextToSize(
+                String(x.cliente || ""),
+                48
+            );
+
+        doc.text(
+            cliente,
+            70,
+            y
+        );
+
+        doc.text(
+            String(x.tipo),
+            125,
+            y
+        );
+
+        doc.text(
+            String(x.formaPago),
+            150,
+            y
+        );
+
+        doc.text(
+            moneda(x.monto),
+            180,
+            y
+        );
+
+        y += Math.max(
+            5,
+            cliente.length*4
+        );
+
+    });
+
+    doc.save(
+        `Reporte_Cobranza_${inicio}_${fin}.pdf`
+    );
 
 }
 
-if(!window.jspdf){
 
-alert("No se pudo cargar el módulo PDF.");
+/* =========================================================
+   PANEL
+========================================================= */
 
-return;
+function actualizarPanel(){
 
-}
+    document.getElementById("statClientes")
+        .textContent =
+        clientes.length;
 
-const {jsPDF}=window.jspdf;
+    document.getElementById("statCotizaciones")
+        .textContent =
+        cotizaciones.length;
 
-const doc=new jsPDF();
+    const porCobrar =
+        cotizaciones
+            .filter(c => c.estado === "Realizada")
+            .reduce(
+                (s,c) => s + saldoCotizacion(c),
+                0
+            );
 
-const desde=document.getElementById("reporteDesde").value;
-const hasta=document.getElementById("reporteHasta").value;
+    /*
+       Total cobrado histórico real:
+       suma de todos los movimientos,
+       no el total de las cotizaciones.
+    */
 
-const efectivo=lista
-.filter(c=>c.formaPago==="Efectivo")
-.reduce((s,c)=>s+Number(c.total||0),0);
+    const cobrado =
+        todosLosMovimientos()
+            .reduce(
+                (s,m) => s + m.monto,
+                0
+            );
 
-const tarjeta=lista
-.filter(c=>c.formaPago==="Tarjeta")
-.reduce((s,c)=>s+Number(c.total||0),0);
+    document.getElementById("statPorCobrar")
+        .textContent =
+        moneda(porCobrar);
 
-const transferencia=lista
-.filter(c=>c.formaPago==="Transferencia")
-.reduce((s,c)=>s+Number(c.total||0),0);
-
-const total=efectivo+tarjeta+transferencia;
-
-doc.setFontSize(20);
-doc.setFont("helvetica","bold");
-
-doc.text("VERASI PC",14,18);
-
-doc.setFontSize(11);
-doc.setFont("helvetica","normal");
-
-doc.text("SOLUCIONES INFORMÁTICAS",14,25);
-
-doc.setFontSize(16);
-doc.setFont("helvetica","bold");
-
-doc.text("REPORTE DE COBRANZA",14,38);
-
-doc.setFontSize(10);
-doc.setFont("helvetica","normal");
-
-doc.text(
-`Periodo: ${fechaMX(desde)} al ${fechaMX(hasta)}`,
-14,45
-);
-
-let y=57;
-
-doc.setFont("helvetica","bold");
-
-doc.text(
-`TOTAL COBRADO: ${moneda(total)}`,
-14,y
-);
-
-y+=7;
-
-doc.setFont("helvetica","normal");
-
-doc.text(
-`Efectivo: ${moneda(efectivo)}`,
-14,y
-);
-
-doc.text(
-`Tarjeta: ${moneda(tarjeta)}`,
-75,y
-);
-
-doc.text(
-`Transferencia: ${moneda(transferencia)}`,
-135,y
-);
-
-y+=12;
-
-doc.setFont("helvetica","bold");
-
-doc.text("Folio",14,y);
-doc.text("Cliente",40,y);
-doc.text("Fecha",110,y);
-doc.text("Forma",140,y);
-doc.text("Importe",175,y);
-
-y+=6;
-
-doc.setFont("helvetica","normal");
-
-lista.forEach(c=>{
-
-if(y>275){
-
-doc.addPage();
-
-y=20;
-
-}
-
-doc.text(
-String(c.folio||"").substring(0,15),
-14,y
-);
-
-doc.text(
-String(c.cliente?.nombre||"").substring(0,32),
-40,y
-);
-
-doc.text(
-fechaMX(c.fechaPago),
-110,y
-);
-
-doc.text(
-String(c.formaPago||"").substring(0,15),
-140,y
-);
-
-doc.text(
-moneda(c.total),
-175,y
-);
-
-y+=6;
-
-});
-
-doc.setFontSize(9);
-doc.setTextColor(100);
-
-doc.text(
-"VERASI PC · SOLUCIONES INFORMÁTICAS",
-14,292
-);
-
-doc.save(
-`Reporte_Cobranza_${desde}_${hasta}.pdf`
-);
+    document.getElementById("statCobrado")
+        .textContent =
+        moneda(cobrado);
 
 }
 
 
-/* =========================
-INICIO
-========================= */
-
+/* =========================================================
+   INICIO
+========================================================= */
 
 function iniciar(){
 
-document.getElementById("cotFecha")
-.value=fechaHoy();
+    document.getElementById("cotFecha").value =
+        fechaHoy();
 
-document.getElementById("reporteDesde")
-.value=fechaHoy();
+    document.getElementById("reporteInicio").value =
+        fechaHoy();
 
-document.getElementById("reporteHasta")
-.value=fechaHoy();
+    document.getElementById("reporteFin").value =
+        fechaHoy();
 
-prepararCotizacion();
+    llenarSelectClientes();
 
-renderClientes();
+    renderClientes();
 
-renderCotizaciones();
+    prepararCotizacion();
 
-renderCXC();
+    renderCotizaciones();
 
-renderReporte();
+    renderCXC();
 
-actualizarPanel();
+    actualizarPanel();
 
-document.getElementById("nav-inicio")
-.classList.add("active");
+    generarReporte();
 
 }
-
 
 iniciar();
 
