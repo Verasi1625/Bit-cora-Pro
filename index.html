@@ -269,6 +269,58 @@ button{
     color:#6d28d9;
 }
 
+/* ================= PENDIENTES ================= */
+
+.pending-card{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:12px;
+    background:white;
+}
+
+.pending-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.pending-title{
+    font-weight:800;
+    font-size:17px;
+}
+
+.pending-address{
+    margin-top:7px;
+    color:#374151;
+}
+
+.pending-description{
+    margin-top:10px;
+    background:#f9fafb;
+    border-radius:10px;
+    padding:10px;
+}
+
+.pending-date{
+    margin-top:10px;
+    font-weight:700;
+}
+
+.pending-overdue{
+    color:#dc2626;
+}
+
+.badge-enproceso{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.badge-entregado{
+    background:#dcfce7;
+    color:#166534;
+}
+
 .quote-card{
     border:1px solid #e5e7eb;
     border-radius:14px;
@@ -481,7 +533,8 @@ th,td{
     }
 
     .quote-top,
-    .expense-top{
+    .expense-top,
+    .pending-top{
         flex-direction:column;
     }
 
@@ -508,6 +561,10 @@ th,td{
 
     <button onclick="mostrarSeccion('cotizacion',this)">
         Cotización
+    </button>
+
+    <button onclick="mostrarSeccion('pendientes',this)">
+        📋 Pendientes
     </button>
 
     <button onclick="mostrarSeccion('historial',this)">
@@ -539,7 +596,8 @@ th,td{
         <h2>Panel de control</h2>
 
         <p class="small">
-            Control de clientes, cotizaciones, cobranza y gastos.
+            Control de clientes, cotizaciones, pendientes,
+            cobranza y gastos.
         </p>
 
     </div>
@@ -565,6 +623,18 @@ th,td{
             </div>
 
             <div class="stat-value" id="statCotizaciones">
+                0
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Pendientes
+            </div>
+
+            <div class="stat-value" id="statPendientes">
                 0
             </div>
 
@@ -786,6 +856,78 @@ th,td{
             Limpiar
 
         </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PENDIENTES ================= -->
+
+<section id="pendientes">
+
+    <div class="card" id="pendientesForm">
+
+        <h2>📋 Nuevo pendiente</h2>
+
+        <p class="small">
+            Registra trabajos o entregas pendientes para
+            llevar control de lo que tienes por realizar.
+        </p>
+
+        <label>Nombre del cliente</label>
+
+        <input
+            id="pendienteClienteNombre"
+            placeholder="Nombre del cliente">
+
+        <label>Dirección</label>
+
+        <textarea
+            id="pendienteDireccion"
+            placeholder="Dirección donde se realizará o entregará el trabajo"></textarea>
+
+        <label>Fecha de entrega</label>
+
+        <input
+            id="pendienteFechaEntrega"
+            type="date">
+
+        <label>Descripción del pendiente</label>
+
+        <textarea
+            id="pendienteDescripcion"
+            placeholder="Ej. Instalar cámaras, entregar equipo, configurar red..."></textarea>
+
+        <br>
+
+        <button
+            id="btnGuardarPendiente"
+            class="btn btn-success"
+            onclick="guardarPendiente()">
+
+            📋 Guardar pendiente
+
+        </button>
+
+        <button
+            id="btnCancelarEdicionPendiente"
+            class="btn btn-light"
+            onclick="cancelarEdicionPendiente()"
+            style="display:none;">
+
+            Cancelar edición
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Trabajos pendientes</h2>
+
+        <div id="listaPendientes"></div>
 
     </div>
 
@@ -1224,13 +1366,17 @@ th,td{
    CONFIGURACIÓN
 ========================================================= */
 
-const KEY_CLIENTES = "bitacora_clientes";
+const KEY_CLIENTES =
+    "bitacora_clientes";
 
 const KEY_COTIZACIONES =
     "bitacora_cotizaciones";
 
 const KEY_GASTOS =
     "bitacora_gastos";
+
+const KEY_PENDIENTES =
+    "bitacora_pendientes";
 
 
 let clientes =
@@ -1251,11 +1397,19 @@ let gastos =
     );
 
 
+let pendientes =
+    JSON.parse(
+        localStorage.getItem(KEY_PENDIENTES) || "[]"
+    );
+
+
 let partidasActuales = [];
 
 let cotizacionPagoActual = null;
 
 let tipoPagoActual = "Pago";
+
+let pendienteEditandoId = null;
 
 
 /* =========================================================
@@ -1277,6 +1431,11 @@ function guardarDatos(){
     localStorage.setItem(
         KEY_GASTOS,
         JSON.stringify(gastos)
+    );
+
+    localStorage.setItem(
+        KEY_PENDIENTES,
+        JSON.stringify(pendientes)
     );
 
 }
@@ -1408,6 +1567,13 @@ function mostrarSeccion(id, boton){
         actualizarCotizacionesGasto();
 
         renderGastos();
+
+    }
+
+
+    if(id === "pendientes"){
+
+        renderPendientes();
 
     }
 
@@ -2144,6 +2310,633 @@ function limpiarCotizacion(){
 
 
     renderPartidas();
+
+}
+
+
+/* =========================================================
+   PENDIENTES
+========================================================= */
+
+function guardarPendiente(){
+
+    const clienteNombre =
+        document
+        .getElementById("pendienteClienteNombre")
+        .value
+        .trim();
+
+
+    const direccion =
+        document
+        .getElementById("pendienteDireccion")
+        .value
+        .trim();
+
+
+    const fechaEntrega =
+        document
+        .getElementById("pendienteFechaEntrega")
+        .value;
+
+
+    const descripcion =
+        document
+        .getElementById("pendienteDescripcion")
+        .value
+        .trim();
+
+
+    if(!clienteNombre){
+
+        alert(
+            "Escribe el nombre del cliente."
+        );
+
+        return;
+
+    }
+
+
+    if(!direccion){
+
+        alert(
+            "Escribe la dirección."
+        );
+
+        return;
+
+    }
+
+
+    if(!fechaEntrega){
+
+        alert(
+            "Selecciona la fecha de entrega."
+        );
+
+        return;
+
+    }
+
+
+    if(!descripcion){
+
+        alert(
+            "Escribe qué trabajo o entrega está pendiente."
+        );
+
+        return;
+
+    }
+
+
+    if(pendienteEditandoId){
+
+        const pendiente =
+            pendientes.find(
+                p =>
+                    p.id ===
+                    pendienteEditandoId
+            );
+
+
+        if(pendiente){
+
+            pendiente.clienteNombre =
+                clienteNombre;
+
+            pendiente.direccion =
+                direccion;
+
+            pendiente.fechaEntrega =
+                fechaEntrega;
+
+            pendiente.descripcion =
+                descripcion;
+
+        }
+
+        alert(
+            "Pendiente actualizado correctamente."
+        );
+
+    }else{
+
+        const pendiente = {
+
+            id:idUnico(),
+
+            clienteNombre,
+
+            direccion,
+
+            fechaEntrega,
+
+            descripcion,
+
+            estado:"Pendiente",
+
+            creado:
+                fechaHoy()
+
+        };
+
+
+        pendientes.push(
+            pendiente
+        );
+
+
+        alert(
+            "Pendiente guardado correctamente."
+        );
+
+    }
+
+
+    guardarDatos();
+
+    limpiarPendiente();
+
+    renderPendientes();
+
+    actualizarPanel();
+
+}
+
+
+function limpiarPendiente(){
+
+    document
+        .getElementById(
+            "pendienteClienteNombre"
+        )
+        .value="";
+
+
+    document
+        .getElementById(
+            "pendienteDireccion"
+        )
+        .value="";
+
+
+    document
+        .getElementById(
+            "pendienteFechaEntrega"
+        )
+        .value =
+        fechaHoy();
+
+
+    document
+        .getElementById(
+            "pendienteDescripcion"
+        )
+        .value="";
+
+
+    pendienteEditandoId =
+        null;
+
+
+    document
+        .getElementById(
+            "btnGuardarPendiente"
+        )
+        .textContent =
+        "📋 Guardar pendiente";
+
+
+    document
+        .getElementById(
+            "btnCancelarEdicionPendiente"
+        )
+        .style
+        .display =
+        "none";
+
+}
+
+
+function cancelarEdicionPendiente(){
+
+    limpiarPendiente();
+
+}
+
+
+function editarPendiente(id){
+
+    const pendiente =
+        pendientes.find(
+            p =>
+                p.id === id
+        );
+
+
+    if(!pendiente) return;
+
+
+    pendienteEditandoId =
+        id;
+
+
+    document
+        .getElementById(
+            "pendienteClienteNombre"
+        )
+        .value =
+        pendiente.clienteNombre || "";
+
+
+    document
+        .getElementById(
+            "pendienteDireccion"
+        )
+        .value =
+        pendiente.direccion || "";
+
+
+    document
+        .getElementById(
+            "pendienteFechaEntrega"
+        )
+        .value =
+        pendiente.fechaEntrega || fechaHoy();
+
+
+    document
+        .getElementById(
+            "pendienteDescripcion"
+        )
+        .value =
+        pendiente.descripcion || "";
+
+
+    document
+        .getElementById(
+            "btnGuardarPendiente"
+        )
+        .textContent =
+        "💾 Actualizar pendiente";
+
+
+    document
+        .getElementById(
+            "btnCancelarEdicionPendiente"
+        )
+        .style
+        .display =
+        "inline-block";
+
+
+    const botonPendientes =
+        [...document.querySelectorAll("nav button")]
+        .find(
+            b =>
+                b.textContent.includes(
+                    "Pendientes"
+                )
+        );
+
+
+    mostrarSeccion(
+        "pendientes",
+        botonPendientes
+    );
+
+
+    document
+        .getElementById(
+            "pendientesForm"
+        )
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+}
+
+
+function cambiarEstadoPendiente(
+    id,
+    estado
+){
+
+    const pendiente =
+        pendientes.find(
+            p =>
+                p.id === id
+        );
+
+
+    if(!pendiente) return;
+
+
+    pendiente.estado =
+        estado;
+
+
+    guardarDatos();
+
+    renderPendientes();
+
+    actualizarPanel();
+
+}
+
+
+function eliminarPendiente(id){
+
+    const pendiente =
+        pendientes.find(
+            p =>
+                p.id === id
+        );
+
+
+    if(!pendiente) return;
+
+
+    const confirmar =
+        confirm(
+            `¿Eliminar el pendiente de "${pendiente.clienteNombre}"?`
+        );
+
+
+    if(!confirmar) return;
+
+
+    pendientes =
+        pendientes.filter(
+            p =>
+                p.id !== id
+        );
+
+
+    guardarDatos();
+
+    renderPendientes();
+
+    actualizarPanel();
+
+}
+
+
+function renderPendientes(){
+
+    const cont =
+        document
+        .getElementById(
+            "listaPendientes"
+        );
+
+
+    if(!cont) return;
+
+
+    if(!pendientes.length){
+
+        cont.innerHTML =
+            `<div class="empty">
+
+                📋 No tienes trabajos pendientes.
+
+            </div>`;
+
+        return;
+
+    }
+
+
+    const ordenados =
+        [...pendientes]
+        .sort((a,b) => {
+
+            const aEntregado =
+                a.estado ===
+                "Entregado";
+
+            const bEntregado =
+                b.estado ===
+                "Entregado";
+
+
+            if(
+                aEntregado !==
+                bEntregado
+            ){
+
+                return aEntregado
+                    ? 1
+                    : -1;
+
+            }
+
+
+            return String(
+                a.fechaEntrega || ""
+            )
+            .localeCompare(
+                String(
+                    b.fechaEntrega || ""
+                )
+            );
+
+        });
+
+
+    cont.innerHTML =
+        ordenados
+        .map(p => {
+
+            const vencido =
+                p.estado !== "Entregado" &&
+                p.fechaEntrega &&
+                p.fechaEntrega <
+                fechaHoy();
+
+
+            let badge =
+                "badge-pendiente";
+
+
+            if(
+                p.estado ===
+                "En proceso"
+            ){
+
+                badge =
+                    "badge-enproceso";
+
+            }
+
+
+            if(
+                p.estado ===
+                "Entregado"
+            ){
+
+                badge =
+                    "badge-entregado";
+
+            }
+
+
+            return `
+
+                <div class="pending-card">
+
+                    <div class="pending-top">
+
+                        <div>
+
+                            <div class="pending-title">
+                                ${esc(p.clienteNombre)}
+                            </div>
+
+                            <div class="small">
+                                📍 ${esc(p.direccion)}
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <span class="badge ${badge}">
+                                ${esc(p.estado)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="pending-date ${
+                            vencido
+                            ? "pending-overdue"
+                            : ""
+                        }">
+
+                        ${
+                            vencido
+                            ? "⚠️ Vencido:"
+                            : "📅 Fecha de entrega:"
+                        }
+
+                        ${esc(p.fechaEntrega)}
+
+                    </div>
+
+
+                    <div class="pending-description">
+
+                        <strong>
+                            Trabajo:
+                        </strong>
+
+                        <div style="margin-top:5px;">
+
+                            ${esc(p.descripcion)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        ${
+                            p.estado ===
+                            "Pendiente"
+                            ?
+                            `
+                            <button
+                                class="btn btn-primary"
+                                onclick="cambiarEstadoPendiente(
+                                    '${p.id}',
+                                    'En proceso'
+                                )">
+
+                                🔧 En proceso
+
+                            </button>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        ${
+                            p.estado ===
+                            "En proceso"
+                            ?
+                            `
+                            <button
+                                class="btn btn-success"
+                                onclick="cambiarEstadoPendiente(
+                                    '${p.id}',
+                                    'Entregado'
+                                )">
+
+                                ✓ Entregado
+
+                            </button>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        ${
+                            p.estado ===
+                            "Entregado"
+                            ?
+                            `
+                            <button
+                                class="btn btn-warning"
+                                onclick="cambiarEstadoPendiente(
+                                    '${p.id}',
+                                    'Pendiente'
+                                )">
+
+                                ↩ Reabrir
+
+                            </button>
+                            `
+                            :
+                            ""
+                        }
+
+
+                        <button
+                            class="btn btn-dark"
+                            onclick="editarPendiente('${p.id}')">
+
+                            ✏️ Editar
+
+                        </button>
+
+
+                        <button
+                            class="btn btn-danger"
+                            onclick="eliminarPendiente('${p.id}')">
+
+                            🗑️ Eliminar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
 
 }
 
@@ -4004,10 +4797,6 @@ function verCotizacion(id){
     `;
 
 
-    /* =====================================================
-       GASTOS DE ESTA COTIZACIÓN
-    ===================================================== */
-
     html += `
 
         <hr>
@@ -5546,6 +6335,22 @@ function actualizarPanel(){
         cotizaciones.length;
 
 
+    const pendientesActivos =
+        pendientes.filter(
+            p =>
+                p.estado !==
+                "Entregado"
+        ).length;
+
+
+    document
+        .getElementById(
+            "statPendientes"
+        )
+        .textContent =
+        pendientesActivos;
+
+
     const porCobrar =
         cotizaciones
         .filter(
@@ -5652,6 +6457,14 @@ function iniciar(){
         fechaHoy();
 
 
+    document
+        .getElementById(
+            "pendienteFechaEntrega"
+        )
+        .value =
+        fechaHoy();
+
+
     llenarSelectClientes();
 
     llenarSelectClientesGastos();
@@ -5659,6 +6472,8 @@ function iniciar(){
     renderClientes();
 
     prepararCotizacion();
+
+    renderPendientes();
 
     renderCotizaciones();
 
