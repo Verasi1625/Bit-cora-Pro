@@ -13,10 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -31,19 +28,11 @@ color:#fff;
 padding:18px 16px;
 position:sticky;
 top:0;
-z-index:10;
+z-index:20;
 }
 
-header h1{
-margin:0;
-font-size:21px;
-}
-
-header p{
-margin:4px 0 0;
-color:#cbd5e1;
-font-size:13px;
-}
+header h1{margin:0;font-size:21px}
+header p{margin:4px 0 0;color:#cbd5e1;font-size:13px}
 
 nav{
 display:flex;
@@ -54,7 +43,7 @@ background:#fff;
 border-bottom:1px solid #e2e8f0;
 position:sticky;
 top:75px;
-z-index:9;
+z-index:19;
 }
 
 nav button{
@@ -78,13 +67,8 @@ max-width:1100px;
 margin:auto;
 }
 
-section{
-display:none;
-}
-
-section.active{
-display:block;
-}
+section{display:none}
+section.active{display:block}
 
 .card{
 background:#fff;
@@ -94,14 +78,8 @@ margin-bottom:14px;
 box-shadow:0 2px 8px rgba(15,23,42,.06);
 }
 
-h2{
-margin:0 0 14px;
-font-size:20px;
-}
-
-h3{
-margin:0 0 10px;
-}
+h2{margin:0 0 14px;font-size:20px}
+h3{margin:0 0 10px}
 
 .grid{
 display:grid;
@@ -117,9 +95,7 @@ margin-bottom:5px;
 color:#475569;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
 width:100%;
 padding:11px;
 border:1px solid #cbd5e1;
@@ -133,9 +109,7 @@ min-height:90px;
 resize:vertical;
 }
 
-button{
-cursor:pointer;
-}
+button{cursor:pointer}
 
 .btn{
 border:0;
@@ -144,35 +118,12 @@ padding:10px 13px;
 font-weight:700;
 }
 
-.btn-primary{
-background:#0f172a;
-color:#fff;
-}
-
-.btn-secondary{
-background:#e2e8f0;
-color:#0f172a;
-}
-
-.btn-success{
-background:#16a34a;
-color:#fff;
-}
-
-.btn-warning{
-background:#f59e0b;
-color:#fff;
-}
-
-.btn-danger{
-background:#dc2626;
-color:#fff;
-}
-
-.btn-info{
-background:#0284c7;
-color:#fff;
-}
+.btn-primary{background:#0f172a;color:#fff}
+.btn-secondary{background:#e2e8f0;color:#0f172a}
+.btn-success{background:#16a34a;color:#fff}
+.btn-warning{background:#f59e0b;color:#fff}
+.btn-danger{background:#dc2626;color:#fff}
+.btn-info{background:#0284c7;color:#fff}
 
 .actions{
 display:flex;
@@ -181,13 +132,19 @@ gap:7px;
 margin-top:12px;
 }
 
+.client-select-row{
+display:grid;
+grid-template-columns:1fr auto;
+gap:8px;
+align-items:end;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
 }
 
-th,
-td{
+th,td{
 padding:9px 7px;
 border-bottom:1px solid #e2e8f0;
 text-align:left;
@@ -195,13 +152,9 @@ font-size:13px;
 vertical-align:top;
 }
 
-th{
-background:#f8fafc;
-}
+th{background:#f8fafc}
 
-.table-wrap{
-overflow-x:auto;
-}
+.table-wrap{overflow-x:auto}
 
 .badge{
 display:inline-block;
@@ -211,25 +164,10 @@ font-size:11px;
 font-weight:800;
 }
 
-.pendiente{
-background:#fef3c7;
-color:#92400e;
-}
-
-.aceptada{
-background:#dbeafe;
-color:#1e40af;
-}
-
-.realizada{
-background:#dcfce7;
-color:#166534;
-}
-
-.pagada{
-background:#ede9fe;
-color:#6d28d9;
-}
+.pendiente{background:#fef3c7;color:#92400e}
+.aceptada{background:#dbeafe;color:#1e40af}
+.realizada{background:#dcfce7;color:#166534}
+.pagada{background:#ede9fe;color:#6d28d9}
 
 .stat{
 background:#fff;
@@ -257,18 +195,6 @@ align-items:end;
 margin-bottom:8px;
 }
 
-@media(max-width:700px){
-
-.item-row{
-grid-template-columns:1fr 1fr;
-}
-
-.item-row .wide{
-grid-column:1/-1;
-}
-
-}
-
 .muted{
 color:#64748b;
 font-size:13px;
@@ -286,53 +212,99 @@ text-align:center;
 color:#64748b;
 }
 
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(15,23,42,.65);
+z-index:100;
+padding:15px;
+overflow:auto;
+}
+
+.modal.show{
+display:block;
+}
+
+.modal-box{
+background:#fff;
+max-width:700px;
+margin:30px auto;
+border-radius:16px;
+padding:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.detail-title{
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:flex-start;
+margin-bottom:15px;
+}
+
+.detail-line{
+padding:8px 0;
+border-bottom:1px solid #e2e8f0;
+}
+
+.detail-total{
+font-size:22px;
+font-weight:800;
+text-align:right;
+margin-top:15px;
+}
+
+@media(max-width:700px){
+
+.item-row{
+grid-template-columns:1fr 1fr;
+}
+
+.item-row .wide{
+grid-column:1/-1;
+}
+
+.client-select-row{
+grid-template-columns:1fr;
+}
+
+.modal-box{
+margin:10px auto;
+}
+
+}
+
+@media print{
+nav,header{display:none}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-
 <h1>VERASI PC</h1>
-
-<p>
-SOLUCIONES INFORMÁTICAS · Bitácora Pro - Control Verasi
-</p>
-
+<p>SOLUCIONES INFORMÁTICAS · Bitácora Pro - Control Verasi</p>
 </header>
-
 
 <nav>
 
-<button id="nav-inicio" onclick="mostrar('inicio')">
-Inicio
-</button>
+<button id="nav-inicio" onclick="mostrar('inicio')">Inicio</button>
 
-<button id="nav-clientes" onclick="mostrar('clientes')">
-Clientes
-</button>
+<button id="nav-clientes" onclick="mostrar('clientes')">Clientes</button>
 
-<button id="nav-cotizacion" onclick="mostrar('cotizacion')">
-Cotización
-</button>
+<button id="nav-cotizacion" onclick="mostrar('cotizacion')">Cotización</button>
 
-<button id="nav-historial" onclick="mostrar('historial')">
-Historial
-</button>
+<button id="nav-historial" onclick="mostrar('historial')">Historial</button>
 
-<button id="nav-cxc" onclick="mostrar('cxc')">
-Cuentas por cobrar
-</button>
+<button id="nav-cxc" onclick="mostrar('cxc')">Cuentas por cobrar</button>
 
-<button id="nav-cobranza" onclick="mostrar('cobranza')">
-Cobranza
-</button>
+<button id="nav-cobranza" onclick="mostrar('cobranza')">Cobranza</button>
 
 </nav>
 
-
 <main>
-
 
 <!-- INICIO -->
 
@@ -340,69 +312,34 @@ Cobranza
 
 <div class="card">
 
-<h2>
-Panel principal
-</h2>
+<h2>Panel principal</h2>
 
 <div class="grid">
 
 <div class="stat">
-
-<small>
-Clientes
-</small>
-
-<strong id="totalClientes">
-0
-</strong>
-
+<small>Clientes</small>
+<strong id="totalClientes">0</strong>
 </div>
-
 
 <div class="stat">
-
-<small>
-Cotizaciones
-</small>
-
-<strong id="totalCotizaciones">
-0
-</strong>
-
+<small>Cotizaciones</small>
+<strong id="totalCotizaciones">0</strong>
 </div>
-
 
 <div class="stat">
-
-<small>
-Por cobrar
-</small>
-
-<strong id="totalCobrar">
-$0.00
-</strong>
-
+<small>Por cobrar</small>
+<strong id="totalCobrar">$0.00</strong>
 </div>
-
 
 <div class="stat">
-
-<small>
-Total cobrado
-</small>
-
-<strong id="totalCobrado">
-$0.00
-</strong>
-
+<small>Total cobrado</small>
+<strong id="totalCobrado">$0.00</strong>
 </div>
 
 </div>
-
 </div>
 
 </section>
-
 
 
 <!-- CLIENTES -->
@@ -411,87 +348,49 @@ $0.00
 
 <div class="card">
 
-<h2>
-Clientes
-</h2>
+<h2>Clientes</h2>
 
 <div class="grid">
 
 <div>
-
-<label>
-Nombre / Razón social
-</label>
-
+<label>Nombre / Razón social</label>
 <input id="clienteNombre">
-
 </div>
 
-
 <div>
-
-<label>
-Teléfono
-</label>
-
+<label>Teléfono</label>
 <input id="clienteTelefono" type="tel">
-
 </div>
 
-
 <div>
-
-<label>
-Correo
-</label>
-
+<label>Correo</label>
 <input id="clienteCorreo" type="email">
-
 </div>
-
 
 <div>
-
-<label>
-Dirección
-</label>
-
+<label>Dirección</label>
 <input id="clienteDireccion">
-
 </div>
 
 </div>
-
 
 <div class="actions">
 
-<button
-class="btn btn-primary"
-onclick="guardarCliente()">
-
+<button class="btn btn-primary" onclick="guardarCliente()">
 Guardar cliente
-
 </button>
 
-
-<button
-class="btn btn-secondary"
-onclick="limpiarCliente()">
-
+<button class="btn btn-secondary" onclick="limpiarCliente()">
 Limpiar
-
 </button>
 
 </div>
 
 </div>
-
 
 <div class="card">
 
-<h3>
-Clientes registrados
-</h3>
+<h3>Clientes registrados</h3>
 
 <div id="tablaClientes"></div>
 
@@ -500,36 +399,43 @@ Clientes registrados
 </section>
 
 
-
 <!-- COTIZACION -->
 
 <section id="cotizacion">
 
 <div class="card">
 
-<h2>
-Nueva cotización
-</h2>
-
+<h2>Nueva cotización</h2>
 
 <div class="grid">
 
 <div>
 
-<label>
-Cliente
-</label>
+<label>Cliente</label>
 
-<select id="cotCliente"></select>
+<div class="client-select-row">
+
+<select id="cotCliente">
+<option value="">Selecciona un cliente</option>
+</select>
+
+<button
+type="button"
+class="btn btn-info"
+onclick="nuevoClienteDesdeCotizacion()">
+
++ Nuevo cliente
+
+</button>
+
+</div>
 
 </div>
 
 
 <div>
 
-<label>
-Fecha
-</label>
+<label>Fecha</label>
 
 <input id="cotFecha" type="date">
 
@@ -538,14 +444,9 @@ Fecha
 
 <div>
 
-<label>
-Vigencia (días)
-</label>
+<label>Vigencia (días)</label>
 
-<input
-id="cotVigencia"
-type="number"
-value="15">
+<input id="cotVigencia" type="number" value="15">
 
 </div>
 
@@ -556,9 +457,7 @@ value="15">
 Partidas
 </h3>
 
-
 <div id="partidas"></div>
-
 
 <div class="actions">
 
@@ -579,9 +478,7 @@ style="margin-top:15px">
 
 <div>
 
-<label>
-Observaciones
-</label>
+<label>Observaciones</label>
 
 <textarea id="cotObservaciones"></textarea>
 
@@ -593,35 +490,18 @@ class="card"
 style="margin:0;background:#f8fafc">
 
 <div>
-
 Subtotal:
-
-<strong id="cotSubtotal">
-$0.00
-</strong>
-
+<strong id="cotSubtotal">$0.00</strong>
 </div>
-
 
 <div>
-
 IVA (16%):
-
-<strong id="cotIVA">
-$0.00
-</strong>
-
+<strong id="cotIVA">$0.00</strong>
 </div>
 
-
 <div class="total-box">
-
 Total:
-
-<span id="cotTotal">
-$0.00
-</span>
-
+<span id="cotTotal">$0.00</span>
 </div>
 
 </div>
@@ -639,7 +519,6 @@ Guardar cotización
 
 </button>
 
-
 <button
 class="btn btn-secondary"
 onclick="limpiarCotizacion()">
@@ -655,16 +534,13 @@ Limpiar
 </section>
 
 
-
 <!-- HISTORIAL -->
 
 <section id="historial">
 
 <div class="card">
 
-<h2>
-Historial de cotizaciones
-</h2>
+<h2>Historial de cotizaciones</h2>
 
 <div id="tablaCotizaciones"></div>
 
@@ -673,16 +549,13 @@ Historial de cotizaciones
 </section>
 
 
-
 <!-- CXC -->
 
 <section id="cxc">
 
 <div class="card">
 
-<h2>
-Cuentas por cobrar
-</h2>
+<h2>Cuentas por cobrar</h2>
 
 <p class="muted">
 
@@ -700,16 +573,13 @@ Al registrar el pago pasan a Cobranza.
 </section>
 
 
-
 <!-- COBRANZA -->
 
 <section id="cobranza">
 
 <div class="card">
 
-<h2>
-Cobranza / pagos
-</h2>
+<h2>Cobranza / pagos</h2>
 
 <p class="muted">
 
@@ -717,36 +587,19 @@ Los pagos registrados permanecen en el historial aunque la cuenta ya esté pagad
 
 </p>
 
-
 <div class="grid">
 
 <div>
-
-<label>
-Desde
-</label>
-
-<input
-id="reporteDesde"
-type="date">
-
+<label>Desde</label>
+<input id="reporteDesde" type="date">
 </div>
-
 
 <div>
-
-<label>
-Hasta
-</label>
-
-<input
-id="reporteHasta"
-type="date">
-
+<label>Hasta</label>
+<input id="reporteHasta" type="date">
 </div>
 
 </div>
-
 
 <div class="actions">
 
@@ -758,7 +611,6 @@ Generar reporte
 
 </button>
 
-
 <button
 class="btn btn-secondary"
 onclick="reporteHoy()">
@@ -766,7 +618,6 @@ onclick="reporteHoy()">
 Reporte de hoy
 
 </button>
-
 
 <button
 class="btn btn-info"
@@ -778,51 +629,137 @@ Exportar PDF
 
 </div>
 
+<div id="resumenCobranza" style="margin-top:15px"></div>
 
-<div
-id="resumenCobranza"
-style="margin-top:15px">
-</div>
-
-
-<div
-id="tablaCobranza"
-style="margin-top:15px">
-</div>
+<div id="tablaCobranza" style="margin-top:15px"></div>
 
 </div>
 
 </section>
 
-
 </main>
 
+
+<!-- MODAL DETALLE -->
+
+<div id="modalDetalle" class="modal">
+
+<div class="modal-box">
+
+<div class="detail-title">
+
+<div>
+<h2 id="detalleTitulo">Detalle de cotización</h2>
+</div>
+
+<button
+class="btn btn-secondary"
+onclick="cerrarDetalle()">
+
+Cerrar
+
+</button>
+
+</div>
+
+<div id="detalleContenido"></div>
+
+<div class="actions">
+
+<button
+class="btn btn-primary"
+id="detallePDF">
+
+📄 Exportar PDF
+
+</button>
+
+<button
+class="btn btn-success"
+id="detalleWhatsApp">
+
+📲 WhatsApp
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MODAL NUEVO CLIENTE -->
+
+<div id="modalCliente" class="modal">
+
+<div class="modal-box">
+
+<h2>Nuevo cliente</h2>
+
+<div class="grid">
+
+<div>
+<label>Nombre / Razón social</label>
+<input id="nuevoClienteNombre">
+</div>
+
+<div>
+<label>Teléfono</label>
+<input id="nuevoClienteTelefono" type="tel">
+</div>
+
+<div>
+<label>Correo</label>
+<input id="nuevoClienteCorreo" type="email">
+</div>
+
+<div>
+<label>Dirección</label>
+<input id="nuevoClienteDireccion">
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn btn-primary"
+onclick="guardarClienteDesdeCotizacion()">
+
+Guardar cliente
+
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="cerrarModalCliente()">
+
+Cancelar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 
 <script>
 
+const STORAGE_CLIENTES="bitacora_clientes";
+const STORAGE_COTIZACIONES="bitacora_cotizaciones";
 
-const STORAGE_CLIENTES =
-"bitacora_clientes";
-
-const STORAGE_COTIZACIONES =
-"bitacora_cotizaciones";
-
-
-let clientes =
-JSON.parse(
-localStorage.getItem(STORAGE_CLIENTES) || "[]"
+let clientes=JSON.parse(
+localStorage.getItem(STORAGE_CLIENTES)||"[]"
 );
 
-
-let cotizaciones =
-JSON.parse(
-localStorage.getItem(STORAGE_COTIZACIONES) || "[]"
+let cotizaciones=JSON.parse(
+localStorage.getItem(STORAGE_COTIZACIONES)||"[]"
 );
 
-
-let partidas = [];
-
+let partidas=[];
 
 
 function guardarDatos(){
@@ -840,7 +777,6 @@ JSON.stringify(cotizaciones)
 }
 
 
-
 function moneda(n){
 
 return new Intl.NumberFormat(
@@ -854,110 +790,74 @@ currency:"MXN"
 }
 
 
-
 function fechaHoy(){
 
-const d = new Date();
+const d=new Date();
 
 return d.getFullYear()
-+"-"
-+String(d.getMonth()+1).padStart(2,"0")
-+"-"
-+String(d.getDate()).padStart(2,"0");
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
 
 }
 
 
-
 function fechaMX(f){
 
-if(!f)
-return "";
+if(!f)return "";
 
 const p=String(f).split("-");
 
-if(p.length!==3)
-return f;
+if(p.length!==3)return f;
 
 return p[2]+"/"+p[1]+"/"+p[0];
 
 }
 
 
-
 function escapeHTML(v){
 
-return String(v ?? "").replace(
+return String(v??"").replace(
 /[&<>"']/g,
 m=>({
-
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-
 }[m])
 );
 
 }
 
 
-
 function mostrar(id){
 
-document
-.querySelectorAll("section")
-.forEach(
-s=>s.classList.remove("active")
-);
+document.querySelectorAll("section")
+.forEach(s=>s.classList.remove("active"));
 
-
-document
-.getElementById(id)
+document.getElementById(id)
 .classList.add("active");
 
+document.querySelectorAll("nav button")
+.forEach(b=>b.classList.remove("active"));
 
-document
-.querySelectorAll("nav button")
-.forEach(
-b=>b.classList.remove("active")
-);
+const btn=document.getElementById("nav-"+id);
 
+if(btn)btn.classList.add("active");
 
-const btn=
-document.getElementById(
-"nav-"+id
-);
+if(id==="clientes")renderClientes();
 
+if(id==="cotizacion")prepararCotizacion();
 
-if(btn)
-btn.classList.add("active");
+if(id==="historial")renderCotizaciones();
 
-
-if(id==="clientes")
-renderClientes();
-
-
-if(id==="cotizacion")
-prepararCotizacion();
-
-
-if(id==="historial")
-renderCotizaciones();
-
-
-if(id==="cxc")
-renderCXC();
-
+if(id==="cxc")renderCXC();
 
 if(id==="cobranza"){
 
-if(
-!document.getElementById(
-"reporteDesde"
-).value
-){
+if(!document.getElementById("reporteDesde").value){
 
 reporteHoy();
 
@@ -969,110 +869,76 @@ generarReporte();
 
 }
 
-
 actualizarPanel();
 
 }
 
 
-
 function actualizarPanel(){
 
-document.getElementById(
-"totalClientes"
-).textContent=
-clientes.length;
+document.getElementById("totalClientes")
+.textContent=clientes.length;
 
+document.getElementById("totalCotizaciones")
+.textContent=cotizaciones.length;
 
-document.getElementById(
-"totalCotizaciones"
-).textContent=
-cotizaciones.length;
+const cobrar=cotizaciones
+.filter(c=>c.estado==="Realizada")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
+const cobrado=cotizaciones
+.filter(c=>c.estado==="Pagada")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
-const cobrar=
-cotizaciones
-.filter(
-c=>c.estado==="Realizada"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
+document.getElementById("totalCobrar")
+.textContent=moneda(cobrar);
 
-
-const cobrado=
-cotizaciones
-.filter(
-c=>c.estado==="Pagada"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
-
-
-document.getElementById(
-"totalCobrar"
-).textContent=
-moneda(cobrar);
-
-
-document.getElementById(
-"totalCobrado"
-).textContent=
-moneda(cobrado);
+document.getElementById("totalCobrado")
+.textContent=moneda(cobrado);
 
 }
 
 
+/* =========================
+CLIENTES
+========================= */
+
 
 function guardarCliente(){
 
-const nombre=
-document
+const nombre=document
 .getElementById("clienteNombre")
-.value
-.trim();
-
+.value.trim();
 
 if(!nombre){
 
-alert(
-"Escribe el nombre del cliente."
-);
+alert("Escribe el nombre del cliente.");
 
 return;
 
 }
 
-
-clientes.push({
+const nuevo={
 
 id:Date.now(),
 
-nombre,
+nombre:nombre,
 
-telefono:
-document
+telefono:document
 .getElementById("clienteTelefono")
-.value
-.trim(),
+.value.trim(),
 
-correo:
-document
+correo:document
 .getElementById("clienteCorreo")
-.value
-.trim(),
+.value.trim(),
 
-direccion:
-document
+direccion:document
 .getElementById("clienteDireccion")
-.value
-.trim()
+.value.trim()
 
-});
+};
 
+clientes.push(nuevo);
 
 guardarDatos();
 
@@ -1084,13 +950,9 @@ llenarSelectClientes();
 
 actualizarPanel();
 
-
-alert(
-"Cliente guardado correctamente."
-);
+alert("Cliente guardado correctamente.");
 
 }
-
 
 
 function limpiarCliente(){
@@ -1101,23 +963,16 @@ function limpiarCliente(){
 "clienteCorreo",
 "clienteDireccion"
 ]
-.forEach(
-id=>{
+.forEach(id=>{
 document.getElementById(id).value="";
-}
-);
+});
 
 }
-
 
 
 function renderClientes(){
 
-const el=
-document.getElementById(
-"tablaClientes"
-);
-
+const el=document.getElementById("tablaClientes");
 
 if(!clientes.length){
 
@@ -1128,22 +983,19 @@ return;
 
 }
 
+el.innerHTML=`
 
-el.innerHTML=
-
-`<div class="table-wrap">
+<div class="table-wrap">
 
 <table>
 
 <thead>
 
 <tr>
-
 <th>Cliente</th>
 <th>Teléfono</th>
 <th>Correo</th>
 <th>Dirección</th>
-
 </tr>
 
 </thead>
@@ -1154,21 +1006,13 @@ ${clientes.map(c=>`
 
 <tr>
 
-<td>
-<b>${escapeHTML(c.nombre)}</b>
-</td>
+<td><b>${escapeHTML(c.nombre)}</b></td>
 
-<td>
-${escapeHTML(c.telefono)}
-</td>
+<td>${escapeHTML(c.telefono)}</td>
 
-<td>
-${escapeHTML(c.correo)}
-</td>
+<td>${escapeHTML(c.correo)}</td>
 
-<td>
-${escapeHTML(c.direccion)}
-</td>
+<td>${escapeHTML(c.direccion)}</td>
 
 </tr>
 
@@ -1178,126 +1022,194 @@ ${escapeHTML(c.direccion)}
 
 </table>
 
-</div>`;
+</div>
+
+`;
 
 }
-
 
 
 function llenarSelectClientes(){
 
-const select=
-document.getElementById(
-"cotCliente"
-);
+const select=document.getElementById("cotCliente");
 
+const actual=select.value;
 
 select.innerHTML=
 '<option value="">Selecciona un cliente</option>'
 +
-clientes
-.map(
-c=>
-`<option value="${c.id}">
+clientes.map(c=>`
+
+<option value="${c.id}">
 ${escapeHTML(c.nombre)}
-</option>`
-)
-.join("");
+</option>
+
+`).join("");
+
+if(clientes.some(c=>String(c.id)===String(actual))){
+
+select.value=actual;
 
 }
 
+}
+
+
+/* =========================
+NUEVO CLIENTE DESDE COTIZACION
+========================= */
+
+
+function nuevoClienteDesdeCotizacion(){
+
+document.getElementById("nuevoClienteNombre").value="";
+document.getElementById("nuevoClienteTelefono").value="";
+document.getElementById("nuevoClienteCorreo").value="";
+document.getElementById("nuevoClienteDireccion").value="";
+
+document.getElementById("modalCliente")
+.classList.add("show");
+
+}
+
+
+function cerrarModalCliente(){
+
+document.getElementById("modalCliente")
+.classList.remove("show");
+
+}
+
+
+function guardarClienteDesdeCotizacion(){
+
+const nombre=document
+.getElementById("nuevoClienteNombre")
+.value.trim();
+
+if(!nombre){
+
+alert("Escribe el nombre del cliente.");
+
+return;
+
+}
+
+const nuevo={
+
+id:Date.now(),
+
+nombre:nombre,
+
+telefono:document
+.getElementById("nuevoClienteTelefono")
+.value.trim(),
+
+correo:document
+.getElementById("nuevoClienteCorreo")
+.value.trim(),
+
+direccion:document
+.getElementById("nuevoClienteDireccion")
+.value.trim()
+
+};
+
+clientes.push(nuevo);
+
+guardarDatos();
+
+llenarSelectClientes();
+
+document.getElementById("cotCliente").value=
+String(nuevo.id);
+
+renderClientes();
+
+actualizarPanel();
+
+cerrarModalCliente();
+
+alert(
+"Cliente creado y seleccionado para la cotización."
+);
+
+}
+
+
+/* =========================
+COTIZACION
+========================= */
 
 
 function prepararCotizacion(){
 
 llenarSelectClientes();
 
+if(!document.getElementById("cotFecha").value){
 
-if(
-!document.getElementById(
-"cotFecha"
-).value
-){
-
-document.getElementById(
-"cotFecha"
-).value=
-fechaHoy();
+document.getElementById("cotFecha").value=fechaHoy();
 
 }
-
 
 if(!partidas.length){
 
-agregarPartida();
-
-}
-
-}
-
-
-
-function agregarPartida(){
-
-partidas.push({
-
+partidas=[{
 descripcion:"",
 cantidad:1,
 precio:0
+}];
 
-});
-
+}
 
 renderPartidas();
 
 }
 
+
+function agregarPartida(){
+
+partidas.push({
+descripcion:"",
+cantidad:1,
+precio:0
+});
+
+renderPartidas();
+
+}
 
 
 function eliminarPartida(i){
 
 partidas.splice(i,1);
 
-
 if(!partidas.length){
 
 partidas.push({
-
 descripcion:"",
 cantidad:1,
 precio:0
-
 });
 
 }
-
 
 renderPartidas();
 
 }
 
 
-
 function renderPartidas(){
 
-const el=
-document.getElementById(
-"partidas"
-);
+const el=document.getElementById("partidas");
 
-
-el.innerHTML=
-partidas
-.map(
-(p,i)=>`
+el.innerHTML=partidas.map((p,i)=>`
 
 <div class="item-row">
 
 <div class="wide">
 
-<label>
-Descripción
-</label>
+<label>Descripción</label>
 
 <input
 value="${escapeHTML(p.descripcion)}"
@@ -1308,12 +1220,9 @@ calcularTotales()
 
 </div>
 
-
 <div>
 
-<label>
-Cantidad
-</label>
+<label>Cantidad</label>
 
 <input
 type="number"
@@ -1327,12 +1236,9 @@ calcularTotales()
 
 </div>
 
-
 <div>
 
-<label>
-Precio
-</label>
+<label>Precio</label>
 
 <input
 type="number"
@@ -1346,22 +1252,17 @@ calcularTotales()
 
 </div>
 
-
 <div>
 
-<label>
-Importe
-</label>
+<label>Importe</label>
 
 <input
 value="${moneda(
-(p.cantidad||0)*
-(p.precio||0)
+(p.cantidad||0)*(p.precio||0)
 )}"
 disabled>
 
 </div>
-
 
 <button
 class="btn btn-danger"
@@ -1373,21 +1274,16 @@ X
 
 </div>
 
-`
-)
-.join("");
-
+`).join("");
 
 calcularTotales();
 
 }
 
 
-
 function calcularTotales(){
 
-const subtotal=
-partidas.reduce(
+const subtotal=partidas.reduce(
 (s,p)=>
 s+
 (Number(p.cantidad)||0)*
@@ -1395,147 +1291,92 @@ s+
 0
 );
 
+const iva=subtotal*.16;
+const total=subtotal+iva;
 
-const iva=
-subtotal*.16;
+document.getElementById("cotSubtotal")
+.textContent=moneda(subtotal);
 
+document.getElementById("cotIVA")
+.textContent=moneda(iva);
 
-const total=
-subtotal+iva;
-
-
-document.getElementById(
-"cotSubtotal"
-).textContent=
-moneda(subtotal);
-
-
-document.getElementById(
-"cotIVA"
-).textContent=
-moneda(iva);
-
-
-document.getElementById(
-"cotTotal"
-).textContent=
-moneda(total);
+document.getElementById("cotTotal")
+.textContent=moneda(total);
 
 }
-
 
 
 function limpiarCotizacion(){
 
-document.getElementById(
-"cotCliente"
-).value="";
+document.getElementById("cotCliente").value="";
 
+document.getElementById("cotFecha").value=fechaHoy();
 
-document.getElementById(
-"cotFecha"
-).value=
-fechaHoy();
+document.getElementById("cotVigencia").value=15;
 
+document.getElementById("cotObservaciones").value="";
 
-document.getElementById(
-"cotVigencia"
-).value=15;
-
-
-document.getElementById(
-"cotObservaciones"
-).value="";
-
-
-partidas=[
-{
+partidas=[{
 descripcion:"",
 cantidad:1,
 precio:0
-}
-];
-
+}];
 
 renderPartidas();
 
 }
 
 
-
 function siguienteFolio(){
 
-const nums=
-cotizaciones
-.map(
+const nums=cotizaciones.map(
 c=>
 parseInt(
-String(c.folio||"")
-.replace(/\D/g,"")
+String(c.folio||"").replace(/\D/g,"")
 )||0
 );
 
+const n=Math.max(0,...nums)+1;
 
-const n=
-Math.max(0,...nums)+1;
-
-
-return "COT-"+
-String(n).padStart(4,"0");
+return "COT-"+String(n).padStart(4,"0");
 
 }
 
 
-
 function guardarCotizacion(){
 
-const clienteId=
-Number(
-document.getElementById(
-"cotCliente"
-).value
+const clienteId=Number(
+document.getElementById("cotCliente").value
 );
 
-
-const cliente=
-clientes.find(
+const cliente=clientes.find(
 c=>c.id===clienteId
 );
 
-
 if(!cliente){
 
-alert(
-"Selecciona un cliente."
-);
+alert("Selecciona un cliente.");
 
 return;
 
 }
 
-
-const validas=
-partidas.filter(
+const validas=partidas.filter(
 p=>
 String(p.descripcion).trim() &&
 Number(p.cantidad)>0 &&
 Number(p.precio)>=0
 );
 
-
 if(!validas.length){
 
-alert(
-"Agrega al menos una partida válida."
-);
+alert("Agrega al menos una partida válida.");
 
 return;
 
 }
 
-
-const subtotal=
-validas.reduce(
+const subtotal=validas.reduce(
 (s,p)=>
 s+
 (Number(p.cantidad)||0)*
@@ -1543,14 +1384,8 @@ s+
 0
 );
 
-
-const iva=
-subtotal*.16;
-
-
-const total=
-subtotal+iva;
-
+const iva=subtotal*.16;
+const total=subtotal+iva;
 
 const c={
 
@@ -1559,47 +1394,31 @@ id:Date.now(),
 folio:siguienteFolio(),
 
 fecha:
-document.getElementById(
-"cotFecha"
-).value ||
-fechaHoy(),
+document.getElementById("cotFecha").value||fechaHoy(),
 
 vigencia:
-Number(
-document.getElementById(
-"cotVigencia"
-).value
-)||15,
+Number(document.getElementById("cotVigencia").value)||15,
 
 clienteId,
 
 cliente:{...cliente},
 
-partidas:
-validas.map(
-p=>({...p})
-),
+partidas:validas.map(p=>({...p})),
 
 subtotal,
-
 iva,
-
 total,
 
 observaciones:
-document.getElementById(
-"cotObservaciones"
-).value
-.trim(),
+document.getElementById("cotObservaciones")
+.value.trim(),
 
 estado:"Pendiente",
 
 formaPago:"",
-
 fechaPago:""
 
 };
-
 
 cotizaciones.unshift(c);
 
@@ -1609,49 +1428,41 @@ limpiarCotizacion();
 
 actualizarPanel();
 
-
 alert(
-"Cotización guardada.\nFolio: "+
-c.folio
+"Cotización guardada correctamente.\n\nFolio: "+c.folio
 );
-
 
 mostrar("historial");
 
 }
 
 
+/* =========================
+HISTORIAL
+========================= */
+
 
 function estadoBadge(estado){
 
 const cls={
-
 Pendiente:"pendiente",
-
 Aceptada:"aceptada",
-
 Realizada:"realizada",
-
 Pagada:"pagada"
+}[estado]||"pendiente";
 
-}[estado] || "pendiente";
-
-
-return `<span class="badge ${cls}">
+return `
+<span class="badge ${cls}">
 ${escapeHTML(estado)}
-</span>`;
+</span>
+`;
 
 }
 
 
-
 function renderCotizaciones(){
 
-const el=
-document.getElementById(
-"tablaCotizaciones"
-);
-
+const el=document.getElementById("tablaCotizaciones");
 
 if(!cotizaciones.length){
 
@@ -1662,17 +1473,15 @@ return;
 
 }
 
+el.innerHTML=`
 
-el.innerHTML=
-
-`<div class="table-wrap">
+<div class="table-wrap">
 
 <table>
 
 <thead>
 
 <tr>
-
 <th>Folio</th>
 <th>Fecha</th>
 <th>Cliente</th>
@@ -1680,7 +1489,6 @@ el.innerHTML=
 <th>Estado</th>
 <th>Pago</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -1691,11 +1499,9 @@ ${cotizaciones.map(c=>{
 
 let acciones="";
 
-
 if(c.estado==="Pendiente"){
 
 acciones+=`
-
 <button
 class="btn btn-info"
 onclick="aceptarCotizacion(${c.id})">
@@ -1703,16 +1509,13 @@ onclick="aceptarCotizacion(${c.id})">
 Aceptar
 
 </button>
-
 `;
 
 }
 
-
 if(c.estado==="Aceptada"){
 
 acciones+=`
-
 <button
 class="btn btn-success"
 onclick="marcarRealizada(${c.id})">
@@ -1720,16 +1523,13 @@ onclick="marcarRealizada(${c.id})">
 Realizada
 
 </button>
-
 `;
 
 }
 
-
 if(c.estado==="Realizada"){
 
 acciones+=`
-
 <button
 class="btn btn-warning"
 onclick="marcarPagada(${c.id})">
@@ -1737,11 +1537,9 @@ onclick="marcarPagada(${c.id})">
 Registrar pago
 
 </button>
-
 `;
 
 }
-
 
 acciones+=`
 
@@ -1749,10 +1547,9 @@ acciones+=`
 class="btn btn-secondary"
 onclick="verCotizacion(${c.id})">
 
-Ver
+Ver detalle
 
 </button>
-
 
 <button
 class="btn btn-primary"
@@ -1761,7 +1558,6 @@ onclick="exportarPDF(${c.id})">
 PDF
 
 </button>
-
 
 <button
 class="btn btn-success"
@@ -1773,52 +1569,27 @@ WhatsApp
 
 `;
 
-
-const pago=
-c.estado==="Pagada"
-
+const pago=c.estado==="Pagada"
 ?
-`${escapeHTML(
-c.formaPago||"Sin dato"
-)}
-<br>
-<small>
-${fechaMX(c.fechaPago)}
-</small>`
-
-:
-"-";
-
+`${escapeHTML(c.formaPago||"Sin dato")}<br>
+<small>${fechaMX(c.fechaPago)}</small>`
+:"-";
 
 return `
 
 <tr>
 
-<td>
-<b>${escapeHTML(c.folio)}</b>
-</td>
+<td><b>${escapeHTML(c.folio)}</b></td>
 
-<td>
-${fechaMX(c.fecha)}
-</td>
+<td>${fechaMX(c.fecha)}</td>
 
-<td>
-${escapeHTML(
-c.cliente?.nombre
-)}
-</td>
+<td>${escapeHTML(c.cliente?.nombre||"")}</td>
 
-<td>
-${moneda(c.total)}
-</td>
+<td>${moneda(c.total)}</td>
 
-<td>
-${estadoBadge(c.estado)}
-</td>
+<td>${estadoBadge(c.estado)}</td>
 
-<td>
-${pago}
-</td>
+<td>${pago}</td>
 
 <td>
 
@@ -1840,26 +1611,25 @@ ${acciones}
 
 </table>
 
-</div>`;
+</div>
+
+`;
 
 }
 
 
+/* =========================
+ESTADOS
+========================= */
+
 
 function aceptarCotizacion(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
-
-if(!c)
-return;
-
+if(!c)return;
 
 c.estado="Aceptada";
-
 
 guardarDatos();
 
@@ -1870,21 +1640,13 @@ actualizarPanel();
 }
 
 
-
 function marcarRealizada(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
-
-if(!c)
-return;
-
+if(!c)return;
 
 c.estado="Realizada";
-
 
 guardarDatos();
 
@@ -1897,22 +1659,13 @@ actualizarPanel();
 }
 
 
-
 function marcarPagada(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
+if(!c)return;
 
-if(!c)
-return;
-
-
-const formaPago=
-prompt(
-
+const formaPago=prompt(
 `¿Cuál fue la forma de pago?
 
 1. Efectivo
@@ -1920,82 +1673,56 @@ prompt(
 3. Transferencia
 
 Escribe 1, 2 o 3:`
-
 );
 
-
-if(formaPago===null)
-return;
-
+if(formaPago===null)return;
 
 let pago="";
 
-
-if(formaPago==="1")
-pago="Efectivo";
-
-
-if(formaPago==="2")
-pago="Tarjeta";
-
-
-if(formaPago==="3")
-pago="Transferencia";
-
+if(formaPago==="1")pago="Efectivo";
+if(formaPago==="2")pago="Tarjeta";
+if(formaPago==="3")pago="Transferencia";
 
 if(!pago){
 
-alert(
-"Selecciona una opción válida: 1, 2 o 3."
-);
+alert("Selecciona una opción válida: 1, 2 o 3.");
 
 return;
 
 }
 
-
 c.estado="Pagada";
-
 c.formaPago=pago;
-
 c.fechaPago=fechaHoy();
-
 
 guardarDatos();
 
 renderCotizaciones();
-
 renderCXC();
-
 actualizarPanel();
 
-
 alert(
-
 `Pago registrado correctamente.
 
 Forma de pago: ${pago}
 Total: ${moneda(c.total)}`
-
 );
 
 }
 
 
+/* =========================
+CUENTAS POR COBRAR
+========================= */
+
 
 function renderCXC(){
 
-const el=
-document.getElementById(
-"tablaCXC"
-);
+const el=document.getElementById("tablaCXC");
 
-
-const lista=
-cotizaciones.filter(
+const lista=cotizaciones.filter(
 c=>c.estado==="Realizada"
 );
-
 
 if(!lista.length){
 
@@ -2006,22 +1733,19 @@ return;
 
 }
 
+el.innerHTML=`
 
-el.innerHTML=
-
-`<div class="table-wrap">
+<div class="table-wrap">
 
 <table>
 
 <thead>
 
 <tr>
-
 <th>Folio</th>
 <th>Cliente</th>
 <th>Total</th>
 <th>Acción</th>
-
 </tr>
 
 </thead>
@@ -2032,19 +1756,11 @@ ${lista.map(c=>`
 
 <tr>
 
-<td>
-${escapeHTML(c.folio)}
-</td>
+<td>${escapeHTML(c.folio)}</td>
 
-<td>
-${escapeHTML(
-c.cliente?.nombre
-)}
-</td>
+<td>${escapeHTML(c.cliente?.nombre||"")}</td>
 
-<td>
-${moneda(c.total)}
-</td>
+<td>${moneda(c.total)}</td>
 
 <td>
 
@@ -2066,239 +1782,133 @@ Registrar pago
 
 </table>
 
-</div>`;
+</div>
+
+`;
 
 }
 
+
+/* =========================
+COBRANZA
+========================= */
 
 
 function pagosPagados(){
 
 return cotizaciones.filter(
-c=>
-c.estado==="Pagada" &&
-c.fechaPago
+c=>c.estado==="Pagada"&&c.fechaPago
 );
 
 }
-
 
 
 function reporteHoy(){
 
 const h=fechaHoy();
 
-
-document.getElementById(
-"reporteDesde"
-).value=h;
-
-
-document.getElementById(
-"reporteHasta"
-).value=h;
-
+document.getElementById("reporteDesde").value=h;
+document.getElementById("reporteHasta").value=h;
 
 generarReporte();
 
 }
 
 
-
 function generarReporte(){
 
-const desde=
-document.getElementById(
-"reporteDesde"
-).value;
+const desde=document.getElementById("reporteDesde").value;
+const hasta=document.getElementById("reporteHasta").value;
 
+if(!desde||!hasta){
 
-const hasta=
-document.getElementById(
-"reporteHasta"
-).value;
-
-
-if(!desde || !hasta){
-
-alert(
-"Selecciona las fechas del reporte."
-);
+alert("Selecciona las fechas del reporte.");
 
 return;
 
 }
-
 
 if(desde>hasta){
 
-alert(
-"La fecha inicial no puede ser mayor que la fecha final."
-);
+alert("La fecha inicial no puede ser mayor que la fecha final.");
 
 return;
 
 }
-
 
 renderReporte();
 
 }
 
 
-
 function datosReporte(){
 
-const desde=
-document.getElementById(
-"reporteDesde"
-).value;
+const desde=document.getElementById("reporteDesde").value;
+const hasta=document.getElementById("reporteHasta").value;
 
-
-const hasta=
-document.getElementById(
-"reporteHasta"
-).value;
-
-
-return pagosPagados()
-.filter(
-c=>
-c.fechaPago>=desde &&
-c.fechaPago<=hasta
+return pagosPagados().filter(
+c=>c.fechaPago>=desde&&c.fechaPago<=hasta
 );
 
 }
 
 
-
 function renderReporte(){
 
-const lista=
-datosReporte();
+const lista=datosReporte();
 
+const efectivo=lista
+.filter(c=>c.formaPago==="Efectivo")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
-const efectivo=
-lista
-.filter(
-c=>c.formaPago==="Efectivo"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
+const tarjeta=lista
+.filter(c=>c.formaPago==="Tarjeta")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
+const transferencia=lista
+.filter(c=>c.formaPago==="Transferencia")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
-const tarjeta=
-lista
-.filter(
-c=>c.formaPago==="Tarjeta"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
+const total=efectivo+tarjeta+transferencia;
 
-
-const transferencia=
-lista
-.filter(
-c=>c.formaPago==="Transferencia"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
-
-
-const total=
-efectivo+
-tarjeta+
-transferencia;
-
-
-document.getElementById(
-"resumenCobranza"
-).innerHTML=
-
-`
+document.getElementById("resumenCobranza").innerHTML=`
 
 <div class="grid">
 
 <div class="stat">
-
-<small>
-Total cobrado
-</small>
-
-<strong>
-${moneda(total)}
-</strong>
-
+<small>Total cobrado</small>
+<strong>${moneda(total)}</strong>
 </div>
 
-
 <div class="stat">
-
-<small>
-Efectivo
-</small>
-
-<strong>
-${moneda(efectivo)}
-</strong>
-
+<small>Efectivo</small>
+<strong>${moneda(efectivo)}</strong>
 </div>
 
-
 <div class="stat">
-
-<small>
-Tarjeta
-</small>
-
-<strong>
-${moneda(tarjeta)}
-</strong>
-
+<small>Tarjeta</small>
+<strong>${moneda(tarjeta)}</strong>
 </div>
 
-
 <div class="stat">
-
-<small>
-Transferencia
-</small>
-
-<strong>
-${moneda(transferencia)}
-</strong>
-
+<small>Transferencia</small>
+<strong>${moneda(transferencia)}</strong>
 </div>
 
 </div>
 
 `;
 
-
 if(!lista.length){
 
-document.getElementById(
-"tablaCobranza"
-).innerHTML=
-
+document.getElementById("tablaCobranza").innerHTML=
 '<div class="empty">No hay pagos registrados en este periodo.</div>';
 
 return;
 
 }
 
-
-document.getElementById(
-"tablaCobranza"
-).innerHTML=
-
-`
+document.getElementById("tablaCobranza").innerHTML=`
 
 <div class="table-wrap">
 
@@ -2307,13 +1917,11 @@ document.getElementById(
 <thead>
 
 <tr>
-
 <th>Folio</th>
 <th>Cliente</th>
 <th>Fecha pago</th>
 <th>Forma de pago</th>
 <th>Importe</th>
-
 </tr>
 
 </thead>
@@ -2324,27 +1932,15 @@ ${lista.map(c=>`
 
 <tr>
 
-<td>
-<b>${escapeHTML(c.folio)}</b>
-</td>
+<td><b>${escapeHTML(c.folio)}</b></td>
 
-<td>
-${escapeHTML(
-c.cliente?.nombre
-)}
-</td>
+<td>${escapeHTML(c.cliente?.nombre||"")}</td>
 
-<td>
-${fechaMX(c.fechaPago)}
-</td>
+<td>${fechaMX(c.fechaPago)}</td>
 
-<td>
-${escapeHTML(c.formaPago)}
-</td>
+<td>${escapeHTML(c.formaPago||"")}</td>
 
-<td>
-${moneda(c.total)}
-</td>
+<td>${moneda(c.total)}</td>
 
 </tr>
 
@@ -2361,245 +1957,269 @@ ${moneda(c.total)}
 }
 
 
+/* =========================
+DETALLE DE COTIZACION
+========================= */
+
 
 function verCotizacion(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
+if(!c)return;
 
-if(!c)
-return;
+document.getElementById("detalleTitulo").textContent=
+`Cotización ${c.folio}`;
 
+let html=`
 
-let texto=
+<div class="detail-line">
+<b>Cliente:</b><br>
+${escapeHTML(c.cliente?.nombre||"")}
+</div>
 
-`Folio: ${c.folio}
+<div class="detail-line">
+<b>Teléfono:</b><br>
+${escapeHTML(c.cliente?.telefono||"")}
+</div>
 
-Cliente: ${c.cliente?.nombre}
+<div class="detail-line">
+<b>Correo:</b><br>
+${escapeHTML(c.cliente?.correo||"")}
+</div>
 
-Fecha: ${fechaMX(c.fecha)}
+<div class="detail-line">
+<b>Dirección:</b><br>
+${escapeHTML(c.cliente?.direccion||"")}
+</div>
 
-Estado: ${c.estado}
+<div class="detail-line">
+<b>Fecha:</b> ${fechaMX(c.fecha)}
+</div>
 
-Total: ${moneda(c.total)}`;
+<div class="detail-line">
+<b>Vigencia:</b> ${c.vigencia} días
+</div>
 
+<div class="detail-line">
+<b>Estado:</b> ${estadoBadge(c.estado)}
+</div>
+
+<h3 style="margin-top:18px">
+Partidas
+</h3>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Descripción</th>
+<th>Cant.</th>
+<th>Precio</th>
+<th>Importe</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${(c.partidas||[]).map(p=>`
+
+<tr>
+
+<td>${escapeHTML(p.descripcion||"")}</td>
+
+<td>${p.cantidad}</td>
+
+<td>${moneda(p.precio)}</td>
+
+<td>
+${moneda(
+(Number(p.cantidad)||0)*
+(Number(p.precio)||0)
+)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="detail-line" style="margin-top:15px">
+Subtotal: <b>${moneda(c.subtotal)}</b>
+</div>
+
+<div class="detail-line">
+IVA (16%): <b>${moneda(c.iva)}</b>
+</div>
+
+<div class="detail-total">
+TOTAL: ${moneda(c.total)}
+</div>
+
+`;
+
+if(c.observaciones){
+
+html+=`
+
+<div class="detail-line" style="margin-top:15px">
+
+<b>Observaciones:</b><br>
+
+${escapeHTML(c.observaciones)}
+
+</div>
+
+`;
+
+}
 
 if(c.estado==="Pagada"){
 
-texto+=`
+html+=`
 
-Forma de pago:
-${c.formaPago||"Sin dato"}
+<div class="detail-line" style="margin-top:15px">
 
-Fecha de pago:
-${fechaMX(c.fechaPago)}`;
+<b>Forma de pago:</b>
+${escapeHTML(c.formaPago||"Sin dato")}
+
+<br>
+
+<b>Fecha de pago:</b>
+${fechaMX(c.fechaPago)}
+
+</div>
+
+`;
+
+}
+
+document.getElementById("detalleContenido")
+.innerHTML=html;
+
+document.getElementById("detallePDF")
+.onclick=()=>exportarPDF(id);
+
+document.getElementById("detalleWhatsApp")
+.onclick=()=>compartirWhatsApp(id);
+
+document.getElementById("modalDetalle")
+.classList.add("show");
 
 }
 
 
-alert(texto);
+function cerrarDetalle(){
+
+document.getElementById("modalDetalle")
+.classList.remove("show");
 
 }
 
+
+/* =========================
+PDF COTIZACION
+========================= */
 
 
 function crearPDF(c){
 
-const {jsPDF}=
-window.jspdf;
+if(!window.jspdf){
 
+alert("No se pudo cargar el módulo PDF. Verifica tu conexión a Internet.");
 
-const doc=
-new jsPDF();
+return null;
 
+}
+
+const {jsPDF}=window.jspdf;
+
+const doc=new jsPDF();
 
 let y=18;
 
-
 doc.setFontSize(20);
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-doc.text(
-"VERASI PC",
-14,
-y
-);
-
+doc.text("VERASI PC",14,y);
 
 y+=7;
 
-
 doc.setFontSize(11);
+doc.setFont("helvetica","normal");
 
-doc.setFont(
-"helvetica",
-"normal"
-);
-
-doc.text(
-"SOLUCIONES INFORMÁTICAS",
-14,
-y
-);
-
+doc.text("SOLUCIONES INFORMÁTICAS",14,y);
 
 doc.setFontSize(16);
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-doc.text(
-"COTIZACIÓN",
-145,
-18
-);
-
+doc.text("COTIZACIÓN",145,18);
 
 doc.setFontSize(10);
+doc.setFont("helvetica","normal");
 
-doc.setFont(
-"helvetica",
-"normal"
-);
-
-doc.text(
-`Folio: ${c.folio}`,
-145,
-25
-);
-
-
-doc.text(
-`Fecha: ${fechaMX(c.fecha)}`,
-145,
-31
-);
-
-
-doc.text(
-`Estado: ${c.estado}`,
-145,
-37
-);
-
+doc.text(`Folio: ${c.folio}`,145,25);
+doc.text(`Fecha: ${fechaMX(c.fecha)}`,145,31);
+doc.text(`Estado: ${c.estado}`,145,37);
 
 y=52;
 
-
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-doc.text(
-"CLIENTE",
-14,
-y
-);
-
+doc.setFont("helvetica","bold");
+doc.text("CLIENTE",14,y);
 
 y+=6;
 
-
-doc.setFont(
-"helvetica",
-"normal"
-);
-
+doc.setFont("helvetica","normal");
 
 doc.text(
 `Nombre: ${c.cliente?.nombre||""}`,
-14,
-y
+14,y
 );
 
-
 y+=5;
-
 
 doc.text(
 `Teléfono: ${c.cliente?.telefono||""}`,
-14,
-y
+14,y
 );
 
-
 y+=5;
-
 
 doc.text(
 `Correo: ${c.cliente?.correo||""}`,
-14,
-y
+14,y
 );
 
-
 y+=5;
-
 
 doc.text(
 `Dirección: ${c.cliente?.direccion||""}`,
-14,
-y
+14,y
 );
-
 
 y+=10;
 
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-
-doc.text(
-"DESCRIPCIÓN",
-14,
-y
-);
-
-
-doc.text(
-"CANT.",
-125,
-y
-);
-
-
-doc.text(
-"PRECIO",
-145,
-y
-);
-
-
-doc.text(
-"IMPORTE",
-175,
-y
-);
-
+doc.text("DESCRIPCIÓN",14,y);
+doc.text("CANT.",125,y);
+doc.text("PRECIO",145,y);
+doc.text("IMPORTE",175,y);
 
 y+=5;
 
+doc.setFont("helvetica","normal");
 
-doc.setFont(
-"helvetica",
-"normal"
-);
-
-
-c.partidas.forEach(p=>{
+(c.partidas||[]).forEach(p=>{
 
 if(y>265){
 
@@ -2609,298 +2229,180 @@ y=20;
 
 }
 
+const desc=String(p.descripcion||"");
 
-const desc=
-String(p.descripcion||"");
+const lines=doc.splitTextToSize(desc,100);
 
+doc.text(lines,14,y);
 
-const lines=
-doc.splitTextToSize(
-desc,
-100
-);
+doc.text(String(p.cantidad),125,y);
 
-
-doc.text(
-lines,
-14,
-y
-);
-
-
-doc.text(
-String(p.cantidad),
-125,
-y
-);
-
-
-doc.text(
-moneda(p.precio),
-145,
-y
-);
-
+doc.text(moneda(p.precio),145,y);
 
 doc.text(
 moneda(
-(p.cantidad||0)*
-(p.precio||0)
+(Number(p.cantidad)||0)*
+(Number(p.precio)||0)
 ),
-175,
-y
+175,y
 );
 
-
-y+=Math.max(
-6,
-lines.length*5
-);
+y+=Math.max(6,lines.length*5);
 
 });
 
-
 y+=5;
 
-
-doc.line(
-14,
-y,
-196,
-y
-);
-
+doc.line(14,y,196,y);
 
 y+=8;
 
-
 doc.text(
 `Subtotal: ${moneda(c.subtotal)}`,
-145,
-y
+145,y
 );
 
-
 y+=6;
-
 
 doc.text(
 `IVA (16%): ${moneda(c.iva)}`,
-145,
-y
+145,y
 );
-
 
 y+=7;
 
-
-doc.setFont(
-"helvetica",
-"bold"
-);
-
+doc.setFont("helvetica","bold");
 
 doc.text(
 `TOTAL: ${moneda(c.total)}`,
-145,
-y
+145,y
 );
-
 
 y+=12;
 
-
-doc.setFont(
-"helvetica",
-"normal"
-);
-
+doc.setFont("helvetica","normal");
 
 if(c.observaciones){
 
-doc.setFont(
-"helvetica",
-"bold"
-);
+doc.setFont("helvetica","bold");
 
-doc.text(
-"OBSERVACIONES",
-14,
-y
-);
-
+doc.text("OBSERVACIONES",14,y);
 
 y+=6;
 
+doc.setFont("helvetica","normal");
 
-doc.setFont(
-"helvetica",
-"normal"
-);
-
-
-const obs=
-doc.splitTextToSize(
+const obs=doc.splitTextToSize(
 c.observaciones,
 180
 );
 
+doc.text(obs,14,y);
 
-doc.text(
-obs,
-14,
-y
-);
-
-
-y+=
-obs.length*5+
-8;
+y+=obs.length*5+8;
 
 }
 
-
 if(c.estado==="Pagada"){
 
-doc.setFont(
-"helvetica",
-"bold"
-);
+doc.setFont("helvetica","bold");
 
-
-doc.text(
-"PAGO REGISTRADO",
-14,
-y
-);
-
+doc.text("PAGO REGISTRADO",14,y);
 
 y+=6;
 
-
-doc.setFont(
-"helvetica",
-"normal"
-);
-
+doc.setFont("helvetica","normal");
 
 doc.text(
 `Forma de pago: ${c.formaPago||"Sin dato"}`,
-14,
-y
+14,y
 );
-
 
 y+=5;
 
-
 doc.text(
 `Fecha de pago: ${fechaMX(c.fechaPago)}`,
-14,
-y
+14,y
 );
-
 
 y+=8;
 
 }
 
-
 doc.setFontSize(9);
-
 doc.setTextColor(100);
-
 
 doc.text(
 "VERASI PC · SOLUCIONES INFORMÁTICAS",
-14,
-287
+14,287
 );
-
 
 doc.text(
 "Gracias por su preferencia.",
-14,
-292
+14,292
 );
-
 
 return doc;
 
 }
 
 
-
 function exportarPDF(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
+if(!c)return;
 
-if(!c)
-return;
+const doc=crearPDF(c);
 
+if(!doc)return;
 
-crearPDF(c).save(
+doc.save(
 `${c.folio}_VERASI_PC.pdf`
 );
 
 }
 
 
+/* =========================
+WHATSAPP
+========================= */
+
 
 async function compartirWhatsApp(id){
 
-const c=
-cotizaciones.find(
-x=>x.id===id
-);
+const c=cotizaciones.find(x=>x.id===id);
 
+if(!c)return;
 
-if(!c)
-return;
+const doc=crearPDF(c);
 
+if(!doc)return;
 
-const doc=
-crearPDF(c);
+const texto=
+`Hola, te comparto la cotización ${c.folio} de VERASI PC por ${moneda(c.total)}.`;
 
+const blob=doc.output("blob");
 
-const blob=
-doc.output("blob");
-
-
-const file=
-new File(
-[
-blob
-],
+const file=new File(
+[blob],
 `${c.folio}_VERASI_PC.pdf`,
 {
 type:"application/pdf"
 }
 );
 
-
-const texto=
-`Hola, te comparto la cotización ${c.folio} de VERASI PC por ${moneda(c.total)}.`;
-
-
 try{
 
 if(
 navigator.share &&
 navigator.canShare &&
-navigator.canShare({
-files:[file]
-})
+navigator.canShare({files:[file]})
 ){
 
 await navigator.share({
 
-title:
-`Cotización ${c.folio}`,
+title:`Cotización ${c.folio}`,
 
 text:texto,
 
@@ -2908,266 +2410,143 @@ files:[file]
 
 });
 
-
 return;
 
 }
 
 }catch(e){
 
-if(
-e.name==="AbortError"
-)
+if(e.name==="AbortError"){
+
 return;
 
 }
 
+}
 
 doc.save(
 `${c.folio}_VERASI_PC.pdf`
 );
 
-
-window.open(
+const wa=
 "https://wa.me/?text="+
-encodeURIComponent(texto),
-"_blank"
-);
+encodeURIComponent(texto);
+
+window.open(wa,"_blank");
 
 }
 
 
+/* =========================
+PDF COBRANZA
+========================= */
+
 
 function exportarReportePDF(){
 
-const lista=
-datosReporte();
-
+const lista=datosReporte();
 
 if(!lista.length){
 
-alert(
-"No hay pagos en el periodo seleccionado."
-);
+alert("No hay pagos en el periodo seleccionado.");
 
 return;
 
 }
 
+if(!window.jspdf){
 
-const {jsPDF}=
-window.jspdf;
+alert("No se pudo cargar el módulo PDF.");
 
+return;
 
-const doc=
-new jsPDF();
+}
 
+const {jsPDF}=window.jspdf;
 
-const desde=
-document.getElementById(
-"reporteDesde"
-).value;
+const doc=new jsPDF();
 
+const desde=document.getElementById("reporteDesde").value;
+const hasta=document.getElementById("reporteHasta").value;
 
-const hasta=
-document.getElementById(
-"reporteHasta"
-).value;
+const efectivo=lista
+.filter(c=>c.formaPago==="Efectivo")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
+const tarjeta=lista
+.filter(c=>c.formaPago==="Tarjeta")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
-const efectivo=
-lista
-.filter(
-c=>c.formaPago==="Efectivo"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
+const transferencia=lista
+.filter(c=>c.formaPago==="Transferencia")
+.reduce((s,c)=>s+Number(c.total||0),0);
 
-
-const tarjeta=
-lista
-.filter(
-c=>c.formaPago==="Tarjeta"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
-
-
-const transferencia=
-lista
-.filter(
-c=>c.formaPago==="Transferencia"
-)
-.reduce(
-(s,c)=>s+Number(c.total||0),
-0
-);
-
-
-const total=
-efectivo+
-tarjeta+
-transferencia;
-
+const total=efectivo+tarjeta+transferencia;
 
 doc.setFontSize(20);
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-doc.text(
-"VERASI PC",
-14,
-18
-);
-
+doc.text("VERASI PC",14,18);
 
 doc.setFontSize(11);
+doc.setFont("helvetica","normal");
 
-doc.setFont(
-"helvetica",
-"normal"
-);
-
-doc.text(
-"SOLUCIONES INFORMÁTICAS",
-14,
-25
-);
-
+doc.text("SOLUCIONES INFORMÁTICAS",14,25);
 
 doc.setFontSize(16);
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-doc.text(
-"REPORTE DE COBRANZA",
-14,
-38
-);
-
+doc.text("REPORTE DE COBRANZA",14,38);
 
 doc.setFontSize(10);
-
-doc.setFont(
-"helvetica",
-"normal"
-);
+doc.setFont("helvetica","normal");
 
 doc.text(
 `Periodo: ${fechaMX(desde)} al ${fechaMX(hasta)}`,
-14,
-45
+14,45
 );
-
 
 let y=57;
 
-
-doc.setFont(
-"helvetica",
-"bold"
-);
-
+doc.setFont("helvetica","bold");
 
 doc.text(
 `TOTAL COBRADO: ${moneda(total)}`,
-14,
-y
+14,y
 );
-
 
 y+=7;
 
-
-doc.setFont(
-"helvetica",
-"normal"
-);
-
+doc.setFont("helvetica","normal");
 
 doc.text(
 `Efectivo: ${moneda(efectivo)}`,
-14,
-y
+14,y
 );
-
 
 doc.text(
 `Tarjeta: ${moneda(tarjeta)}`,
-75,
-y
+75,y
 );
-
 
 doc.text(
 `Transferencia: ${moneda(transferencia)}`,
-135,
-y
+135,y
 );
-
 
 y+=12;
 
+doc.setFont("helvetica","bold");
 
-doc.setFont(
-"helvetica",
-"bold"
-);
-
-
-doc.text(
-"Folio",
-14,
-y
-);
-
-
-doc.text(
-"Cliente",
-40,
-y
-);
-
-
-doc.text(
-"Fecha",
-110,
-y
-);
-
-
-doc.text(
-"Forma",
-140,
-y
-);
-
-
-doc.text(
-"Importe",
-175,
-y
-);
-
+doc.text("Folio",14,y);
+doc.text("Cliente",40,y);
+doc.text("Fecha",110,y);
+doc.text("Forma",140,y);
+doc.text("Importe",175,y);
 
 y+=6;
 
-
-doc.setFont(
-"helvetica",
-"normal"
-);
-
+doc.setFont("helvetica","normal");
 
 lista.forEach(c=>{
 
@@ -3179,93 +2558,65 @@ y=20;
 
 }
 
-
 doc.text(
-String(c.folio||"")
-.substring(0,15),
-14,
-y
+String(c.folio||"").substring(0,15),
+14,y
 );
 
-
 doc.text(
-String(
-c.cliente?.nombre||""
-)
-.substring(0,32),
-40,
-y
+String(c.cliente?.nombre||"").substring(0,32),
+40,y
 );
-
 
 doc.text(
 fechaMX(c.fechaPago),
-110,
-y
+110,y
 );
-
 
 doc.text(
-String(c.formaPago||"")
-.substring(0,15),
-140,
-y
+String(c.formaPago||"").substring(0,15),
+140,y
 );
-
 
 doc.text(
 moneda(c.total),
-175,
-y
+175,y
 );
-
 
 y+=6;
 
 });
 
-
 doc.setFontSize(9);
-
 doc.setTextColor(100);
-
 
 doc.text(
 "VERASI PC · SOLUCIONES INFORMÁTICAS",
-14,
-292
+14,292
 );
 
-
-const nombre=
-`Reporte_Cobranza_${desde}_${hasta}.pdf`;
-
-
-doc.save(nombre);
+doc.save(
+`Reporte_Cobranza_${desde}_${hasta}.pdf`
+);
 
 }
 
 
+/* =========================
+INICIO
+========================= */
+
 
 function iniciar(){
 
-document.getElementById(
-"cotFecha"
-).value=
-fechaHoy();
+document.getElementById("cotFecha")
+.value=fechaHoy();
 
+document.getElementById("reporteDesde")
+.value=fechaHoy();
 
-document.getElementById(
-"reporteDesde"
-).value=
-fechaHoy();
-
-
-document.getElementById(
-"reporteHasta"
-).value=
-fechaHoy();
-
+document.getElementById("reporteHasta")
+.value=fechaHoy();
 
 prepararCotizacion();
 
@@ -3279,16 +2630,13 @@ renderReporte();
 
 actualizarPanel();
 
-
-document.getElementById(
-"nav-inicio"
-).classList.add("active");
+document.getElementById("nav-inicio")
+.classList.add("active");
 
 }
 
 
 iniciar();
-
 
 </script>
 
