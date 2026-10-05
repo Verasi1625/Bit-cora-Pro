@@ -2,225 +2,183 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-<meta name="theme-color" content="#0b1736">
-<title>Bitácora Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora Pro - Control Verasi</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-    "Helvetica Neue",Arial,sans-serif;
-    background:#f3f5f9;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#f3f4f6;
     color:#111827;
 }
 
 header{
-    background:#0b1736;
+    background:#111827;
     color:white;
-    padding:28px 20px 24px;
-    border-radius:0 0 28px 28px;
+    padding:18px;
 }
 
 header h1{
     margin:0;
-    font-size:30px;
+    font-size:23px;
 }
 
-header p{
-    margin:6px 0 0;
+header small{
     opacity:.75;
 }
 
+nav{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:10px;
+    background:white;
+    border-bottom:1px solid #ddd;
+}
+
+nav button{
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    background:#e5e7eb;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+nav button.active{
+    background:#111827;
+    color:white;
+}
+
 main{
-    padding:18px;
-    padding-bottom:100px;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
 }
 
-.section-title{
-    font-size:21px;
-    font-weight:800;
-    margin:22px 0 13px;
+section{
+    display:block;
 }
 
-.resumen{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
+.hidden{
+    display:none !important;
 }
 
 .card{
     background:white;
-    border-radius:18px;
-    padding:15px 8px;
-    text-align:center;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-}
-
-.card .numero{
-    font-size:26px;
-    font-weight:800;
-}
-
-.card small{
-    color:#6b7280;
-}
-
-.menu{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:13px;
-}
-
-.menu button{
-    border:0;
-    background:white;
-    min-height:120px;
-    border-radius:20px;
-    font-size:16px;
-    font-weight:700;
-    color:#111827;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-}
-
-.menu button:active{
-    transform:scale(.97);
-}
-
-.icono{
-    display:block;
-    font-size:31px;
-    margin-bottom:9px;
-}
-
-.pantalla{
-    display:none;
-}
-
-.pantalla.activa{
-    display:block;
-}
-
-.volver{
-    border:0;
-    background:#e5e7eb;
-    border-radius:12px;
-    padding:10px 15px;
-    font-weight:700;
+    border-radius:16px;
+    padding:16px;
     margin-bottom:15px;
+    box-shadow:0 2px 8px #00000012;
 }
 
-.formulario{
-    background:white;
-    padding:18px;
-    border-radius:20px;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
-}
-
-input,textarea,select{
-    width:100%;
-    border:1px solid #d1d5db;
-    border-radius:12px;
-    padding:13px;
-    margin:6px 0 12px;
-    font-size:16px;
-    background:white;
-}
-
-textarea{
-    min-height:100px;
-    resize:vertical;
+h2{
+    margin-top:0;
 }
 
 label{
-    font-size:14px;
-    font-weight:700;
+    display:block;
+    margin-top:12px;
+    font-size:13px;
+    font-weight:bold;
 }
 
-.btn-principal{
+input,
+select,
+textarea{
     width:100%;
-    border:0;
-    border-radius:14px;
-    padding:15px;
-    background:#0b1736;
-    color:white;
-    font-size:16px;
-    font-weight:800;
+    padding:11px;
     margin-top:5px;
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    font-size:16px;
 }
 
-.lista{
+textarea{
+    min-height:80px;
+}
+
+button{
+    border:0;
+    border-radius:9px;
+    padding:10px 14px;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.primary{
+    background:#111827;
+    color:white;
+}
+
+.success{
+    background:#166534;
+    color:white;
+}
+
+.danger{
+    background:#b91c1c;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
     margin-top:15px;
 }
 
-.item{
-    background:white;
-    padding:16px;
-    border-radius:17px;
-    margin-bottom:10px;
-    box-shadow:0 3px 12px rgba(0,0,0,.05);
+th,
+td{
+    border-bottom:1px solid #e5e7eb;
+    padding:8px;
+    text-align:left;
 }
 
-.item strong{
-    font-size:17px;
+th{
+    background:#f9fafb;
 }
 
-.item small{
-    color:#6b7280;
-}
-
-.btn-eliminar{
-    border:0;
-    background:#fee2e2;
-    color:#991b1b;
-    padding:8px 11px;
-    border-radius:10px;
-    margin-top:10px;
-    font-weight:700;
+td input{
+    margin:0;
 }
 
 .total{
-    background:#0b1736;
-    color:white;
-    padding:17px;
-    border-radius:16px;
-    margin-top:10px;
-    font-size:20px;
-    font-weight:800;
     text-align:right;
+    line-height:1.8;
+    margin-top:15px;
 }
 
-.bottom{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    background:white;
-    border-top:1px solid #ddd;
-    display:flex;
-    justify-content:space-around;
-    padding:10px 5px calc(10px + env(safe-area-inset-bottom));
-    z-index:100;
-}
-
-.bottom button{
-    border:0;
-    background:none;
-    font-size:12px;
-    color:#374151;
-}
-
-.bottom span{
-    display:block;
+.total strong{
     font-size:23px;
-    margin-bottom:3px;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#6b7280;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    background:#e5e7eb;
+    font-size:12px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -228,873 +186,1418 @@ label{
 <body>
 
 <header>
-    <h1>Hola, Paps 👋</h1>
-    <p id="fecha"></p>
+    <h1>Bitácora Pro</h1>
+    <small>Control Verasi</small>
 </header>
+
+<nav>
+    <button id="nav-inicio" onclick="mostrar('inicio')">Inicio</button>
+    <button id="nav-clientes" onclick="mostrar('clientes')">Clientes</button>
+    <button id="nav-cotizacion" onclick="mostrar('cotizacion')">Cotizaciones</button>
+    <button id="nav-historial" onclick="mostrar('historial')">Historial</button>
+    <button id="nav-cxc" onclick="mostrar('cxc')">Cuentas por cobrar</button>
+</nav>
 
 <main>
 
 <!-- INICIO -->
-<section id="inicio" class="pantalla activa">
+<section id="inicio">
 
-    <div class="section-title">Resumen de hoy</div>
+    <div class="card">
+        <h2>Panel principal</h2>
 
-    <div class="resumen">
-        <div class="card">
-            <div class="numero" id="numClientes">0</div>
-            <small>Clientes</small>
-        </div>
+        <div class="grid">
 
-        <div class="card">
-            <div class="numero" id="numPendientes">0</div>
-            <small>Pendientes</small>
-        </div>
+            <div class="card">
+                <strong id="contadorClientes">0</strong>
+                <br>
+                Clientes
+            </div>
 
-        <div class="card">
-            <div class="numero" id="numCotizaciones">0</div>
-            <small>Cotizaciones</small>
+            <div class="card">
+                <strong id="contadorCotizaciones">0</strong>
+                <br>
+                Cotizaciones
+            </div>
+
+            <div class="card">
+                <strong id="totalCobrar">$0.00</strong>
+                <br>
+                Por cobrar
+            </div>
+
         </div>
     </div>
 
-    <div class="section-title">¿Qué quieres hacer?</div>
+    <div class="card">
+        <h2>Acciones rápidas</h2>
 
-    <div class="menu">
-
-        <button onclick="mostrar('clientes')">
-            <span class="icono">👥</span>
-            Clientes
+        <button class="primary"
+                onclick="mostrar('clientes');nuevoCliente()">
+            + Nuevo cliente
         </button>
 
-        <button onclick="mostrar('bitacora')">
-            <span class="icono">📋</span>
-            Bitácora
+        <button class="success"
+                onclick="mostrar('cotizacion')">
+            + Nueva cotización
         </button>
-
-        <button onclick="mostrar('pendientes')">
-            <span class="icono">⏰</span>
-            Pendientes
-        </button>
-
-        <button onclick="mostrar('cotizaciones')">
-            <span class="icono">💰</span>
-            Cotizaciones
-        </button>
-
-        <button onclick="mostrar('notas')">
-            <span class="icono">📝</span>
-            Notas
-        </button>
-
-        <button onclick="mostrar('materiales')">
-            <span class="icono">📦</span>
-            Materiales
-        </button>
-
-        <button onclick="mostrar('calendario')">
-            <span class="icono">📅</span>
-            Calendario
-        </button>
-
-        <button onclick="compartirApp()">
-            <span class="icono">📤</span>
-            Compartir
-        </button>
-
     </div>
+
 </section>
 
 
 <!-- CLIENTES -->
-<section id="clientes" class="pantalla">
+<section id="clientes" class="hidden">
 
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+    <div class="card">
 
-<h2>👥 Clientes</h2>
+        <h2>Clientes</h2>
 
-<div class="formulario">
+        <div id="listaClientes"></div>
 
-<label>Nombre del cliente</label>
-<input id="clienteNombre" placeholder="Ej. Juan Pérez">
+        <hr>
 
-<label>Teléfono</label>
-<input id="clienteTelefono"
-       type="tel"
-       placeholder="612 123 4567">
+        <h3>Agregar / editar cliente</h3>
 
-<label>Dirección</label>
-<input id="clienteDireccion"
-       placeholder="Dirección del cliente">
+        <input type="hidden" id="clienteId">
 
-<label>Notas</label>
-<textarea id="clienteNotas"
-          placeholder="Información adicional"></textarea>
+        <label>Nombre / Empresa</label>
+        <input id="clienteNombre"
+               placeholder="Nombre del cliente o empresa">
 
-<button class="btn-principal"
-        onclick="guardarCliente()">
-Guardar cliente
-</button>
+        <label>Teléfono</label>
+        <input id="clienteTelefono"
+               type="tel">
 
-</div>
+        <label>Correo</label>
+        <input id="clienteCorreo"
+               type="email">
 
-<div id="listaClientes" class="lista"></div>
+        <label>Dirección</label>
+        <textarea id="clienteDireccion"></textarea>
 
-</section>
+        <button class="success"
+                onclick="guardarCliente()">
+            Guardar cliente
+        </button>
 
+        <button onclick="limpiarCliente()">
+            Cancelar
+        </button>
 
-<!-- BITÁCORA -->
-<section id="bitacora" class="pantalla">
-
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
-
-<h2>📋 Bitácora del día</h2>
-
-<div class="formulario">
-
-<label>Cliente</label>
-<input id="bitCliente"
-       placeholder="Nombre del cliente">
-
-<label>Trabajo realizado</label>
-<textarea id="bitTrabajo"
-          placeholder="Describe lo que hiciste"></textarea>
-
-<label>Material utilizado</label>
-<textarea id="bitMaterial"
-          placeholder="Cable, conectores, cámaras, etc."></textarea>
-
-<label>Observaciones</label>
-<textarea id="bitObservaciones"
-          placeholder="Pendientes o recomendaciones"></textarea>
-
-<button class="btn-principal"
-        onclick="guardarBitacora()">
-Guardar visita
-</button>
-
-</div>
-
-<div id="listaBitacora" class="lista"></div>
+    </div>
 
 </section>
 
 
-<!-- PENDIENTES -->
-<section id="pendientes" class="pantalla">
+<!-- COTIZACIÓN -->
+<section id="cotizacion" class="hidden">
 
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+    <div class="card">
 
-<h2>⏰ Pendientes</h2>
+        <h2>Nueva cotización</h2>
 
-<div class="formulario">
+        <label>Cliente</label>
 
-<label>Pendiente</label>
-<input id="pendienteTexto"
-       placeholder="Ej. Regresar llamada a cliente">
+        <select id="cotCliente"
+                onchange="cargarClienteCotizacion()">
 
-<label>Fecha</label>
-<input id="pendienteFecha" type="date">
+            <option value="">
+                Selecciona un cliente
+            </option>
 
-<button class="btn-principal"
-        onclick="guardarPendiente()">
-Guardar pendiente
-</button>
+        </select>
 
-</div>
+        <button onclick="mostrar('clientes');nuevoCliente()">
+            + Crear cliente nuevo
+        </button>
 
-<div id="listaPendientes" class="lista"></div>
+        <div id="datosCliente"
+             class="card hidden">
+        </div>
 
-</section>
+        <div class="grid">
 
+            <div>
+                <label>Fecha</label>
+                <input type="date"
+                       id="cotFecha">
+            </div>
 
-<!-- COTIZACIONES -->
-<section id="cotizaciones" class="pantalla">
+            <div>
+                <label>Vigencia</label>
+                <input type="text"
+                       id="cotVigencia"
+                       value="15 días">
+            </div>
 
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+        </div>
 
-<h2>💰 Cotización</h2>
+        <label>Observaciones</label>
 
-<div class="formulario">
+        <textarea id="cotObservaciones"></textarea>
 
-<label>Cliente</label>
-<input id="cotCliente"
-       placeholder="Nombre del cliente">
+        <h3>Partidas</h3>
 
-<label>Concepto</label>
-<input id="cotConcepto"
-       placeholder="Ej. Instalación de 5 cámaras">
+        <div class="table-wrap">
 
-<label>Cantidad</label>
-<input id="cotCantidad"
-       type="number"
-       value="1"
-       min="1">
+            <table>
 
-<label>Precio unitario</label>
-<input id="cotPrecio"
-       type="number"
-       value="0"
-       min="0">
+                <thead>
 
-<button class="btn-principal"
-        onclick="guardarCotizacion()">
-Guardar cotización
-</button>
+                    <tr>
+                        <th>#</th>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Precio unitario</th>
+                        <th>Importe</th>
+                        <th></th>
+                    </tr>
 
-</div>
+                </thead>
 
-<div id="listaCotizaciones" class="lista"></div>
+                <tbody id="partidas"></tbody>
 
-</section>
+            </table>
 
+        </div>
 
-<!-- NOTAS -->
-<section id="notas" class="pantalla">
+        <button class="primary"
+                onclick="agregarPartida()">
+            + Agregar partida
+        </button>
 
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+        <div class="total">
 
-<h2>📝 Notas</h2>
+            Subtotal:
+            <span id="subtotal">$0.00</span>
 
-<div class="formulario">
+            <br>
 
-<label>Nota</label>
-<textarea id="notaTexto"
-          placeholder="Escribe algo..."></textarea>
+            IVA 16%:
+            <span id="iva">$0.00</span>
 
-<button class="btn-principal"
-        onclick="guardarNota()">
-Guardar nota
-</button>
+            <br>
 
-</div>
+            <strong>
+                Total:
+                <span id="total">$0.00</span>
+            </strong>
 
-<div id="listaNotas" class="lista"></div>
+        </div>
 
-</section>
+        <button class="success"
+                onclick="guardarCotizacion()">
+            Guardar cotización
+        </button>
 
+        <button onclick="limpiarCotizacion()">
+            Limpiar
+        </button>
 
-<!-- MATERIALES -->
-<section id="materiales" class="pantalla">
-
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
-
-<h2>📦 Materiales</h2>
-
-<div class="formulario">
-
-<label>Material</label>
-<input id="materialNombre"
-       placeholder="Ej. Cable Cat6">
-
-<label>Cantidad</label>
-<input id="materialCantidad"
-       type="number"
-       value="1">
-
-<button class="btn-principal"
-        onclick="guardarMaterial()">
-Agregar material
-</button>
-
-</div>
-
-<div id="listaMateriales" class="lista"></div>
+    </div>
 
 </section>
 
 
-<!-- CALENDARIO -->
-<section id="calendario" class="pantalla">
+<!-- HISTORIAL -->
+<section id="historial" class="hidden">
 
-<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+    <div class="card">
 
-<h2>📅 Calendario</h2>
+        <h2>Historial de cotizaciones</h2>
 
-<div class="formulario">
+        <div id="listaCotizaciones"></div>
 
-<label>Fecha</label>
-<input type="date" id="eventoFecha">
+    </div>
 
-<label>Hora</label>
-<input type="time" id="eventoHora">
+</section>
 
-<label>Evento</label>
-<input id="eventoTexto"
-       placeholder="Ej. Visita para cotización">
 
-<button class="btn-principal"
-        onclick="guardarEvento()">
-Guardar evento
-</button>
+<!-- CUENTAS POR COBRAR -->
+<section id="cxc" class="hidden">
 
-</div>
+    <div class="card">
 
-<div id="listaEventos" class="lista"></div>
+        <h2>Cuentas por cobrar</h2>
+
+        <div id="listaCXC"></div>
+
+    </div>
 
 </section>
 
 </main>
 
 
-<!-- BARRA INFERIOR -->
-
-<nav class="bottom">
-
-<button onclick="mostrar('inicio')">
-<span>🏠</span>
-Inicio
-</button>
-
-<button onclick="mostrar('clientes')">
-<span>👥</span>
-Clientes
-</button>
-
-<button onclick="mostrar('bitacora')">
-<span>📋</span>
-Bitácora
-</button>
-
-<button onclick="mostrar('cotizaciones')">
-<span>💰</span>
-Cotizaciones
-</button>
-
-</nav>
-
-
 <script>
 
-const hoy = new Date();
+const STORAGE_CLIENTES = "bitacora_clientes";
 
-document.getElementById("fecha").textContent =
-hoy.toLocaleDateString("es-MX",{
-    weekday:"long",
-    day:"numeric",
-    month:"long",
-    year:"numeric"
-});
+const STORAGE_COTIZACIONES =
+    "bitacora_cotizaciones";
 
 
-function obtener(nombre){
-
-    return JSON.parse(
-        localStorage.getItem(nombre) || "[]"
+let clientes =
+    JSON.parse(
+        localStorage.getItem(STORAGE_CLIENTES) || "[]"
     );
 
-}
 
-
-function guardar(nombre, datos){
-
-    localStorage.setItem(
-        nombre,
-        JSON.stringify(datos)
+let cotizaciones =
+    JSON.parse(
+        localStorage.getItem(STORAGE_COTIZACIONES) || "[]"
     );
 
-}
+
+let partidas = [];
 
 
-function mostrar(id){
+/* =========================
+   NAVEGACIÓN
+========================= */
+
+function mostrar(seccion){
 
     document
-    .querySelectorAll(".pantalla")
-    .forEach(x => x.classList.remove("activa"));
+        .querySelectorAll("main > section")
+        .forEach(s => s.classList.add("hidden"));
 
     document
-    .getElementById(id)
-    .classList.add("activa");
+        .getElementById(seccion)
+        .classList.remove("hidden");
 
-    actualizar();
+    document
+        .querySelectorAll("nav button")
+        .forEach(b => b.classList.remove("active"));
 
-    window.scrollTo(0,0);
+    const boton =
+        document.getElementById("nav-" + seccion);
+
+    if(boton){
+        boton.classList.add("active");
+    }
+
+    if(seccion === "inicio"){
+        actualizarPanel();
+    }
+
+    if(seccion === "clientes"){
+        renderClientes();
+    }
+
+    if(seccion === "cotizacion"){
+        prepararCotizacion();
+    }
+
+    if(seccion === "historial"){
+        renderCotizaciones();
+    }
+
+    if(seccion === "cxc"){
+        renderCXC();
+    }
 }
 
 
-function eliminar(nombre,index){
+/* =========================
+   CLIENTES
+========================= */
 
-    let datos = obtener(nombre);
+function nuevoCliente(){
 
-    datos.splice(index,1);
+    limpiarCliente();
 
-    guardar(nombre,datos);
-
-    actualizar();
+    document
+        .getElementById("clienteNombre")
+        .focus();
 }
 
-
-/* CLIENTES */
 
 function guardarCliente(){
 
     const nombre =
-    document.getElementById("clienteNombre").value.trim();
+        document
+            .getElementById("clienteNombre")
+            .value
+            .trim();
 
     if(!nombre){
-        alert("Escribe el nombre del cliente.");
+
+        alert(
+            "Escribe el nombre o empresa del cliente."
+        );
+
         return;
     }
 
-    let datos = obtener("clientes");
+    const id =
+        document
+            .getElementById("clienteId")
+            .value;
 
-    datos.push({
+    const datos = {
+
+        id:
+            id ||
+            Date.now().toString(),
+
         nombre,
-        telefono:document.getElementById("clienteTelefono").value,
-        direccion:document.getElementById("clienteDireccion").value,
-        notas:document.getElementById("clienteNotas").value,
-        fecha:new Date().toLocaleString("es-MX")
-    });
 
-    guardar("clientes",datos);
+        telefono:
+            document
+                .getElementById("clienteTelefono")
+                .value
+                .trim(),
 
-    document.getElementById("clienteNombre").value="";
-    document.getElementById("clienteTelefono").value="";
-    document.getElementById("clienteDireccion").value="";
-    document.getElementById("clienteNotas").value="";
+        correo:
+            document
+                .getElementById("clienteCorreo")
+                .value
+                .trim(),
 
-    actualizar();
+        direccion:
+            document
+                .getElementById("clienteDireccion")
+                .value
+                .trim()
+    };
 
-    alert("Cliente guardado.");
+
+    if(id){
+
+        const indice =
+            clientes.findIndex(
+                c => c.id === id
+            );
+
+        if(indice >= 0){
+            clientes[indice] = datos;
+        }
+
+    }else{
+
+        clientes.push(datos);
+    }
+
+
+    guardarDatos();
+
+    limpiarCliente();
+
+    renderClientes();
+
+    actualizarSelectClientes();
+
+    alert("Cliente guardado correctamente.");
 }
 
 
-/* BITÁCORA */
+function limpiarCliente(){
 
-function guardarBitacora(){
+    document.getElementById("clienteId").value = "";
+
+    document.getElementById("clienteNombre").value = "";
+
+    document.getElementById("clienteTelefono").value = "";
+
+    document.getElementById("clienteCorreo").value = "";
+
+    document.getElementById("clienteDireccion").value = "";
+}
+
+
+function editarCliente(id){
 
     const cliente =
-    document.getElementById("bitCliente").value.trim();
+        clientes.find(
+            c => c.id === id
+        );
 
-    const trabajo =
-    document.getElementById("bitTrabajo").value.trim();
+    if(!cliente) return;
 
-    if(!cliente || !trabajo){
-        alert("Cliente y trabajo son obligatorios.");
-        return;
-    }
+    document.getElementById("clienteId").value =
+        cliente.id;
 
-    let datos = obtener("bitacora");
+    document.getElementById("clienteNombre").value =
+        cliente.nombre;
 
-    datos.push({
-        cliente,
-        trabajo,
-        material:document.getElementById("bitMaterial").value,
-        observaciones:document.getElementById("bitObservaciones").value,
-        fecha:new Date().toLocaleString("es-MX")
-    });
+    document.getElementById("clienteTelefono").value =
+        cliente.telefono;
 
-    guardar("bitacora",datos);
+    document.getElementById("clienteCorreo").value =
+        cliente.correo;
 
-    document.getElementById("bitCliente").value="";
-    document.getElementById("bitTrabajo").value="";
-    document.getElementById("bitMaterial").value="";
-    document.getElementById("bitObservaciones").value="";
-
-    actualizar();
-
-    alert("Visita guardada.");
+    document.getElementById("clienteDireccion").value =
+        cliente.direccion;
 }
 
 
-/* PENDIENTES */
+function eliminarCliente(id){
 
-function guardarPendiente(){
-
-    const texto =
-    document.getElementById("pendienteTexto").value.trim();
-
-    if(!texto){
-        alert("Escribe el pendiente.");
+    if(
+        !confirm(
+            "¿Seguro que quieres eliminar este cliente?"
+        )
+    ){
         return;
     }
 
-    let datos = obtener("pendientes");
+    clientes =
+        clientes.filter(
+            c => c.id !== id
+        );
 
-    datos.push({
-        texto,
-        fecha:document.getElementById("pendienteFecha").value,
-        completado:false
-    });
+    guardarDatos();
 
-    guardar("pendientes",datos);
+    renderClientes();
 
-    document.getElementById("pendienteTexto").value="";
-    document.getElementById("pendienteFecha").value="";
-
-    actualizar();
+    actualizarSelectClientes();
 }
 
 
-/* COTIZACIONES */
+function renderClientes(){
+
+    const contenedor =
+        document.getElementById("listaClientes");
+
+
+    if(!clientes.length){
+
+        contenedor.innerHTML =
+            '<div class="empty">No hay clientes guardados.</div>';
+
+        return;
+    }
+
+
+    contenedor.innerHTML =
+        clientes.map(c => `
+
+            <div class="card">
+
+                <strong>
+                    ${escapeHTML(c.nombre)}
+                </strong>
+
+                <br>
+
+                📞
+                ${escapeHTML(
+                    c.telefono || "Sin teléfono"
+                )}
+
+                <br>
+
+                ✉️
+                ${escapeHTML(
+                    c.correo || "Sin correo"
+                )}
+
+                <br>
+
+                📍
+                ${escapeHTML(
+                    c.direccion || "Sin dirección"
+                )}
+
+                <br>
+
+                <button
+                    onclick="editarCliente('${c.id}')">
+                    Editar
+                </button>
+
+                <button
+                    class="danger"
+                    onclick="eliminarCliente('${c.id}')">
+                    Eliminar
+                </button>
+
+            </div>
+
+        `).join("");
+}
+
+
+/* =========================
+   COTIZACIONES
+========================= */
+
+function prepararCotizacion(){
+
+    actualizarSelectClientes();
+
+
+    if(
+        !document
+            .getElementById("cotFecha")
+            .value
+    ){
+
+        document
+            .getElementById("cotFecha")
+            .value =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+    }
+
+
+    if(!partidas.length){
+
+        agregarPartida();
+        agregarPartida();
+        agregarPartida();
+    }
+}
+
+
+function actualizarSelectClientes(){
+
+    const select =
+        document.getElementById("cotCliente");
+
+    const valor =
+        select.value;
+
+
+    select.innerHTML =
+        '<option value="">Selecciona un cliente</option>' +
+
+        clientes.map(c => `
+
+            <option value="${c.id}">
+                ${escapeHTML(c.nombre)}
+            </option>
+
+        `).join("");
+
+
+    select.value = valor;
+}
+
+
+function cargarClienteCotizacion(){
+
+    const id =
+        document
+            .getElementById("cotCliente")
+            .value;
+
+
+    const cliente =
+        clientes.find(
+            c => c.id === id
+        );
+
+
+    const caja =
+        document.getElementById("datosCliente");
+
+
+    if(!cliente){
+
+        caja.classList.add("hidden");
+
+        return;
+    }
+
+
+    caja.classList.remove("hidden");
+
+
+    caja.innerHTML = `
+
+        <strong>Datos del cliente</strong>
+
+        <br>
+
+        ${escapeHTML(cliente.nombre)}
+
+        <br>
+
+        📞
+        ${escapeHTML(
+            cliente.telefono || "Sin teléfono"
+        )}
+
+        <br>
+
+        ✉️
+        ${escapeHTML(
+            cliente.correo || "Sin correo"
+        )}
+
+        <br>
+
+        📍
+        ${escapeHTML(
+            cliente.direccion || "Sin dirección"
+        )}
+
+    `;
+}
+
+
+/* =========================
+   PARTIDAS
+========================= */
+
+function agregarPartida(){
+
+    partidas.push({
+
+        cantidad:1,
+
+        descripcion:"",
+
+        precio:0
+
+    });
+
+
+    renderPartidas();
+}
+
+
+function eliminarPartida(indice){
+
+    partidas.splice(
+        indice,
+        1
+    );
+
+    renderPartidas();
+}
+
+
+function actualizarPartida(
+    indice,
+    campo,
+    valor
+){
+
+    if(campo === "cantidad"){
+
+        partidas[indice].cantidad =
+            parseFloat(valor) || 0;
+    }
+
+
+    if(campo === "precio"){
+
+        partidas[indice].precio =
+            parseFloat(valor) || 0;
+    }
+
+
+    if(campo === "descripcion"){
+
+        partidas[indice].descripcion =
+            valor;
+    }
+
+
+    calcularTotales();
+}
+
+
+function renderPartidas(){
+
+    const tbody =
+        document.getElementById("partidas");
+
+
+    tbody.innerHTML =
+        partidas.map((p,i) => {
+
+            const importe =
+                p.cantidad *
+                p.precio;
+
+
+            return `
+
+                <tr>
+
+                    <td>
+                        ${i + 1}
+                    </td>
+
+                    <td>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value="${p.cantidad}"
+                            onchange="
+                                actualizarPartida(
+                                    ${i},
+                                    'cantidad',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </td>
+
+                    <td>
+
+                        <input
+                            type="text"
+                            placeholder="Descripción"
+                            value="${escapeHTML(p.descripcion)}"
+                            onchange="
+                                actualizarPartida(
+                                    ${i},
+                                    'descripcion',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </td>
+
+                    <td>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value="${p.precio}"
+                            onchange="
+                                actualizarPartida(
+                                    ${i},
+                                    'precio',
+                                    this.value
+                                )
+                            "
+                        >
+
+                    </td>
+
+                    <td>
+                        ${moneda(importe)}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="danger"
+                            onclick="
+                                eliminarPartida(${i})
+                            ">
+                            X
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+
+    calcularTotales();
+}
+
+
+/* =========================
+   TOTALES
+========================= */
+
+function calcularTotales(){
+
+    const subtotal =
+        partidas.reduce(
+            (total,p) =>
+                total +
+                (
+                    p.cantidad *
+                    p.precio
+                ),
+            0
+        );
+
+
+    const iva =
+        subtotal * 0.16;
+
+
+    const total =
+        subtotal + iva;
+
+
+    document.getElementById("subtotal")
+        .textContent =
+        moneda(subtotal);
+
+
+    document.getElementById("iva")
+        .textContent =
+        moneda(iva);
+
+
+    document.getElementById("total")
+        .textContent =
+        moneda(total);
+}
+
+
+/* =========================
+   GUARDAR COTIZACIÓN
+========================= */
 
 function guardarCotizacion(){
 
+    const clienteId =
+        document
+            .getElementById("cotCliente")
+            .value;
+
+
+    if(!clienteId){
+
+        alert(
+            "Primero selecciona un cliente."
+        );
+
+        return;
+    }
+
+
     const cliente =
-    document.getElementById("cotCliente").value.trim();
+        clientes.find(
+            c => c.id === clienteId
+        );
 
-    const concepto =
-    document.getElementById("cotConcepto").value.trim();
 
-    const cantidad =
-    Number(document.getElementById("cotCantidad").value);
+    if(!cliente) return;
 
-    const precio =
-    Number(document.getElementById("cotPrecio").value);
 
-    if(!cliente || !concepto){
-        alert("Cliente y concepto son obligatorios.");
+    const partidasValidas =
+        partidas.filter(
+            p =>
+                p.descripcion.trim() &&
+                p.cantidad > 0
+        );
+
+
+    if(!partidasValidas.length){
+
+        alert(
+            "Agrega por lo menos una partida."
+        );
+
         return;
     }
 
-    let datos = obtener("cotizaciones");
 
-    datos.push({
-        cliente,
-        concepto,
-        cantidad,
-        precio,
-        total:cantidad*precio,
-        fecha:new Date().toLocaleString("es-MX")
-    });
+    const subtotal =
+        partidasValidas.reduce(
+            (s,p) =>
+                s +
+                (
+                    p.cantidad *
+                    p.precio
+                ),
+            0
+        );
 
-    guardar("cotizaciones",datos);
 
-    document.getElementById("cotCliente").value="";
-    document.getElementById("cotConcepto").value="";
+    const iva =
+        subtotal * 0.16;
 
-    actualizar();
 
-    alert("Cotización guardada.");
+    const total =
+        subtotal + iva;
+
+
+    const cotizacion = {
+
+        id:
+            Date.now().toString(),
+
+        folio:
+            "COT-" +
+            new Date().getFullYear() +
+            "-" +
+            String(
+                cotizaciones.length + 1
+            ).padStart(4,"0"),
+
+
+        fecha:
+            document
+                .getElementById("cotFecha")
+                .value,
+
+
+        vigencia:
+            document
+                .getElementById("cotVigencia")
+                .value,
+
+
+        clienteId:
+            cliente.id,
+
+
+        cliente:
+            {...cliente},
+
+
+        partidas:
+            partidasValidas,
+
+
+        subtotal,
+
+        iva,
+
+        total,
+
+
+        observaciones:
+            document
+                .getElementById("cotObservaciones")
+                .value,
+
+
+        estado:
+            "Pendiente"
+    };
+
+
+    cotizaciones.push(
+        cotizacion
+    );
+
+
+    guardarDatos();
+
+
+    alert(
+        "Cotización " +
+        cotizacion.folio +
+        " guardada correctamente."
+    );
+
+
+    limpiarCotizacion();
+
+    mostrar("historial");
 }
 
 
-/* NOTAS */
+/* =========================
+   LIMPIAR COTIZACIÓN
+========================= */
 
-function guardarNota(){
+function limpiarCotizacion(){
 
-    const texto =
-    document.getElementById("notaTexto").value.trim();
+    document
+        .getElementById("cotCliente")
+        .value = "";
 
-    if(!texto){
-        alert("Escribe una nota.");
+
+    document
+        .getElementById("cotObservaciones")
+        .value = "";
+
+
+    document
+        .getElementById("datosCliente")
+        .classList.add("hidden");
+
+
+    partidas = [];
+
+
+    agregarPartida();
+    agregarPartida();
+    agregarPartida();
+
+
+    document
+        .getElementById("cotFecha")
+        .value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+}
+
+
+/* =========================
+   HISTORIAL
+========================= */
+
+function renderCotizaciones(){
+
+    const contenedor =
+        document
+            .getElementById(
+                "listaCotizaciones"
+            );
+
+
+    if(!cotizaciones.length){
+
+        contenedor.innerHTML =
+            '<div class="empty">Todavía no hay cotizaciones.</div>';
+
         return;
     }
 
-    let datos = obtener("notas");
 
-    datos.push({
-        texto,
-        fecha:new Date().toLocaleString("es-MX")
-    });
+    contenedor.innerHTML =
+        cotizaciones
+            .slice()
+            .reverse()
+            .map(c => `
 
-    guardar("notas",datos);
+                <div class="card">
 
-    document.getElementById("notaTexto").value="";
+                    <strong>
+                        ${escapeHTML(c.folio)}
+                    </strong>
 
-    actualizar();
+                    <span class="badge">
+                        ${escapeHTML(c.estado)}
+                    </span>
+
+                    <br><br>
+
+                    Cliente:
+                    ${escapeHTML(
+                        c.cliente.nombre
+                    )}
+
+                    <br>
+
+                    Fecha:
+                    ${escapeHTML(c.fecha)}
+
+                    <br>
+
+                    Total:
+                    <strong>
+                        ${moneda(c.total)}
+                    </strong>
+
+                    <br>
+
+                    Partidas:
+                    ${c.partidas.length}
+
+                    <br>
+
+                    <button
+                        onclick="
+                            verCotizacion('${c.id}')
+                        ">
+                        Ver detalle
+                    </button>
+
+                    ${
+                        c.estado !== "Pagada"
+                        ?
+                        `
+                        <button
+                            class="success"
+                            onclick="
+                                marcarPagada('${c.id}')
+                            ">
+                            Marcar como pagada
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+            `)
+            .join("");
 }
 
 
-/* MATERIALES */
+function verCotizacion(id){
 
-function guardarMaterial(){
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
 
-    const nombre =
-    document.getElementById("materialNombre").value.trim();
 
-    const cantidad =
-    Number(document.getElementById("materialCantidad").value);
+    if(!c) return;
 
-    if(!nombre){
-        alert("Escribe el material.");
+
+    const detalle =
+        c.partidas
+            .map(
+                (p,i) =>
+                    `${i+1}. ${p.cantidad} x ${p.descripcion} = ${moneda(p.cantidad * p.precio)}`
+            )
+            .join("\n");
+
+
+    alert(
+`Cotización ${c.folio}
+
+Cliente: ${c.cliente.nombre}
+
+${detalle}
+
+Subtotal: ${moneda(c.subtotal)}
+IVA: ${moneda(c.iva)}
+TOTAL: ${moneda(c.total)}
+
+Estado: ${c.estado}
+
+Observaciones:
+${c.observaciones || "Sin observaciones"}`
+    );
+}
+
+
+function marcarPagada(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+
+    if(!c) return;
+
+
+    c.estado =
+        "Pagada";
+
+
+    guardarDatos();
+
+    renderCotizaciones();
+
+    renderCXC();
+
+    actualizarPanel();
+}
+
+
+/* =========================
+   CUENTAS POR COBRAR
+========================= */
+
+function renderCXC(){
+
+    const pendientes =
+        cotizaciones.filter(
+            c => c.estado !== "Pagada"
+        );
+
+
+    const contenedor =
+        document.getElementById(
+            "listaCXC"
+        );
+
+
+    if(!pendientes.length){
+
+        contenedor.innerHTML =
+            '<div class="empty">No hay cuentas por cobrar.</div>';
+
         return;
     }
 
-    let datos = obtener("materiales");
 
-    datos.push({
-        nombre,
-        cantidad
-    });
+    const total =
+        pendientes.reduce(
+            (s,c) =>
+                s + c.total,
+            0
+        );
 
-    guardar("materiales",datos);
 
-    document.getElementById("materialNombre").value="";
+    contenedor.innerHTML = `
 
-    actualizar();
+        <div class="card">
+
+            <strong>
+                Total pendiente:
+            </strong>
+
+            <br>
+
+            <strong style="font-size:24px">
+                ${moneda(total)}
+            </strong>
+
+        </div>
+
+
+        ${
+            pendientes.map(c => `
+
+                <div class="card">
+
+                    <strong>
+                        ${escapeHTML(c.folio)}
+                    </strong>
+
+                    <br>
+
+                    Cliente:
+                    ${escapeHTML(
+                        c.cliente.nombre
+                    )}
+
+                    <br>
+
+                    Fecha:
+                    ${escapeHTML(c.fecha)}
+
+                    <br>
+
+                    Adeudo:
+                    <strong>
+                        ${moneda(c.total)}
+                    </strong>
+
+                    <br>
+
+                    <button
+                        class="success"
+                        onclick="
+                            marcarPagada('${c.id}')
+                        ">
+                        Marcar como pagada
+                    </button>
+
+                </div>
+
+            `).join("")
+        }
+
+    `;
 }
 
 
-/* CALENDARIO */
+/* =========================
+   PANEL
+========================= */
 
-function guardarEvento(){
+function actualizarPanel(){
 
-    const texto =
-    document.getElementById("eventoTexto").value.trim();
+    document
+        .getElementById(
+            "contadorClientes"
+        )
+        .textContent =
+        clientes.length;
 
-    if(!texto){
-        alert("Escribe el evento.");
-        return;
-    }
 
-    let datos = obtener("eventos");
+    document
+        .getElementById(
+            "contadorCotizaciones"
+        )
+        .textContent =
+        cotizaciones.length;
 
-    datos.push({
-        fecha:document.getElementById("eventoFecha").value,
-        hora:document.getElementById("eventoHora").value,
-        texto
-    });
 
-    guardar("eventos",datos);
+    const pendiente =
+        cotizaciones
+            .filter(
+                c => c.estado !== "Pagada"
+            )
+            .reduce(
+                (s,c) =>
+                    s + c.total,
+                0
+            );
 
-    document.getElementById("eventoTexto").value="";
 
-    actualizar();
+    document
+        .getElementById(
+            "totalCobrar"
+        )
+        .textContent =
+        moneda(pendiente);
 }
 
 
-/* ACTUALIZAR PANTALLAS */
+/* =========================
+   GUARDAR DATOS
+========================= */
 
-function actualizar(){
+function guardarDatos(){
 
-    const clientes=obtener("clientes");
-    const pendientes=obtener("pendientes");
-    const cotizaciones=obtener("cotizaciones");
+    localStorage.setItem(
+        STORAGE_CLIENTES,
+        JSON.stringify(clientes)
+    );
 
-    document.getElementById("numClientes").textContent =
-    clientes.length;
 
-    document.getElementById("numPendientes").textContent =
-    pendientes.length;
+    localStorage.setItem(
+        STORAGE_COTIZACIONES,
+        JSON.stringify(cotizaciones)
+    );
 
-    document.getElementById("numCotizaciones").textContent =
-    cotizaciones.length;
 
+    actualizarPanel();
+}
 
-    document.getElementById("listaClientes").innerHTML =
-    clientes.map((x,i)=>`
 
-        <div class="item">
+/* =========================
+   UTILIDADES
+========================= */
 
-            <strong>${escapeHTML(x.nombre)}</strong><br>
+function moneda(valor){
 
-            <small>
-            📞 ${escapeHTML(x.telefono || "Sin teléfono")}<br>
-            📍 ${escapeHTML(x.direccion || "Sin dirección")}
-            </small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('clientes',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    const visitas=obtener("bitacora");
-
-    document.getElementById("listaBitacora").innerHTML =
-    visitas.map((x,i)=>`
-
-        <div class="item">
-
-            <strong>${escapeHTML(x.cliente)}</strong>
-
-            <p>${escapeHTML(x.trabajo)}</p>
-
-            <small>${escapeHTML(x.fecha)}</small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('bitacora',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    document.getElementById("listaPendientes").innerHTML =
-    pendientes.map((x,i)=>`
-
-        <div class="item">
-
-            <strong>⏰ ${escapeHTML(x.texto)}</strong>
-
-            <br>
-
-            <small>
-            ${x.fecha || "Sin fecha"}
-            </small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('pendientes',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    document.getElementById("listaCotizaciones").innerHTML =
-    cotizaciones.map((x,i)=>`
-
-        <div class="item">
-
-            <strong>${escapeHTML(x.cliente)}</strong>
-
-            <p>${escapeHTML(x.concepto)}</p>
-
-            <small>
-            ${x.cantidad} × $${x.precio.toFixed(2)}
-            </small>
-
-            <div class="total">
-            $${x.total.toFixed(2)}
-            </div>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('cotizaciones',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    const notas=obtener("notas");
-
-    document.getElementById("listaNotas").innerHTML =
-    notas.map((x,i)=>`
-
-        <div class="item">
-
-            <p>${escapeHTML(x.texto)}</p>
-
-            <small>${escapeHTML(x.fecha)}</small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('notas',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    const materiales=obtener("materiales");
-
-    document.getElementById("listaMateriales").innerHTML =
-    materiales.map((x,i)=>`
-
-        <div class="item">
-
-            <strong>${escapeHTML(x.nombre)}</strong>
-
-            <br>
-
-            <small>
-            Cantidad: ${x.cantidad}
-            </small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('materiales',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
-
-    const eventos=obtener("eventos");
-
-    document.getElementById("listaEventos").innerHTML =
-    eventos.map((x,i)=>`
-
-        <div class="item">
-
-            <strong>📅 ${escapeHTML(x.texto)}</strong>
-
-            <br>
-
-            <small>
-            ${x.fecha || "Sin fecha"}
-            ${x.hora ? " · "+x.hora : ""}
-            </small>
-
-            <br>
-
-            <button
-            class="btn-eliminar"
-            onclick="eliminar('eventos',${i})">
-            Eliminar
-            </button>
-
-        </div>
-
-    `).join("");
-
+    return new Intl.NumberFormat(
+        "es-MX",
+        {
+            style:"currency",
+            currency:"MXN"
+        }
+    ).format(valor || 0);
 }
 
 
 function escapeHTML(text){
 
-    return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+    return String(text || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-async function compartirApp(){
+/* =========================
+   INICIO
+========================= */
 
-    if(navigator.share){
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-        try{
+        mostrar("inicio");
 
-            await navigator.share({
-                title:"Bitácora Pro",
-                text:"Mi aplicación Bitácora Pro"
-            });
+        partidas = [];
 
-        }catch(e){}
-
-    }else{
-
-        alert(
-        "En Safari puedes usar el botón Compartir y después 'Agregar a pantalla de inicio'."
-        );
+        agregarPartida();
+        agregarPartida();
+        agregarPartida();
 
     }
-
-}
-
-
-actualizar();
+);
 
 </script>
 
