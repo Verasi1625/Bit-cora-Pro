@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bitácora Pro - Control Verasi</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 *{box-sizing:border-box}
 
@@ -59,12 +61,8 @@ main{
     padding:15px;
 }
 
-section{
-    display:block;
-}
-
 .hidden{
-    display:none !important;
+    display:none!important;
 }
 
 .card{
@@ -86,9 +84,7 @@ label{
     font-weight:bold;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
     width:100%;
     padding:11px;
     margin-top:5px;
@@ -109,20 +105,12 @@ button{
     font-weight:bold;
 }
 
-.primary{
-    background:#111827;
-    color:white;
-}
-
-.success{
-    background:#166534;
-    color:white;
-}
-
-.danger{
-    background:#b91c1c;
-    color:white;
-}
+.primary{background:#111827;color:white}
+.success{background:#166534;color:white}
+.warning{background:#b45309;color:white}
+.danger{background:#b91c1c;color:white}
+.pdf{background:#7c3aed;color:white}
+.whatsapp{background:#25D366;color:white}
 
 .grid{
     display:grid;
@@ -141,8 +129,7 @@ table{
     margin-top:15px;
 }
 
-th,
-td{
+th,td{
     border-bottom:1px solid #e5e7eb;
     padding:8px;
     text-align:left;
@@ -179,6 +166,57 @@ td input{
     background:#e5e7eb;
     font-size:12px;
     font-weight:bold;
+    margin-left:5px;
+}
+
+.badge-aceptada{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.badge-realizada{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.badge-pagada{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.logo-box{
+    background:#111827;
+    color:white;
+    padding:18px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.logo-box strong{
+    font-size:23px;
+    letter-spacing:1px;
+}
+
+.logo-box small{
+    display:block;
+    margin-top:4px;
+    opacity:.8;
+}
+
+.acciones{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+
+.acciones button{
+    margin-top:6px;
+}
+
+hr{
+    border:0;
+    border-top:1px solid #e5e7eb;
+    margin:20px 0;
 }
 </style>
 </head>
@@ -191,16 +229,31 @@ td input{
 </header>
 
 <nav>
-    <button id="nav-inicio" onclick="mostrar('inicio')">Inicio</button>
-    <button id="nav-clientes" onclick="mostrar('clientes')">Clientes</button>
-    <button id="nav-cotizacion" onclick="mostrar('cotizacion')">Cotizaciones</button>
-    <button id="nav-historial" onclick="mostrar('historial')">Historial</button>
-    <button id="nav-cxc" onclick="mostrar('cxc')">Cuentas por cobrar</button>
+    <button id="nav-inicio" onclick="mostrar('inicio')">
+        Inicio
+    </button>
+
+    <button id="nav-clientes" onclick="mostrar('clientes')">
+        Clientes
+    </button>
+
+    <button id="nav-cotizacion" onclick="mostrar('cotizacion')">
+        Cotizaciones
+    </button>
+
+    <button id="nav-historial" onclick="mostrar('historial')">
+        Historial
+    </button>
+
+    <button id="nav-cxc" onclick="mostrar('cxc')">
+        Cuentas por cobrar
+    </button>
 </nav>
 
 <main>
 
-<!-- INICIO -->
+<!-- ================= INICIO ================= -->
+
 <section id="inicio">
 
     <div class="card">
@@ -210,43 +263,45 @@ td input{
 
             <div class="card">
                 <strong id="contadorClientes">0</strong>
-                <br>
-                Clientes
+                <br>Clientes
             </div>
 
             <div class="card">
                 <strong id="contadorCotizaciones">0</strong>
-                <br>
-                Cotizaciones
+                <br>Cotizaciones
             </div>
 
             <div class="card">
                 <strong id="totalCobrar">$0.00</strong>
-                <br>
-                Por cobrar
+                <br>Por cobrar
             </div>
 
         </div>
     </div>
 
     <div class="card">
+
         <h2>Acciones rápidas</h2>
 
-        <button class="primary"
-                onclick="mostrar('clientes');nuevoCliente()">
+        <button
+            class="primary"
+            onclick="mostrar('clientes');nuevoCliente()">
             + Nuevo cliente
         </button>
 
-        <button class="success"
-                onclick="mostrar('cotizacion')">
+        <button
+            class="success"
+            onclick="mostrar('cotizacion')">
             + Nueva cotización
         </button>
+
     </div>
 
 </section>
 
 
-<!-- CLIENTES -->
+<!-- ================= CLIENTES ================= -->
+
 <section id="clientes" class="hidden">
 
     <div class="card">
@@ -262,22 +317,22 @@ td input{
         <input type="hidden" id="clienteId">
 
         <label>Nombre / Empresa</label>
-        <input id="clienteNombre"
-               placeholder="Nombre del cliente o empresa">
+        <input
+            id="clienteNombre"
+            placeholder="Nombre del cliente o empresa">
 
         <label>Teléfono</label>
-        <input id="clienteTelefono"
-               type="tel">
+        <input id="clienteTelefono" type="tel">
 
         <label>Correo</label>
-        <input id="clienteCorreo"
-               type="email">
+        <input id="clienteCorreo" type="email">
 
         <label>Dirección</label>
         <textarea id="clienteDireccion"></textarea>
 
-        <button class="success"
-                onclick="guardarCliente()">
+        <button
+            class="success"
+            onclick="guardarCliente()">
             Guardar cliente
         </button>
 
@@ -290,17 +345,24 @@ td input{
 </section>
 
 
-<!-- COTIZACIÓN -->
+<!-- ================= COTIZACIÓN ================= -->
+
 <section id="cotizacion" class="hidden">
 
     <div class="card">
+
+        <div class="logo-box">
+            <strong>VERASI PC</strong>
+            <small>SOLUCIONES INFORMÁTICAS</small>
+        </div>
 
         <h2>Nueva cotización</h2>
 
         <label>Cliente</label>
 
-        <select id="cotCliente"
-                onchange="cargarClienteCotizacion()">
+        <select
+            id="cotCliente"
+            onchange="cargarClienteCotizacion()">
 
             <option value="">
                 Selecciona un cliente
@@ -312,23 +374,28 @@ td input{
             + Crear cliente nuevo
         </button>
 
-        <div id="datosCliente"
-             class="card hidden">
+        <div
+            id="datosCliente"
+            class="card hidden">
         </div>
 
         <div class="grid">
 
             <div>
                 <label>Fecha</label>
-                <input type="date"
-                       id="cotFecha">
+
+                <input
+                    type="date"
+                    id="cotFecha">
             </div>
 
             <div>
                 <label>Vigencia</label>
-                <input type="text"
-                       id="cotVigencia"
-                       value="15 días">
+
+                <input
+                    type="text"
+                    id="cotVigencia"
+                    value="15 días">
             </div>
 
         </div>
@@ -344,7 +411,6 @@ td input{
             <table>
 
                 <thead>
-
                     <tr>
                         <th>#</th>
                         <th>Cantidad</th>
@@ -353,7 +419,6 @@ td input{
                         <th>Importe</th>
                         <th></th>
                     </tr>
-
                 </thead>
 
                 <tbody id="partidas"></tbody>
@@ -362,8 +427,9 @@ td input{
 
         </div>
 
-        <button class="primary"
-                onclick="agregarPartida()">
+        <button
+            class="primary"
+            onclick="agregarPartida()">
             + Agregar partida
         </button>
 
@@ -386,8 +452,9 @@ td input{
 
         </div>
 
-        <button class="success"
-                onclick="guardarCotizacion()">
+        <button
+            class="success"
+            onclick="guardarCotizacion()">
             Guardar cotización
         </button>
 
@@ -400,7 +467,8 @@ td input{
 </section>
 
 
-<!-- HISTORIAL -->
+<!-- ================= HISTORIAL ================= -->
+
 <section id="historial" class="hidden">
 
     <div class="card">
@@ -414,12 +482,19 @@ td input{
 </section>
 
 
-<!-- CUENTAS POR COBRAR -->
+<!-- ================= CUENTAS POR COBRAR ================= -->
+
 <section id="cxc" class="hidden">
 
     <div class="card">
 
         <h2>Cuentas por cobrar</h2>
+
+        <p>
+            Solo aparecen trabajos
+            <strong>realizados</strong>
+            que todavía no han sido pagados.
+        </p>
 
         <div id="listaCXC"></div>
 
@@ -432,36 +507,49 @@ td input{
 
 <script>
 
-const STORAGE_CLIENTES = "bitacora_clientes";
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+const STORAGE_CLIENTES =
+    "bitacora_clientes";
 
 const STORAGE_COTIZACIONES =
     "bitacora_cotizaciones";
 
 
+/* =====================================================
+   DATOS
+===================================================== */
+
 let clientes =
     JSON.parse(
-        localStorage.getItem(STORAGE_CLIENTES) || "[]"
+        localStorage.getItem(
+            STORAGE_CLIENTES
+        ) || "[]"
     );
-
 
 let cotizaciones =
     JSON.parse(
-        localStorage.getItem(STORAGE_COTIZACIONES) || "[]"
+        localStorage.getItem(
+            STORAGE_COTIZACIONES
+        ) || "[]"
     );
-
 
 let partidas = [];
 
 
-/* =========================
+/* =====================================================
    NAVEGACIÓN
-========================= */
+===================================================== */
 
 function mostrar(seccion){
 
     document
         .querySelectorAll("main > section")
-        .forEach(s => s.classList.add("hidden"));
+        .forEach(
+            s => s.classList.add("hidden")
+        );
 
     document
         .getElementById(seccion)
@@ -469,10 +557,14 @@ function mostrar(seccion){
 
     document
         .querySelectorAll("nav button")
-        .forEach(b => b.classList.remove("active"));
+        .forEach(
+            b => b.classList.remove("active")
+        );
 
     const boton =
-        document.getElementById("nav-" + seccion);
+        document.getElementById(
+            "nav-" + seccion
+        );
 
     if(boton){
         boton.classList.add("active");
@@ -500,9 +592,9 @@ function mostrar(seccion){
 }
 
 
-/* =========================
+/* =====================================================
    CLIENTES
-========================= */
+===================================================== */
 
 function nuevoCliente(){
 
@@ -563,7 +655,6 @@ function guardarCliente(){
                 .trim()
     };
 
-
     if(id){
 
         const indice =
@@ -578,8 +669,8 @@ function guardarCliente(){
     }else{
 
         clientes.push(datos);
-    }
 
+    }
 
     guardarDatos();
 
@@ -661,7 +752,6 @@ function renderClientes(){
     const contenedor =
         document.getElementById("listaClientes");
 
-
     if(!clientes.length){
 
         contenedor.innerHTML =
@@ -669,7 +759,6 @@ function renderClientes(){
 
         return;
     }
-
 
     contenedor.innerHTML =
         clientes.map(c => `
@@ -720,14 +809,13 @@ function renderClientes(){
 }
 
 
-/* =========================
+/* =====================================================
    COTIZACIONES
-========================= */
+===================================================== */
 
 function prepararCotizacion(){
 
     actualizarSelectClientes();
-
 
     if(
         !document
@@ -738,11 +826,8 @@ function prepararCotizacion(){
         document
             .getElementById("cotFecha")
             .value =
-            new Date()
-                .toISOString()
-                .split("T")[0];
+            fechaHoy();
     }
-
 
     if(!partidas.length){
 
@@ -761,7 +846,6 @@ function actualizarSelectClientes(){
     const valor =
         select.value;
 
-
     select.innerHTML =
         '<option value="">Selecciona un cliente</option>' +
 
@@ -772,7 +856,6 @@ function actualizarSelectClientes(){
             </option>
 
         `).join("");
-
 
     select.value = valor;
 }
@@ -785,16 +868,13 @@ function cargarClienteCotizacion(){
             .getElementById("cotCliente")
             .value;
 
-
     const cliente =
         clientes.find(
             c => c.id === id
         );
 
-
     const caja =
         document.getElementById("datosCliente");
-
 
     if(!cliente){
 
@@ -803,15 +883,13 @@ function cargarClienteCotizacion(){
         return;
     }
 
-
     caja.classList.remove("hidden");
-
 
     caja.innerHTML = `
 
         <strong>Datos del cliente</strong>
 
-        <br>
+        <br><br>
 
         ${escapeHTML(cliente.nombre)}
 
@@ -840,9 +918,9 @@ function cargarClienteCotizacion(){
 }
 
 
-/* =========================
+/* =====================================================
    PARTIDAS
-========================= */
+===================================================== */
 
 function agregarPartida(){
 
@@ -855,7 +933,6 @@ function agregarPartida(){
         precio:0
 
     });
-
 
     renderPartidas();
 }
@@ -884,20 +961,17 @@ function actualizarPartida(
             parseFloat(valor) || 0;
     }
 
-
     if(campo === "precio"){
 
         partidas[indice].precio =
             parseFloat(valor) || 0;
     }
 
-
     if(campo === "descripcion"){
 
         partidas[indice].descripcion =
             valor;
     }
-
 
     calcularTotales();
 }
@@ -908,7 +982,6 @@ function renderPartidas(){
     const tbody =
         document.getElementById("partidas");
 
-
     tbody.innerHTML =
         partidas.map((p,i) => {
 
@@ -916,14 +989,11 @@ function renderPartidas(){
                 p.cantidad *
                 p.precio;
 
-
             return `
 
                 <tr>
 
-                    <td>
-                        ${i + 1}
-                    </td>
+                    <td>${i + 1}</td>
 
                     <td>
 
@@ -1000,14 +1070,13 @@ function renderPartidas(){
 
         }).join("");
 
-
     calcularTotales();
 }
 
 
-/* =========================
+/* =====================================================
    TOTALES
-========================= */
+===================================================== */
 
 function calcularTotales(){
 
@@ -1022,24 +1091,19 @@ function calcularTotales(){
             0
         );
 
-
     const iva =
         subtotal * 0.16;
 
-
     const total =
         subtotal + iva;
-
 
     document.getElementById("subtotal")
         .textContent =
         moneda(subtotal);
 
-
     document.getElementById("iva")
         .textContent =
         moneda(iva);
-
 
     document.getElementById("total")
         .textContent =
@@ -1047,9 +1111,9 @@ function calcularTotales(){
 }
 
 
-/* =========================
+/* =====================================================
    GUARDAR COTIZACIÓN
-========================= */
+===================================================== */
 
 function guardarCotizacion(){
 
@@ -1057,7 +1121,6 @@ function guardarCotizacion(){
         document
             .getElementById("cotCliente")
             .value;
-
 
     if(!clienteId){
 
@@ -1068,15 +1131,12 @@ function guardarCotizacion(){
         return;
     }
 
-
     const cliente =
         clientes.find(
             c => c.id === clienteId
         );
 
-
     if(!cliente) return;
-
 
     const partidasValidas =
         partidas.filter(
@@ -1084,7 +1144,6 @@ function guardarCotizacion(){
                 p.descripcion.trim() &&
                 p.cantidad > 0
         );
-
 
     if(!partidasValidas.length){
 
@@ -1094,7 +1153,6 @@ function guardarCotizacion(){
 
         return;
     }
-
 
     const subtotal =
         partidasValidas.reduce(
@@ -1107,14 +1165,11 @@ function guardarCotizacion(){
             0
         );
 
-
     const iva =
         subtotal * 0.16;
 
-
     const total =
         subtotal + iva;
-
 
     const cotizacion = {
 
@@ -1129,30 +1184,24 @@ function guardarCotizacion(){
                 cotizaciones.length + 1
             ).padStart(4,"0"),
 
-
         fecha:
             document
                 .getElementById("cotFecha")
                 .value,
-
 
         vigencia:
             document
                 .getElementById("cotVigencia")
                 .value,
 
-
         clienteId:
             cliente.id,
-
 
         cliente:
             {...cliente},
 
-
         partidas:
             partidasValidas,
-
 
         subtotal,
 
@@ -1160,25 +1209,20 @@ function guardarCotizacion(){
 
         total,
 
-
         observaciones:
             document
                 .getElementById("cotObservaciones")
                 .value,
 
-
         estado:
             "Pendiente"
     };
-
 
     cotizaciones.push(
         cotizacion
     );
 
-
     guardarDatos();
-
 
     alert(
         "Cotización " +
@@ -1186,16 +1230,110 @@ function guardarCotizacion(){
         " guardada correctamente."
     );
 
-
     limpiarCotizacion();
 
     mostrar("historial");
 }
 
 
-/* =========================
+/* =====================================================
+   ESTADOS
+===================================================== */
+
+/*
+    PENDIENTE:
+    Solo es una cotización.
+    NO cuenta por cobrar.
+
+    ACEPTADA:
+    Cliente aceptó la cotización.
+    NO cuenta por cobrar.
+
+    REALIZADA:
+    Trabajo terminado.
+    SÍ cuenta por cobrar.
+
+    PAGADA:
+    Ya se cobró.
+    Sale de cuentas por cobrar.
+*/
+
+
+function aceptarCotizacion(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+    if(!c) return;
+
+    c.estado =
+        "Aceptada";
+
+    guardarDatos();
+
+    renderCotizaciones();
+
+    actualizarPanel();
+
+    alert(
+        "Cotización aceptada.\n\nTodavía NO entra a Cuentas por Cobrar."
+    );
+}
+
+
+function marcarRealizada(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+    if(!c) return;
+
+    c.estado =
+        "Realizada";
+
+    guardarDatos();
+
+    renderCotizaciones();
+
+    renderCXC();
+
+    actualizarPanel();
+
+    alert(
+        "Trabajo marcado como realizado.\n\nAhora sí aparece en Cuentas por Cobrar."
+    );
+}
+
+
+function marcarPagada(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+    if(!c) return;
+
+    c.estado =
+        "Pagada";
+
+    guardarDatos();
+
+    renderCotizaciones();
+
+    renderCXC();
+
+    actualizarPanel();
+}
+
+
+/* =====================================================
    LIMPIAR COTIZACIÓN
-========================= */
+===================================================== */
 
 function limpiarCotizacion(){
 
@@ -1203,46 +1341,37 @@ function limpiarCotizacion(){
         .getElementById("cotCliente")
         .value = "";
 
-
     document
         .getElementById("cotObservaciones")
         .value = "";
-
 
     document
         .getElementById("datosCliente")
         .classList.add("hidden");
 
-
     partidas = [];
 
-
     agregarPartida();
     agregarPartida();
     agregarPartida();
-
 
     document
         .getElementById("cotFecha")
         .value =
-        new Date()
-            .toISOString()
-            .split("T")[0];
+        fechaHoy();
 }
 
 
-/* =========================
+/* =====================================================
    HISTORIAL
-========================= */
+===================================================== */
 
 function renderCotizaciones(){
 
     const contenedor =
-        document
-            .getElementById(
-                "listaCotizaciones"
-            );
-
+        document.getElementById(
+            "listaCotizaciones"
+        );
 
     if(!cotizaciones.length){
 
@@ -1252,78 +1381,153 @@ function renderCotizaciones(){
         return;
     }
 
-
     contenedor.innerHTML =
         cotizaciones
             .slice()
             .reverse()
-            .map(c => `
+            .map(c => {
 
-                <div class="card">
+                let claseEstado = "";
 
-                    <strong>
-                        ${escapeHTML(c.folio)}
-                    </strong>
+                if(c.estado === "Aceptada"){
+                    claseEstado =
+                        "badge-aceptada";
+                }
 
-                    <span class="badge">
-                        ${escapeHTML(c.estado)}
-                    </span>
+                if(c.estado === "Realizada"){
+                    claseEstado =
+                        "badge-realizada";
+                }
 
-                    <br><br>
+                if(c.estado === "Pagada"){
+                    claseEstado =
+                        "badge-pagada";
+                }
 
-                    Cliente:
-                    ${escapeHTML(
-                        c.cliente.nombre
-                    )}
+                return `
 
-                    <br>
+                    <div class="card">
 
-                    Fecha:
-                    ${escapeHTML(c.fecha)}
+                        <strong>
+                            ${escapeHTML(c.folio)}
+                        </strong>
 
-                    <br>
+                        <span
+                            class="badge ${claseEstado}">
+                            ${escapeHTML(c.estado)}
+                        </span>
 
-                    Total:
-                    <strong>
-                        ${moneda(c.total)}
-                    </strong>
+                        <br><br>
 
-                    <br>
+                        Cliente:
+                        ${escapeHTML(
+                            c.cliente.nombre
+                        )}
 
-                    Partidas:
-                    ${c.partidas.length}
+                        <br>
 
-                    <br>
+                        Fecha:
+                        ${escapeHTML(c.fecha)}
 
-                    <button
-                        onclick="
-                            verCotizacion('${c.id}')
-                        ">
-                        Ver detalle
-                    </button>
+                        <br>
 
-                    ${
-                        c.estado !== "Pagada"
-                        ?
-                        `
-                        <button
-                            class="success"
-                            onclick="
-                                marcarPagada('${c.id}')
-                            ">
-                            Marcar como pagada
-                        </button>
-                        `
-                        :
-                        ""
-                    }
+                        Total:
+                        <strong>
+                            ${moneda(c.total)}
+                        </strong>
 
-                </div>
+                        <br>
 
-            `)
+                        Partidas:
+                        ${c.partidas.length}
+
+                        <div class="acciones">
+
+                            <button
+                                onclick="
+                                    verCotizacion('${c.id}')
+                                ">
+                                Ver detalle
+                            </button>
+
+                            <button
+                                class="pdf"
+                                onclick="
+                                    exportarPDF('${c.id}')
+                                ">
+                                📄 Exportar PDF
+                            </button>
+
+                            <button
+                                class="whatsapp"
+                                onclick="
+                                    compartirWhatsApp('${c.id}')
+                                ">
+                                📲 WhatsApp
+                            </button>
+
+                            ${
+                                c.estado === "Pendiente"
+                                ?
+                                `
+                                <button
+                                    class="warning"
+                                    onclick="
+                                        aceptarCotizacion('${c.id}')
+                                    ">
+                                    ✓ Aceptar
+                                </button>
+                                `
+                                :
+                                ""
+                            }
+
+                            ${
+                                c.estado === "Aceptada"
+                                ?
+                                `
+                                <button
+                                    class="primary"
+                                    onclick="
+                                        marcarRealizada('${c.id}')
+                                    ">
+                                    🔧 Trabajo realizado
+                                </button>
+                                `
+                                :
+                                ""
+                            }
+
+                            ${
+                                c.estado === "Realizada"
+                                ?
+                                `
+                                <button
+                                    class="success"
+                                    onclick="
+                                        marcarPagada('${c.id}')
+                                    ">
+                                    ✓ Marcar pagada
+                                </button>
+                                `
+                                :
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
             .join("");
 }
 
+
+/* =====================================================
+   DETALLE
+===================================================== */
 
 function verCotizacion(id){
 
@@ -1332,9 +1536,7 @@ function verCotizacion(id){
             x => x.id === id
         );
 
-
     if(!c) return;
-
 
     const detalle =
         c.partidas
@@ -1343,7 +1545,6 @@ function verCotizacion(id){
                     `${i+1}. ${p.cantidad} x ${p.descripcion} = ${moneda(p.cantidad * p.precio)}`
             )
             .join("\n");
-
 
     alert(
 `Cotización ${c.folio}
@@ -1364,48 +1565,22 @@ ${c.observaciones || "Sin observaciones"}`
 }
 
 
-function marcarPagada(id){
-
-    const c =
-        cotizaciones.find(
-            x => x.id === id
-        );
-
-
-    if(!c) return;
-
-
-    c.estado =
-        "Pagada";
-
-
-    guardarDatos();
-
-    renderCotizaciones();
-
-    renderCXC();
-
-    actualizarPanel();
-}
-
-
-/* =========================
+/* =====================================================
    CUENTAS POR COBRAR
-========================= */
+===================================================== */
 
 function renderCXC(){
 
     const pendientes =
         cotizaciones.filter(
-            c => c.estado !== "Pagada"
+            c =>
+                c.estado === "Realizada"
         );
-
 
     const contenedor =
         document.getElementById(
             "listaCXC"
         );
-
 
     if(!pendientes.length){
 
@@ -1415,14 +1590,12 @@ function renderCXC(){
         return;
     }
 
-
     const total =
         pendientes.reduce(
             (s,c) =>
                 s + c.total,
             0
         );
-
 
     contenedor.innerHTML = `
 
@@ -1440,7 +1613,6 @@ function renderCXC(){
 
         </div>
 
-
         ${
             pendientes.map(c => `
 
@@ -1450,7 +1622,11 @@ function renderCXC(){
                         ${escapeHTML(c.folio)}
                     </strong>
 
-                    <br>
+                    <span class="badge badge-realizada">
+                        Realizada
+                    </span>
+
+                    <br><br>
 
                     Cliente:
                     ${escapeHTML(
@@ -1476,7 +1652,7 @@ function renderCXC(){
                         onclick="
                             marcarPagada('${c.id}')
                         ">
-                        Marcar como pagada
+                        ✓ Marcar como pagada
                     </button>
 
                 </div>
@@ -1488,32 +1664,27 @@ function renderCXC(){
 }
 
 
-/* =========================
+/* =====================================================
    PANEL
-========================= */
+===================================================== */
 
 function actualizarPanel(){
 
     document
-        .getElementById(
-            "contadorClientes"
-        )
+        .getElementById("contadorClientes")
         .textContent =
         clientes.length;
 
-
     document
-        .getElementById(
-            "contadorCotizaciones"
-        )
+        .getElementById("contadorCotizaciones")
         .textContent =
         cotizaciones.length;
-
 
     const pendiente =
         cotizaciones
             .filter(
-                c => c.estado !== "Pagada"
+                c =>
+                    c.estado === "Realizada"
             )
             .reduce(
                 (s,c) =>
@@ -1521,19 +1692,16 @@ function actualizarPanel(){
                 0
             );
 
-
     document
-        .getElementById(
-            "totalCobrar"
-        )
+        .getElementById("totalCobrar")
         .textContent =
         moneda(pendiente);
 }
 
 
-/* =========================
-   GUARDAR DATOS
-========================= */
+/* =====================================================
+   GUARDAR
+===================================================== */
 
 function guardarDatos(){
 
@@ -1542,20 +1710,679 @@ function guardarDatos(){
         JSON.stringify(clientes)
     );
 
-
     localStorage.setItem(
         STORAGE_COTIZACIONES,
         JSON.stringify(cotizaciones)
     );
 
-
     actualizarPanel();
 }
 
 
-/* =========================
+/* =====================================================
+   PDF
+===================================================== */
+
+async function crearPDF(c){
+
+    if(
+        typeof window.jspdf === "undefined"
+    ){
+
+        throw new Error(
+            "No se pudo cargar jsPDF."
+        );
+    }
+
+    const {
+        jsPDF
+    } =
+        window.jspdf;
+
+    const doc =
+        new jsPDF();
+
+    const margen = 18;
+
+    let y = 18;
+
+
+    /* ENCABEZADO */
+
+    doc.setFillColor(
+        17,24,39
+    );
+
+    doc.rect(
+        0,
+        0,
+        210,
+        40,
+        "F"
+    );
+
+    doc.setTextColor(
+        255,255,255
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(22);
+
+    doc.text(
+        "VERASI PC",
+        margen,
+        17
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "SOLUCIONES INFORMÁTICAS",
+        margen,
+        25
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(12);
+
+    doc.text(
+        "COTIZACIÓN",
+        153,
+        17
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        c.folio,
+        153,
+        25
+    );
+
+
+    /* DATOS */
+
+    y = 52;
+
+    doc.setTextColor(
+        17,24,39
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "DATOS DEL CLIENTE",
+        margen,
+        y
+    );
+
+    y += 8;
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Cliente: " +
+        (c.cliente.nombre || ""),
+        margen,
+        y
+    );
+
+    y += 6;
+
+    if(c.cliente.telefono){
+
+        doc.text(
+            "Teléfono: " +
+            c.cliente.telefono,
+            margen,
+            y
+        );
+
+        y += 6;
+    }
+
+    if(c.cliente.correo){
+
+        doc.text(
+            "Correo: " +
+            c.cliente.correo,
+            margen,
+            y
+        );
+
+        y += 6;
+    }
+
+    if(c.cliente.direccion){
+
+        const direccion =
+            doc.splitTextToSize(
+                "Dirección: " +
+                c.cliente.direccion,
+                170
+            );
+
+        doc.text(
+            direccion,
+            margen,
+            y
+        );
+
+        y +=
+            direccion.length * 5;
+    }
+
+    y += 5;
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Fecha:",
+        margen,
+        y
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        c.fecha || "",
+        margen + 25,
+        y
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.text(
+        "Vigencia:",
+        115,
+        y
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        c.vigencia || "",
+        145,
+        y
+    );
+
+    y += 12;
+
+
+    /* TABLA */
+
+    doc.setFillColor(
+        243,244,246
+    );
+
+    doc.rect(
+        margen,
+        y,
+        174,
+        9,
+        "F"
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(8);
+
+    doc.text(
+        "#",
+        margen + 2,
+        y + 6
+    );
+
+    doc.text(
+        "CANT.",
+        margen + 12,
+        y + 6
+    );
+
+    doc.text(
+        "DESCRIPCIÓN",
+        margen + 35,
+        y + 6
+    );
+
+    doc.text(
+        "P. UNIT.",
+        margen + 125,
+        y + 6
+    );
+
+    doc.text(
+        "IMPORTE",
+        margen + 151,
+        y + 6
+    );
+
+    y += 14;
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    c.partidas.forEach(
+        (p,index) => {
+
+            if(y > 255){
+
+                doc.addPage();
+
+                y = 20;
+            }
+
+            const descripcion =
+                doc.splitTextToSize(
+                    p.descripcion,
+                    85
+                );
+
+            doc.text(
+                String(index + 1),
+                margen + 2,
+                y
+            );
+
+            doc.text(
+                String(p.cantidad),
+                margen + 12,
+                y
+            );
+
+            doc.text(
+                descripcion,
+                margen + 35,
+                y
+            );
+
+            doc.text(
+                moneda(p.precio),
+                margen + 125,
+                y
+            );
+
+            doc.text(
+                moneda(
+                    p.cantidad *
+                    p.precio
+                ),
+                margen + 151,
+                y
+            );
+
+            y +=
+                Math.max(
+                    6,
+                    descripcion.length * 5
+                );
+
+            doc.setDrawColor(
+                220,220,220
+            );
+
+            doc.line(
+                margen,
+                y - 2,
+                192,
+                y - 2
+            );
+
+        }
+    );
+
+
+    /* TOTALES */
+
+    y += 8;
+
+    if(y > 245){
+
+        doc.addPage();
+
+        y = 20;
+    }
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.text(
+        "Subtotal:",
+        130,
+        y
+    );
+
+    doc.text(
+        moneda(c.subtotal),
+        170,
+        y
+    );
+
+    y += 7;
+
+    doc.text(
+        "IVA 16%:",
+        130,
+        y
+    );
+
+    doc.text(
+        moneda(c.iva),
+        170,
+        y
+    );
+
+    y += 9;
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(12);
+
+    doc.text(
+        "TOTAL:",
+        130,
+        y
+    );
+
+    doc.text(
+        moneda(c.total),
+        170,
+        y
+    );
+
+
+    /* OBSERVACIONES */
+
+    y += 15;
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Observaciones:",
+        margen,
+        y
+    );
+
+    y += 6;
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    const observaciones =
+        doc.splitTextToSize(
+            c.observaciones ||
+            "Sin observaciones",
+            174
+        );
+
+    doc.text(
+        observaciones,
+        margen,
+        y
+    );
+
+
+    /* PIE */
+
+    const paginas =
+        doc.internal.getNumberOfPages();
+
+    for(
+        let pagina = 1;
+        pagina <= paginas;
+        pagina++
+    ){
+
+        doc.setPage(pagina);
+
+        doc.setFontSize(8);
+
+        doc.setTextColor(
+            120,120,120
+        );
+
+        doc.text(
+            "VERASI PC - SOLUCIONES INFORMÁTICAS",
+            margen,
+            287
+        );
+
+        doc.text(
+            "Página " +
+            pagina +
+            " de " +
+            paginas,
+            165,
+            287
+        );
+    }
+
+
+    return doc;
+}
+
+
+/* =====================================================
+   EXPORTAR PDF
+===================================================== */
+
+async function exportarPDF(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+    if(!c){
+
+        alert(
+            "No se encontró la cotización."
+        );
+
+        return;
+    }
+
+    try{
+
+        const doc =
+            await crearPDF(c);
+
+        doc.save(
+            c.folio + ".pdf"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "No se pudo generar el PDF."
+        );
+    }
+}
+
+
+/* =====================================================
+   WHATSAPP / COMPARTIR PDF
+===================================================== */
+
+async function compartirWhatsApp(id){
+
+    const c =
+        cotizaciones.find(
+            x => x.id === id
+        );
+
+    if(!c){
+
+        alert(
+            "No se encontró la cotización."
+        );
+
+        return;
+    }
+
+    try{
+
+        const doc =
+            await crearPDF(c);
+
+        const blob =
+            doc.output("blob");
+
+        const archivo =
+            new File(
+                [blob],
+                c.folio + ".pdf",
+                {
+                    type:"application/pdf"
+                }
+            );
+
+
+        /*
+           En iPhone/Safari se intenta usar
+           la hoja nativa de compartir.
+
+           Ahí podrás seleccionar WhatsApp.
+        */
+
+        if(
+            navigator.share &&
+            navigator.canShare &&
+            navigator.canShare({
+                files:[archivo]
+            })
+        ){
+
+            await navigator.share({
+
+                title:
+                    "Cotización " +
+                    c.folio,
+
+                text:
+                    "Hola, te comparto la cotización " +
+                    c.folio +
+                    " de VERASI PC.",
+
+                files:[
+                    archivo
+                ]
+
+            });
+
+            return;
+        }
+
+
+        /*
+           Respaldo:
+           descarga el PDF y abre WhatsApp
+           con el mensaje preparado.
+        */
+
+        doc.save(
+            c.folio + ".pdf"
+        );
+
+
+        const mensaje =
+            encodeURIComponent(
+                "Hola, te comparto la cotización " +
+                c.folio +
+                " de VERASI PC.\n\n" +
+                "Total: " +
+                moneda(c.total) +
+                "\n\n" +
+                "El PDF se descargó en el dispositivo para adjuntarlo en WhatsApp."
+            );
+
+
+        window.open(
+            "https://wa.me/?text=" +
+            mensaje,
+            "_blank"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        /*
+           Si el usuario cancela
+           la ventana de compartir,
+           simplemente no hacemos nada.
+        */
+
+        if(
+            error.name !==
+            "AbortError"
+        ){
+
+            alert(
+                "No se pudo compartir la cotización."
+            );
+        }
+    }
+}
+
+
+/* =====================================================
    UTILIDADES
-========================= */
+===================================================== */
 
 function moneda(valor){
 
@@ -1565,24 +2392,71 @@ function moneda(valor){
             style:"currency",
             currency:"MXN"
         }
-    ).format(valor || 0);
+    ).format(
+        valor || 0
+    );
+}
+
+
+function fechaHoy(){
+
+    const ahora =
+        new Date();
+
+    const año =
+        ahora.getFullYear();
+
+    const mes =
+        String(
+            ahora.getMonth() + 1
+        ).padStart(2,"0");
+
+    const dia =
+        String(
+            ahora.getDate()
+        ).padStart(2,"0");
+
+    return (
+        año +
+        "-" +
+        mes +
+        "-" +
+        dia
+    );
 }
 
 
 function escapeHTML(text){
 
-    return String(text || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        text || ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 }
 
 
-/* =========================
+/* =====================================================
    INICIO
-========================= */
+===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
