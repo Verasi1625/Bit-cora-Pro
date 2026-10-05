@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<meta name="theme-color" content="#0b1736">
+<title>Bitácora Pro</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+    "Helvetica Neue",Arial,sans-serif;
+    background:#f3f5f9;
+    color:#111827;
+}
+
+header{
+    background:#0b1736;
+    color:white;
+    padding:28px 20px 24px;
+    border-radius:0 0 28px 28px;
+}
+
+header h1{
+    margin:0;
+    font-size:30px;
+}
+
+header p{
+    margin:6px 0 0;
+    opacity:.75;
+}
+
+main{
+    padding:18px;
+    padding-bottom:100px;
+}
+
+.section-title{
+    font-size:21px;
+    font-weight:800;
+    margin:22px 0 13px;
+}
+
+.resumen{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:15px 8px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card .numero{
+    font-size:26px;
+    font-weight:800;
+}
+
+.card small{
+    color:#6b7280;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.menu button{
+    border:0;
+    background:white;
+    min-height:120px;
+    border-radius:20px;
+    font-size:16px;
+    font-weight:700;
+    color:#111827;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.menu button:active{
+    transform:scale(.97);
+}
+
+.icono{
+    display:block;
+    font-size:31px;
+    margin-bottom:9px;
+}
+
+.pantalla{
+    display:none;
+}
+
+.pantalla.activa{
+    display:block;
+}
+
+.volver{
+    border:0;
+    background:#e5e7eb;
+    border-radius:12px;
+    padding:10px 15px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.formulario{
+    background:white;
+    padding:18px;
+    border-radius:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+input,textarea,select{
+    width:100%;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    padding:13px;
+    margin:6px 0 12px;
+    font-size:16px;
+    background:white;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+label{
+    font-size:14px;
+    font-weight:700;
+}
+
+.btn-principal{
+    width:100%;
+    border:0;
+    border-radius:14px;
+    padding:15px;
+    background:#0b1736;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    margin-top:5px;
+}
+
+.lista{
+    margin-top:15px;
+}
+
+.item{
+    background:white;
+    padding:16px;
+    border-radius:17px;
+    margin-bottom:10px;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.item strong{
+    font-size:17px;
+}
+
+.item small{
+    color:#6b7280;
+}
+
+.btn-eliminar{
+    border:0;
+    background:#fee2e2;
+    color:#991b1b;
+    padding:8px 11px;
+    border-radius:10px;
+    margin-top:10px;
+    font-weight:700;
+}
+
+.total{
+    background:#0b1736;
+    color:white;
+    padding:17px;
+    border-radius:16px;
+    margin-top:10px;
+    font-size:20px;
+    font-weight:800;
+    text-align:right;
+}
+
+.bottom{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:white;
+    border-top:1px solid #ddd;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 5px calc(10px + env(safe-area-inset-bottom));
+    z-index:100;
+}
+
+.bottom button{
+    border:0;
+    background:none;
+    font-size:12px;
+    color:#374151;
+}
+
+.bottom span{
+    display:block;
+    font-size:23px;
+    margin-bottom:3px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Hola, Paps 👋</h1>
+    <p id="fecha"></p>
+</header>
+
+<main>
+
+<!-- INICIO -->
+<section id="inicio" class="pantalla activa">
+
+    <div class="section-title">Resumen de hoy</div>
+
+    <div class="resumen">
+        <div class="card">
+            <div class="numero" id="numClientes">0</div>
+            <small>Clientes</small>
+        </div>
+
+        <div class="card">
+            <div class="numero" id="numPendientes">0</div>
+            <small>Pendientes</small>
+        </div>
+
+        <div class="card">
+            <div class="numero" id="numCotizaciones">0</div>
+            <small>Cotizaciones</small>
+        </div>
+    </div>
+
+    <div class="section-title">¿Qué quieres hacer?</div>
+
+    <div class="menu">
+
+        <button onclick="mostrar('clientes')">
+            <span class="icono">👥</span>
+            Clientes
+        </button>
+
+        <button onclick="mostrar('bitacora')">
+            <span class="icono">📋</span>
+            Bitácora
+        </button>
+
+        <button onclick="mostrar('pendientes')">
+            <span class="icono">⏰</span>
+            Pendientes
+        </button>
+
+        <button onclick="mostrar('cotizaciones')">
+            <span class="icono">💰</span>
+            Cotizaciones
+        </button>
+
+        <button onclick="mostrar('notas')">
+            <span class="icono">📝</span>
+            Notas
+        </button>
+
+        <button onclick="mostrar('materiales')">
+            <span class="icono">📦</span>
+            Materiales
+        </button>
+
+        <button onclick="mostrar('calendario')">
+            <span class="icono">📅</span>
+            Calendario
+        </button>
+
+        <button onclick="compartirApp()">
+            <span class="icono">📤</span>
+            Compartir
+        </button>
+
+    </div>
+</section>
+
+
+<!-- CLIENTES -->
+<section id="clientes" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>👥 Clientes</h2>
+
+<div class="formulario">
+
+<label>Nombre del cliente</label>
+<input id="clienteNombre" placeholder="Ej. Juan Pérez">
+
+<label>Teléfono</label>
+<input id="clienteTelefono"
+       type="tel"
+       placeholder="612 123 4567">
+
+<label>Dirección</label>
+<input id="clienteDireccion"
+       placeholder="Dirección del cliente">
+
+<label>Notas</label>
+<textarea id="clienteNotas"
+          placeholder="Información adicional"></textarea>
+
+<button class="btn-principal"
+        onclick="guardarCliente()">
+Guardar cliente
+</button>
+
+</div>
+
+<div id="listaClientes" class="lista"></div>
+
+</section>
+
+
+<!-- BITÁCORA -->
+<section id="bitacora" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>📋 Bitácora del día</h2>
+
+<div class="formulario">
+
+<label>Cliente</label>
+<input id="bitCliente"
+       placeholder="Nombre del cliente">
+
+<label>Trabajo realizado</label>
+<textarea id="bitTrabajo"
+          placeholder="Describe lo que hiciste"></textarea>
+
+<label>Material utilizado</label>
+<textarea id="bitMaterial"
+          placeholder="Cable, conectores, cámaras, etc."></textarea>
+
+<label>Observaciones</label>
+<textarea id="bitObservaciones"
+          placeholder="Pendientes o recomendaciones"></textarea>
+
+<button class="btn-principal"
+        onclick="guardarBitacora()">
+Guardar visita
+</button>
+
+</div>
+
+<div id="listaBitacora" class="lista"></div>
+
+</section>
+
+
+<!-- PENDIENTES -->
+<section id="pendientes" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>⏰ Pendientes</h2>
+
+<div class="formulario">
+
+<label>Pendiente</label>
+<input id="pendienteTexto"
+       placeholder="Ej. Regresar llamada a cliente">
+
+<label>Fecha</label>
+<input id="pendienteFecha" type="date">
+
+<button class="btn-principal"
+        onclick="guardarPendiente()">
+Guardar pendiente
+</button>
+
+</div>
+
+<div id="listaPendientes" class="lista"></div>
+
+</section>
+
+
+<!-- COTIZACIONES -->
+<section id="cotizaciones" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>💰 Cotización</h2>
+
+<div class="formulario">
+
+<label>Cliente</label>
+<input id="cotCliente"
+       placeholder="Nombre del cliente">
+
+<label>Concepto</label>
+<input id="cotConcepto"
+       placeholder="Ej. Instalación de 5 cámaras">
+
+<label>Cantidad</label>
+<input id="cotCantidad"
+       type="number"
+       value="1"
+       min="1">
+
+<label>Precio unitario</label>
+<input id="cotPrecio"
+       type="number"
+       value="0"
+       min="0">
+
+<button class="btn-principal"
+        onclick="guardarCotizacion()">
+Guardar cotización
+</button>
+
+</div>
+
+<div id="listaCotizaciones" class="lista"></div>
+
+</section>
+
+
+<!-- NOTAS -->
+<section id="notas" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>📝 Notas</h2>
+
+<div class="formulario">
+
+<label>Nota</label>
+<textarea id="notaTexto"
+          placeholder="Escribe algo..."></textarea>
+
+<button class="btn-principal"
+        onclick="guardarNota()">
+Guardar nota
+</button>
+
+</div>
+
+<div id="listaNotas" class="lista"></div>
+
+</section>
+
+
+<!-- MATERIALES -->
+<section id="materiales" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>📦 Materiales</h2>
+
+<div class="formulario">
+
+<label>Material</label>
+<input id="materialNombre"
+       placeholder="Ej. Cable Cat6">
+
+<label>Cantidad</label>
+<input id="materialCantidad"
+       type="number"
+       value="1">
+
+<button class="btn-principal"
+        onclick="guardarMaterial()">
+Agregar material
+</button>
+
+</div>
+
+<div id="listaMateriales" class="lista"></div>
+
+</section>
+
+
+<!-- CALENDARIO -->
+<section id="calendario" class="pantalla">
+
+<button class="volver" onclick="mostrar('inicio')">← Regresar</button>
+
+<h2>📅 Calendario</h2>
+
+<div class="formulario">
+
+<label>Fecha</label>
+<input type="date" id="eventoFecha">
+
+<label>Hora</label>
+<input type="time" id="eventoHora">
+
+<label>Evento</label>
+<input id="eventoTexto"
+       placeholder="Ej. Visita para cotización">
+
+<button class="btn-principal"
+        onclick="guardarEvento()">
+Guardar evento
+</button>
+
+</div>
+
+<div id="listaEventos" class="lista"></div>
+
+</section>
+
+</main>
+
+
+<!-- BARRA INFERIOR -->
+
+<nav class="bottom">
+
+<button onclick="mostrar('inicio')">
+<span>🏠</span>
+Inicio
+</button>
+
+<button onclick="mostrar('clientes')">
+<span>👥</span>
+Clientes
+</button>
+
+<button onclick="mostrar('bitacora')">
+<span>📋</span>
+Bitácora
+</button>
+
+<button onclick="mostrar('cotizaciones')">
+<span>💰</span>
+Cotizaciones
+</button>
+
+</nav>
+
+
+<script>
+
+const hoy = new Date();
+
+document.getElementById("fecha").textContent =
+hoy.toLocaleDateString("es-MX",{
+    weekday:"long",
+    day:"numeric",
+    month:"long",
+    year:"numeric"
+});
+
+
+function obtener(nombre){
+
+    return JSON.parse(
+        localStorage.getItem(nombre) || "[]"
+    );
+
+}
+
+
+function guardar(nombre, datos){
+
+    localStorage.setItem(
+        nombre,
+        JSON.stringify(datos)
+    );
+
+}
+
+
+function mostrar(id){
+
+    document
+    .querySelectorAll(".pantalla")
+    .forEach(x => x.classList.remove("activa"));
+
+    document
+    .getElementById(id)
+    .classList.add("activa");
+
+    actualizar();
+
+    window.scrollTo(0,0);
+}
+
+
+function eliminar(nombre,index){
+
+    let datos = obtener(nombre);
+
+    datos.splice(index,1);
+
+    guardar(nombre,datos);
+
+    actualizar();
+}
+
+
+/* CLIENTES */
+
+function guardarCliente(){
+
+    const nombre =
+    document.getElementById("clienteNombre").value.trim();
+
+    if(!nombre){
+        alert("Escribe el nombre del cliente.");
+        return;
+    }
+
+    let datos = obtener("clientes");
+
+    datos.push({
+        nombre,
+        telefono:document.getElementById("clienteTelefono").value,
+        direccion:document.getElementById("clienteDireccion").value,
+        notas:document.getElementById("clienteNotas").value,
+        fecha:new Date().toLocaleString("es-MX")
+    });
+
+    guardar("clientes",datos);
+
+    document.getElementById("clienteNombre").value="";
+    document.getElementById("clienteTelefono").value="";
+    document.getElementById("clienteDireccion").value="";
+    document.getElementById("clienteNotas").value="";
+
+    actualizar();
+
+    alert("Cliente guardado.");
+}
+
+
+/* BITÁCORA */
+
+function guardarBitacora(){
+
+    const cliente =
+    document.getElementById("bitCliente").value.trim();
+
+    const trabajo =
+    document.getElementById("bitTrabajo").value.trim();
+
+    if(!cliente || !trabajo){
+        alert("Cliente y trabajo son obligatorios.");
+        return;
+    }
+
+    let datos = obtener("bitacora");
+
+    datos.push({
+        cliente,
+        trabajo,
+        material:document.getElementById("bitMaterial").value,
+        observaciones:document.getElementById("bitObservaciones").value,
+        fecha:new Date().toLocaleString("es-MX")
+    });
+
+    guardar("bitacora",datos);
+
+    document.getElementById("bitCliente").value="";
+    document.getElementById("bitTrabajo").value="";
+    document.getElementById("bitMaterial").value="";
+    document.getElementById("bitObservaciones").value="";
+
+    actualizar();
+
+    alert("Visita guardada.");
+}
+
+
+/* PENDIENTES */
+
+function guardarPendiente(){
+
+    const texto =
+    document.getElementById("pendienteTexto").value.trim();
+
+    if(!texto){
+        alert("Escribe el pendiente.");
+        return;
+    }
+
+    let datos = obtener("pendientes");
+
+    datos.push({
+        texto,
+        fecha:document.getElementById("pendienteFecha").value,
+        completado:false
+    });
+
+    guardar("pendientes",datos);
+
+    document.getElementById("pendienteTexto").value="";
+    document.getElementById("pendienteFecha").value="";
+
+    actualizar();
+}
+
+
+/* COTIZACIONES */
+
+function guardarCotizacion(){
+
+    const cliente =
+    document.getElementById("cotCliente").value.trim();
+
+    const concepto =
+    document.getElementById("cotConcepto").value.trim();
+
+    const cantidad =
+    Number(document.getElementById("cotCantidad").value);
+
+    const precio =
+    Number(document.getElementById("cotPrecio").value);
+
+    if(!cliente || !concepto){
+        alert("Cliente y concepto son obligatorios.");
+        return;
+    }
+
+    let datos = obtener("cotizaciones");
+
+    datos.push({
+        cliente,
+        concepto,
+        cantidad,
+        precio,
+        total:cantidad*precio,
+        fecha:new Date().toLocaleString("es-MX")
+    });
+
+    guardar("cotizaciones",datos);
+
+    document.getElementById("cotCliente").value="";
+    document.getElementById("cotConcepto").value="";
+
+    actualizar();
+
+    alert("Cotización guardada.");
+}
+
+
+/* NOTAS */
+
+function guardarNota(){
+
+    const texto =
+    document.getElementById("notaTexto").value.trim();
+
+    if(!texto){
+        alert("Escribe una nota.");
+        return;
+    }
+
+    let datos = obtener("notas");
+
+    datos.push({
+        texto,
+        fecha:new Date().toLocaleString("es-MX")
+    });
+
+    guardar("notas",datos);
+
+    document.getElementById("notaTexto").value="";
+
+    actualizar();
+}
+
+
+/* MATERIALES */
+
+function guardarMaterial(){
+
+    const nombre =
+    document.getElementById("materialNombre").value.trim();
+
+    const cantidad =
+    Number(document.getElementById("materialCantidad").value);
+
+    if(!nombre){
+        alert("Escribe el material.");
+        return;
+    }
+
+    let datos = obtener("materiales");
+
+    datos.push({
+        nombre,
+        cantidad
+    });
+
+    guardar("materiales",datos);
+
+    document.getElementById("materialNombre").value="";
+
+    actualizar();
+}
+
+
+/* CALENDARIO */
+
+function guardarEvento(){
+
+    const texto =
+    document.getElementById("eventoTexto").value.trim();
+
+    if(!texto){
+        alert("Escribe el evento.");
+        return;
+    }
+
+    let datos = obtener("eventos");
+
+    datos.push({
+        fecha:document.getElementById("eventoFecha").value,
+        hora:document.getElementById("eventoHora").value,
+        texto
+    });
+
+    guardar("eventos",datos);
+
+    document.getElementById("eventoTexto").value="";
+
+    actualizar();
+}
+
+
+/* ACTUALIZAR PANTALLAS */
+
+function actualizar(){
+
+    const clientes=obtener("clientes");
+    const pendientes=obtener("pendientes");
+    const cotizaciones=obtener("cotizaciones");
+
+    document.getElementById("numClientes").textContent =
+    clientes.length;
+
+    document.getElementById("numPendientes").textContent =
+    pendientes.length;
+
+    document.getElementById("numCotizaciones").textContent =
+    cotizaciones.length;
+
+
+    document.getElementById("listaClientes").innerHTML =
+    clientes.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>${escapeHTML(x.nombre)}</strong><br>
+
+            <small>
+            📞 ${escapeHTML(x.telefono || "Sin teléfono")}<br>
+            📍 ${escapeHTML(x.direccion || "Sin dirección")}
+            </small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('clientes',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    const visitas=obtener("bitacora");
+
+    document.getElementById("listaBitacora").innerHTML =
+    visitas.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>${escapeHTML(x.cliente)}</strong>
+
+            <p>${escapeHTML(x.trabajo)}</p>
+
+            <small>${escapeHTML(x.fecha)}</small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('bitacora',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    document.getElementById("listaPendientes").innerHTML =
+    pendientes.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>⏰ ${escapeHTML(x.texto)}</strong>
+
+            <br>
+
+            <small>
+            ${x.fecha || "Sin fecha"}
+            </small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('pendientes',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    document.getElementById("listaCotizaciones").innerHTML =
+    cotizaciones.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>${escapeHTML(x.cliente)}</strong>
+
+            <p>${escapeHTML(x.concepto)}</p>
+
+            <small>
+            ${x.cantidad} × $${x.precio.toFixed(2)}
+            </small>
+
+            <div class="total">
+            $${x.total.toFixed(2)}
+            </div>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('cotizaciones',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    const notas=obtener("notas");
+
+    document.getElementById("listaNotas").innerHTML =
+    notas.map((x,i)=>`
+
+        <div class="item">
+
+            <p>${escapeHTML(x.texto)}</p>
+
+            <small>${escapeHTML(x.fecha)}</small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('notas',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    const materiales=obtener("materiales");
+
+    document.getElementById("listaMateriales").innerHTML =
+    materiales.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>${escapeHTML(x.nombre)}</strong>
+
+            <br>
+
+            <small>
+            Cantidad: ${x.cantidad}
+            </small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('materiales',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+
+    const eventos=obtener("eventos");
+
+    document.getElementById("listaEventos").innerHTML =
+    eventos.map((x,i)=>`
+
+        <div class="item">
+
+            <strong>📅 ${escapeHTML(x.texto)}</strong>
+
+            <br>
+
+            <small>
+            ${x.fecha || "Sin fecha"}
+            ${x.hora ? " · "+x.hora : ""}
+            </small>
+
+            <br>
+
+            <button
+            class="btn-eliminar"
+            onclick="eliminar('eventos',${i})">
+            Eliminar
+            </button>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+async function compartirApp(){
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+                title:"Bitácora Pro",
+                text:"Mi aplicación Bitácora Pro"
+            });
+
+        }catch(e){}
+
+    }else{
+
+        alert(
+        "En Safari puedes usar el botón Compartir y después 'Agregar a pantalla de inicio'."
+        );
+
+    }
+
+}
+
+
+actualizar();
+
+</script>
+
+</body>
+</html>
