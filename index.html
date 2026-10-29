@@ -13,6 +13,7 @@
 <section id="sec-historial" class="section"><h1>Historial de pagos</h1><div class="card tablewrap"><table><thead><tr><th>Fecha</th><th>Nota</th><th>Cliente</th><th>Importe</th><th>Método</th><th>Referencia</th></tr></thead><tbody id="paymentsBody"></tbody></table></div></section>
 <section id="sec-usuarios" class="section"><h1>Usuarios</h1><div class="card"><p class="muted">Los usuarios se crean en Supabase Authentication. Aquí se consultan sus perfiles y roles.</p><div class="tablewrap"><table><thead><tr><th>ID</th><th>Rol</th><th>Activo</th></tr></thead><tbody id="usersBody"></tbody></table></div></div></section>
 <footer class="muted smalltext no-print" style="padding:20px 0">VERASI PC · Información almacenada en Supabase · No compartas tus credenciales.</footer></div>
+<div id="paymentModal" class="hide" style="position:fixed;inset:0;background:#000b;z-index:1000;display:grid;place-items:center;padding:16px;overflow:auto"><div class="card" style="width:min(480px,100%);margin:0"><h2>Generar nota de venta</h2><p class="muted">Cotización <strong id="paymentQuote"></strong> · Total: <strong id="paymentTotal"></strong></p><form id="paymentForm" class="formgrid"><label class="field full">¿Cómo pagará el cliente?<select id="paymentType"><option value="contado">Contado (pago completo)</option><option value="anticipo">Con anticipo</option><option value="credito">Crédito (sin pago inicial)</option></select></label><label class="field full" id="paymentAmountWrap">Importe recibido<input id="paymentAmount" type="number" min="0.01" step="0.01" required></label><label class="field full" id="paymentMethodWrap">Método de pago<select id="paymentMethod"><option value="efectivo">Efectivo</option><option value="tarjeta">Tarjeta</option><option value="transferencia">Transferencia</option></select></label><label class="field full" id="paymentReferenceWrap">Referencia (opcional)<input id="paymentReference" maxlength="120"></label><div class="field full"><strong id="paymentBalance"></strong></div><div class="row"><button class="btn good" type="submit" id="paymentConfirm">Generar nota</button><button class="btn alt" type="button" id="paymentCancel">Cancelar</button></div></form></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
@@ -65,11 +66,52 @@ function renderQuotes(){
  document.querySelectorAll('[data-share-quote]').forEach(b=>b.onclick=()=>exportQuotePDF(b.dataset.shareQuote,true));
 }
 async function approveQuote(id){if(!isAdmin())return flash('Solo un administrador puede autorizar.',true);if(!confirm('¿Autorizar esta cotización?'))return;try{const {error}=await db.rpc('aprobar_cotizacion',{p_cotizacion_id:id});if(error)throw error;flash('Cotización autorizada');await refresh('cotizaciones')}catch(e){err(e)}}
+let pendingConversion=null;
+function updatePaymentUI(){
+ const type=$('paymentType').value, total=pendingConversion?.total||0;
+ const isCredit=type==='credito',isCash=type==='contado';
+ $('paymentAmountWrap').classList.toggle('hide',isCredit);
+ $('paymentMethodWrap').classList.toggle('hide',isCredit);
+ $('paymentReferenceWrap').classList.toggle('hide',isCredit);
+ $('paymentAmount').required=!isCredit;
+ $('paymentAmount').disabled=isCredit||isCash;
+ if(isCash)$('paymentAmount').value=total.toFixed(2);
+ if(isCredit)$('paymentAmount').value='';
+ const amount=isCredit?0:Number($('paymentAmount').value||0);
+ $('paymentBalance').textContent='Saldo pendiente: '+money(Math.max(0,total-amount));
+}
+$('paymentType').onchange=()=>{if($('paymentType').value==='anticipo')$('paymentAmount').value='';updatePaymentUI()};
+$('paymentAmount').oninput=updatePaymentUI;
+$('paymentCancel').onclick=()=>{$('paymentModal').classList.add('hide');pendingConversion=null};
 async function convertQuote(id){
  if(!isAdmin())return flash('Solo un administrador puede convertir cotizaciones.',true);
- if(!confirm('¿Generar nota de venta desde esta cotización autorizada? Esta operación registra una venta y puede generar saldo por cobrar.'))return;
- try{const {data,error}=await db.rpc('convertir_cotizacion_a_nota',{p_cotizacion_id:id});if(error)throw error;flash('Nota de venta creada correctamente. Folio de nota: '+String(data));await refresh('cotizaciones');}catch(e){err(e)}
+ try{
+  const {data:q,error}=await db.from('cotizaciones').select('id,folio,total,estado').eq('id',id).single();
+  if(error)throw error;
+  if(q.estado!=='aprobada')throw Error('Primero debes autorizar la cotización.');
+  if(!Number.isFinite(Number(q.total))||Number(q.total)<=0)throw Error('La cotización debe tener un total mayor que cero.');
+  pendingConversion={id:q.id,total:Number(q.total)};
+  $('paymentQuote').textContent='#'+q.folio;
+  $('paymentTotal').textContent=money(q.total);
+  $('paymentType').value='contado';$('paymentMethod').value='efectivo';$('paymentReference').value='';
+  updatePaymentUI();$('paymentModal').classList.remove('hide');
+ }catch(e){err(e)}
 }
+$('paymentForm').onsubmit=async e=>{
+ e.preventDefault();if(busy||!pendingConversion)return;
+ const type=$('paymentType').value,total=pendingConversion.total;
+ const amount=type==='credito'?0:type==='contado'?total:Number($('paymentAmount').value);
+ if(!Number.isFinite(amount)||amount<0||amount>total||(type==='anticipo'&&(amount<=0||amount>=total)))return flash('El anticipo debe ser mayor que cero y menor que el total.',true);
+ if(!confirm('¿Generar nota por '+money(total)+' con pago inicial de '+money(amount)+' y saldo de '+money(total-amount)+'?'))return;
+ busy=true;$('paymentConfirm').disabled=true;
+ try{
+  const args={p_cotizacion_id:pendingConversion.id,p_tipo_pago:type,p_importe_inicial:amount,p_metodo_pago:type==='credito'?null:$('paymentMethod').value,p_referencia:type==='credito'?null:($('paymentReference').value.trim()||null)};
+  const {data,error}=await db.rpc('convertir_cotizacion_a_nota',args);if(error)throw error;
+  $('paymentModal').classList.add('hide');pendingConversion=null;
+  flash('Nota #'+String(data)+' generada. Pago registrado: '+money(amount)+'. Saldo: '+money(total-amount));
+  await refresh('cotizaciones');
+ }catch(e){err(e)}finally{busy=false;$('paymentConfirm').disabled=false}
+};
 async function fetchQuotePDF(id){
  const {data:d,error:e1}=await db.from('cotizaciones').select('*').eq('id',id).single();if(e1)throw e1;
  const {data:items,error:e2}=await db.from('cotizacion_partidas').select('*').eq('cotizacion_id',id).order('numero_partida');if(e2)throw e2;
