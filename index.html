@@ -58,8 +58,10 @@ body:has(#login:not(.hide)):after{display:none!important}
 <div id="app" class="shell hide"><header class="top no-print"><div class="brand">VERASI PC<small>SOLUCIONES INFORMÁTICAS · BITÁCORA PRO</small></div><div class="row"><span id="who" class="pill"></span><button id="logout" class="btn alt">Salir</button></div></header><nav id="nav" class="nav no-print"></nav><div id="flash" class="no-print"></div>
 <section id="sec-inicio" class="section active"><h1>Panel principal</h1><div class="cards"><div class="card"><div class="muted">Total vendido</div><div class="metric" id="mSales">—</div></div><div class="card"><div class="muted">Total cobrado</div><div class="metric" id="mPaid">—</div></div><div class="card"><div class="muted">Por cobrar</div><div class="metric" id="mDue">—</div></div><div class="card"><div class="muted">Clientes deudores</div><div class="metric" id="mDebtors">—</div></div></div><div class="card"><h2>Bienvenido</h2><p class="muted">Las cotizaciones no se contabilizan como ventas. Los trabajos realizados se registran en notas de venta y los abonos se controlan por separado.</p><button class="btn" data-go="cobranza">Ver cuentas por cobrar</button></div></section>
 <section id="sec-clientes" class="section"><div class="row between"><h1>Clientes</h1><button class="btn" id="newClient">+ Nuevo cliente</button></div><div id="clientEditor" class="card hide"><h2 id="clientTitle">Nuevo cliente</h2><form id="clientForm" class="formgrid"><input type="hidden" id="clientId"><label class="field">Nombre / contacto<input id="cNombre" required></label><label class="field">Empresa<input id="cEmpresa"></label><label class="field">Teléfono<input id="cTel"></label><label class="field">Correo<input id="cCorreo" type="email"></label><label class="field full">Dirección<textarea id="cDir"></textarea></label><div class="row"><button class="btn" type="submit">Guardar</button><button class="btn alt" type="button" id="cancelClient">Cancelar</button></div></form></div><div class="card"><div class="tablewrap"><table><thead><tr><th>Nombre</th><th>Empresa</th><th>Teléfono</th><th>Correo</th><th>Acciones</th></tr></thead><tbody id="clientsBody"></tbody></table></div></div></section>
-<section id="sec-cotizaciones" class="section"><div class="row between"><h1>Cotizaciones</h1><button class="btn" id="newQuote">+ Nueva cotización</button></div><div id="quoteEditor" class="card hide"><h2>Nueva cotización</h2><form id="quoteForm"><div class="formgrid"><div class="field"><label for="qClient">Cliente</label><select id="qClient" required></select><button type="button" class="btn alt small" id="qNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="qTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="qObs"></textarea></label></div><h2 style="margin-top:18px">Partidas</h2><div id="qLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addQLine">+ Partida</button><strong id="qPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar cotización</button><button type="button" class="btn alt" id="cancelQuote">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead><tbody id="quotesBody"></tbody></table></div></section>
-<section id="sec-ventas" class="section"><div class="row between"><h1>Notas de venta</h1><button class="btn" id="newSale">+ Nueva nota</button></div><div id="saleEditor" class="card hide"><h2>Nueva nota de venta</h2><form id="saleForm"><div class="formgrid"><div class="field"><label for="sClient">Cliente</label><select id="sClient" required></select><button type="button" class="btn alt small" id="sNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="sTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="sObs"></textarea></label></div><h2 style="margin-top:18px">Trabajos realizados</h2><div id="sLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addSLine">+ Partida</button><strong id="sPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar nota</button><button type="button" class="btn alt" id="cancelSale">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="salesBody"></tbody></table></div></section>
+<section id="sec-cotizaciones" class="section"><div class="row between"><h1>Cotizaciones</h1><button class="btn" id="newQuote">+ Nueva cotización</button></div><div id="quoteEditor" class="card hide"><h2>Nueva cotización</h2><form id="quoteForm"><div class="formgrid"><div class="field"><label for="qClient">Cliente</label><select id="qClient" required></select><button type="button" class="btn alt small" id="qNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="qTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="qObs"></textarea></label></div><h2 style="margin-top:18px">Partidas</h2><div class="card" style="margin:10px 0;padding:12px"><label class="field">Buscar o escanear producto
+<input id="qScanCode" type="text" placeholder="Código de barras, código interno o descripción" autocomplete="off" list="qScanList"></label><datalist id="qScanList"></datalist><div class="row" style="margin-top:8px"><button class="btn alt" type="button" id="qAddScan">+ Agregar producto</button><button class="btn alt" type="button" id="qCameraScan">📷 Escanear con cámara</button></div><small class="help">Lector USB/Bluetooth: escanea aquí y pulsa Enter. El mismo artículo aumenta su cantidad.</small></div><div id="qLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addQLine">+ Partida</button><strong id="qPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar cotización</button><button type="button" class="btn alt" id="cancelQuote">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead><tbody id="quotesBody"></tbody></table></div></section>
+<section id="sec-ventas" class="section"><div class="row between"><h1>Notas de venta</h1><button class="btn" id="newSale">+ Nueva nota</button></div><div id="saleEditor" class="card hide"><h2>Nueva nota de venta</h2><form id="saleForm"><div class="formgrid"><div class="field"><label for="sClient">Cliente</label><select id="sClient" required></select><button type="button" class="btn alt small" id="sNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="sTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="sObs"></textarea></label></div><h2 style="margin-top:18px">Trabajos realizados</h2><div class="card" style="margin:10px 0;padding:12px"><label class="field">Buscar o escanear producto
+<input id="sScanCode" type="text" placeholder="Código de barras, código interno o descripción" autocomplete="off" list="sScanList"></label><datalist id="sScanList"></datalist><div class="row" style="margin-top:8px"><button class="btn alt" type="button" id="sAddScan">+ Agregar producto</button><button class="btn alt" type="button" id="sCameraScan">📷 Escanear con cámara</button></div><small class="help">Lector USB/Bluetooth: escanea aquí y pulsa Enter. El mismo artículo aumenta su cantidad.</small></div><div id="sLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addSLine">+ Partida</button><strong id="sPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar nota</button><button type="button" class="btn alt" id="cancelSale">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="salesBody"></tbody></table></div></section>
 
 <section id="sec-productos" class="section"><div class="row between"><h1>Productos y servicios</h1><button id="newProduct" type="button" class="btn catalog-admin">+ Nuevo artículo</button></div>
 <p class="help">Catálogo compartido para administradores y técnicos. Las existencias se modifican únicamente mediante movimientos registrados.</p>
@@ -72,7 +74,7 @@ body:has(#login:not(.hide)):after{display:none!important}
 <p class="help">El stock inicial es 0. Para cargar o corregir existencias, guarda el artículo y utiliza «Movimiento».</p><div class="catalog-form-buttons"><button class="btn" type="submit">Guardar artículo</button><button class="btn alt" id="cancelProduct" type="button">Cancelar</button></div></form></div>
 <div id="stockEditor" class="card hide"><h2>Movimiento de inventario</h2><p id="stockProductName" class="muted"></p><form id="stockForm"><input id="stockProductId" type="hidden"><div class="formgrid"><label class="field">Tipo<select id="stockAction"><option value="entrada">Entrada (+)</option><option value="salida">Salida (-)</option><option value="devolucion">Devolución (+)</option><option value="ajuste">Ajuste (existencia final)</option></select></label><label class="field">Cantidad / existencia final<input id="stockAmount" type="number" min="0.001" step="0.001" required></label><label class="field">Motivo<input id="stockReason" maxlength="200" required placeholder="Compra, conteo físico, devolución..."></label><label class="field">Referencia<input id="stockRef" maxlength="120" placeholder="Factura o folio (opcional)"></label></div><div class="catalog-form-buttons"><button class="btn" type="submit">Registrar movimiento</button><button class="btn alt" id="cancelStock" type="button">Cancelar</button></div></form></div>
 <div class="card tablewrap"><table class="catalog-table"><thead><tr><th>Código</th><th>Descripción</th><th>Tipo</th><th>Precio</th><th>Existencia</th><th>Mínimo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="productsBody"></tbody></table></div>
-<p class="help">Importación Excel: actualiza artículos por código sin duplicarlos. Por seguridad, el archivo importa datos del catálogo, no existencias; para estas utiliza movimientos. Las ventas todavía no descuentan inventario automáticamente.</p></section>
+<p class="help">Importación Excel: actualiza artículos por código sin duplicarlos. Puedes elegir importar solo el catálogo, reemplazar o sumar existencias; los movimientos quedan registrados. No repitas una importación con SUMAR sin revisar existencias. Las ventas todavía no descuentan inventario automáticamente.</p></section>
 <section id="sec-cobranza" class="section"><h1>Cuentas por cobrar</h1><div class="card tablewrap"><table><thead><tr><th>Nota</th><th>Fecha</th><th>Cliente</th><th>Venta</th><th>Abonado</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="debtsBody"></tbody></table></div></section>
 <section id="sec-historial" class="section"><h1>Reporte de cobranza</h1>
 <div class="card"><div class="row between"><h2>Filtros de cobranza</h2><div class="row" style="gap:8px;flex-wrap:wrap"><button type="button" class="btn small" id="reportPdf">📄 Exportar PDF</button><button type="button" class="btn small good" id="reportExcel">📊 Exportar Excel</button><button type="button" class="btn alt small" id="reportReload">Actualizar datos</button></div></div>
@@ -175,11 +177,11 @@ async function deactivateClient(id){if(!confirm('¿Desactivar este cliente?'))re
 $('newClient').onclick=()=>editClient(null);$('cancelClient').onclick=()=>$('clientEditor').classList.add('hide');
 $('clientForm').onsubmit=async e=>{e.preventDefault();const id=$('clientId').value;const values={nombre:$('cNombre').value.trim(),empresa:$('cEmpresa').value.trim()||null,telefono:$('cTel').value.trim()||null,correo:$('cCorreo').value.trim()||null,direccion:$('cDir').value.trim()||null};try{let q=id?db.from('clientes').update(values).eq('id',id):db.from('clientes').insert({...values,creado_por:user.id});const {error}=await q;if(error)throw error;$('clientEditor').classList.add('hide');flash('Cliente guardado');await refresh('clientes')}catch(e){err(e)}};
 function addLine(target){const wrap=$(target);const div=document.createElement('div');div.className='line';div.innerHTML=`<label class="field">Descripción<input class="desc" required maxlength="500" placeholder="Servicio o producto"></label><label class="field">Cantidad<input class="qty" type="number" min="0.01" step="0.01" value="1" required></label><label class="field">Precio $<input class="price" type="number" min="0" step="0.01" value="0" required></label><button type="button" class="btn small warn" title="Quitar">×</button>`;div.querySelector('button').onclick=()=>{div.remove();preview(target)};div.querySelectorAll('input').forEach(i=>i.oninput=()=>preview(target));wrap.append(div);preview(target)}
-function lines(target){return [...$(target).querySelectorAll('.line')].map((r,i)=>({numero_partida:i+1,descripcion:r.querySelector('.desc').value.trim(),cantidad:Number(r.querySelector('.qty').value),precio_unitario:Number(r.querySelector('.price').value)}))}
+function lines(target){return [...$(target).querySelectorAll('.line')].map((r,i)=>({numero_partida:i+1,descripcion:r.querySelector('.desc').value.trim(),cantidad:Number(r.querySelector('.qty').value),precio_unitario:Number(r.querySelector('.price').value),producto_id:r.dataset.productoId||null}))}
 function preview(target){const sum=lines(target).reduce((a,x)=>a+x.cantidad*x.precio_unitario,0);const tax=$(target==='qLines'?'qTax':'sTax').value==='true';$(target==='qLines'?'qPreview':'sPreview').textContent=`Total estimado: ${money(sum*(tax?1.16:1))}`}
-function showEditor(kind){const quote=kind==='q';$(quote?'quoteEditor':'saleEditor').classList.remove('hide');$(quote?'quoteForm':'saleForm').reset();$(quote?'qLines':'sLines').innerHTML='';addLine(quote?'qLines':'sLines')}
+function showEditor(kind){loadProducts().catch(err);const quote=kind==='q';$(quote?'quoteEditor':'saleEditor').classList.remove('hide');$(quote?'quoteForm':'saleForm').reset();$(quote?'qLines':'sLines').innerHTML='';addLine(quote?'qLines':'sLines')}
 $('newQuote').onclick=()=>showEditor('q');$('newSale').onclick=()=>showEditor('s');$('cancelQuote').onclick=()=>$('quoteEditor').classList.add('hide');$('cancelSale').onclick=()=>$('saleEditor').classList.add('hide');$('addQLine').onclick=()=>addLine('qLines');$('addSLine').onclick=()=>addLine('sLines');$('qTax').onchange=()=>preview('qLines');$('sTax').onchange=()=>preview('sLines');
-async function insertDocument(table,lineTable,formPrefix){const isQ=formPrefix==='q',rows=lines(isQ?'qLines':'sLines');if(!rows.length||rows.some(r=>!r.descripcion||r.cantidad<=0||r.precio_unitario<0))throw Error('Revisa las partidas, cantidades y precios.');const values={cliente_id:$(formPrefix+'Client').value,creado_por:user.id,aplica_iva:$(formPrefix+'Tax').value==='true'};if(isQ){/* Cotizaciones may have different optional columns; use only established fields. */}else{values.observaciones=$('sObs').value.trim()||null}const {data:doc,error:e1}=await db.from(table).insert(values).select('id').single();if(e1)throw e1;const payload=rows.map(r=>({...r,[isQ?'cotizacion_id':'nota_venta_id']:doc.id}));const {error:e2}=await db.from(lineTable).insert(payload);if(e2)throw Error(`Se creó el encabezado, pero fallaron las partidas: ${e2.message}. Revisa el registro antes de intentar otra vez.`);return doc}
+async function insertDocument(table,lineTable,formPrefix){const isQ=formPrefix==='q',rows=lines(isQ?'qLines':'sLines');if(!rows.length||rows.some(r=>!r.descripcion||r.cantidad<=0||r.precio_unitario<0))throw Error('Revisa las partidas, cantidades y precios.');if(!isAdmin()){const target=isQ?'qLines':'sLines';for(const row of $(target).querySelectorAll('.line[data-producto-id]')){const p=catalogProducts.find(x=>x.id===row.dataset.productoId);if(p&&Number(row.querySelector('.price').value)<Number(p.precio_venta))throw Error('Un precio menor al catálogo requiere autorización del administrador. Esta función aún está pendiente.')}}const values={cliente_id:$(formPrefix+'Client').value,creado_por:user.id,aplica_iva:$(formPrefix+'Tax').value==='true'};if(isQ){/* Cotizaciones may have different optional columns; use only established fields. */}else{values.observaciones=$('sObs').value.trim()||null}const {data:doc,error:e1}=await db.from(table).insert(values).select('id').single();if(e1)throw e1;const payload=rows.map(r=>({...r,[isQ?'cotizacion_id':'nota_venta_id']:doc.id}));const {error:e2}=await db.from(lineTable).insert(payload);if(e2)throw Error(`Se creó el encabezado, pero fallaron las partidas: ${e2.message}. Revisa el registro antes de intentar otra vez.`);return doc}
 $('quoteForm').onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;try{await insertDocument('cotizaciones','cotizacion_partidas','q');$('quoteEditor').classList.add('hide');flash('Cotización registrada');await refresh('cotizaciones')}catch(ex){err(ex)}finally{busy=false}};
 $('saleForm').onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;try{await insertDocument('notas_venta','notas_venta_partidas','s');$('saleEditor').classList.add('hide');flash('Nota de venta registrada');await refresh('ventas')}catch(ex){err(ex)}finally{busy=false}};
 function renderQuotes(){
@@ -416,11 +418,75 @@ $('reportExcel').onclick=exportReportExcel;
 
 async function printDoc(table,lineTable,id){try{const {pdf}=await fetchDocumentPDF(table,id);const url=URL.createObjectURL(pdf.output('blob'));const w=window.open(url,'_blank');if(!w){pdf.save('VERASI_PC_documento.pdf');flash('El navegador bloqueó la ventana; se descargó el PDF.')}setTimeout(()=>URL.revokeObjectURL(url),120000)}catch(e){err(e)}}
 
+
+// VERASI PC · búsqueda y escáner para cotizaciones / notas
+function catalogScanOptions(){
+ for(const prefix of ['q','s']){
+  const el=$(prefix+'ScanList');if(!el)continue;
+  el.innerHTML=catalogProducts.filter(p=>p.activo).map(p=>`<option value="${esc(p.codigo)}">${esc(p.descripcion)} — ${money(p.precio_venta)}</option>`).join('');
+ }
+}
+function findScannedProduct(value){
+ const term=String(value||'').trim().toLocaleLowerCase('es');
+ if(!term)return null;
+ return catalogProducts.find(p=>p.activo&&[p.codigo_barras,p.codigo].some(v=>String(v||'').trim().toLocaleLowerCase('es')===term))
+   ||catalogProducts.find(p=>p.activo&&p.descripcion.trim().toLocaleLowerCase('es')===term)
+   ||null;
+}
+function addScannedProduct(prefix){
+ const field=$(prefix+'ScanCode'),p=findScannedProduct(field.value);
+ if(!p){flash('No encontré ese artículo activo en el catálogo. Revisa el código o selecciona uno de la lista.','warn');return}
+ const target=prefix==='q'?'qLines':'sLines',wrap=$(target);
+ let row=[...wrap.querySelectorAll('.line')].find(r=>r.dataset.productoId===p.id);
+ if(row){
+  const qty=row.querySelector('.qty');qty.value=String(Number(qty.value||0)+1);
+ }else{
+  row=[...wrap.querySelectorAll('.line')].find(r=>!r.dataset.productoId&&!r.querySelector('.desc').value.trim());
+  if(!row){addLine(target);row=wrap.querySelector('.line:last-child')}
+  row.dataset.productoId=p.id;
+  row.dataset.precioBase=String(p.precio_venta);
+  row.querySelector('.desc').value=p.descripcion;
+  row.querySelector('.qty').value='1';
+  row.querySelector('.price').value=String(p.precio_venta);
+ }
+ preview(target);field.value='';field.focus();
+}
+let verasiScanStream=null,verasiScanTimer=null;
+function closeScanCamera(){
+ if(verasiScanTimer){clearInterval(verasiScanTimer);verasiScanTimer=null}
+ if(verasiScanStream){verasiScanStream.getTracks().forEach(t=>t.stop());verasiScanStream=null}
+ const box=$('verasiScanModal');if(box)box.remove();
+}
+async function startScanCamera(prefix){
+ if(!navigator.mediaDevices?.getUserMedia||!('BarcodeDetector' in window)){
+  alert('Este navegador no permite escanear con cámara directamente. Usa un lector USB/Bluetooth o escribe el código.');return;
+ }
+ closeScanCamera();
+ const modal=document.createElement('div');modal.id='verasiScanModal';
+ modal.style.cssText='position:fixed;inset:0;background:#000d;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px';
+ modal.innerHTML='<div style="background:white;border-radius:14px;padding:16px;width:min(95vw,460px)"><h3>Escanear código</h3><video autoplay muted playsinline style="width:100%;background:#111;border-radius:8px"></video><p class="help">Enfoca el código de barras o QR.</p><button type="button" class="btn alt" id="verasiCloseCamera">Cerrar cámara</button></div>';
+ document.body.append(modal);$('verasiCloseCamera').onclick=closeScanCamera;
+ try{
+  const detector=new BarcodeDetector();
+  verasiScanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  const video=modal.querySelector('video');video.srcObject=verasiScanStream;await video.play();
+  let scanning=false;
+  verasiScanTimer=setInterval(async()=>{
+   if(scanning||video.readyState<2)return;scanning=true;
+   try{const found=await detector.detect(video);if(found.length){$(prefix+'ScanCode').value=found[0].rawValue;closeScanCamera();addScannedProduct(prefix)}}catch(e){}finally{scanning=false}
+  },350);
+ }catch(e){closeScanCamera();alert('No se pudo abrir la cámara: '+e.message)}
+}
+for(const prefix of ['q','s']){
+ $(prefix+'AddScan').onclick=()=>addScannedProduct(prefix);
+ $(prefix+'CameraScan').onclick=()=>startScanCamera(prefix);
+ $(prefix+'ScanCode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addScannedProduct(prefix)}});
+}
 // VERASI PC · Productos y servicios (catálogo v1)
 let catalogProducts=[];
 const catalogFields=['codigo','codigo_barras','descripcion','tipo','categoria','costo','precio_venta','stock_minimo','unidad','activo'];
 function productAdminUI(){document.querySelectorAll('.catalog-admin').forEach(x=>x.classList.toggle('hide',!isAdmin()))}
-async function loadProducts(){productAdminUI();const {data,error}=await db.from('productos').select('id,codigo,codigo_barras,descripcion,tipo,categoria,costo,precio_venta,existencia,stock_minimo,unidad,activo').order('descripcion',{ascending:true}).limit(2000);if(error)throw error;catalogProducts=data||[];actualizarListaCategorias();renderProducts()}
+async function loadProducts(){productAdminUI();const {data,error}=await db.from('productos').select('id,codigo,codigo_barras,descripcion,tipo,categoria,costo,precio_venta,existencia,stock_minimo,unidad,activo').order('descripcion',{ascending:true}).limit(2000);if(error)throw error;catalogProducts=data||[];actualizarListaCategorias();catalogScanOptions();renderProducts()}
 function actualizarListaCategorias(){
   const categorias=[...new Set(catalogProducts.map(p=>String(p.categoria||'').trim()).filter(Boolean))];
   categorias.sort((a,b)=>a.localeCompare(b,'es',{sensitivity:'base'}));
@@ -434,13 +500,60 @@ function openStock(id){if(!isAdmin())return;const p=catalogProducts.find(x=>x.id
 $('cancelStock').onclick=()=>$('stockEditor').classList.add('hide');$('stockForm').onsubmit=async ev=>{ev.preventDefault();if(!isAdmin())return;const type=$('stockAction').value,amount=Number($('stockAmount').value),reason=$('stockReason').value.trim();if(!(amount>0)||!reason)return flash('Indica una cantidad mayor a cero y el motivo.',true);if(!confirm(`¿Confirmas ${type} por ${amount}? Este movimiento quedará registrado.`))return;const b=ev.submitter;b.disabled=true;try{const {error}=await db.rpc('registrar_movimiento_inventario',{p_producto_id:$('stockProductId').value,p_tipo:type,p_cantidad:amount,p_motivo:reason,p_referencia:$('stockRef').value.trim()||null});if(error)throw error;$('stockEditor').classList.add('hide');await loadProducts();flash('Movimiento de inventario registrado.')}catch(e){err(e)}finally{b.disabled=false}};
 function catalogExcel(rows,name){if(!window.XLSX)throw Error('La biblioteca Excel no está disponible.');const sheet=XLSX.utils.json_to_sheet(rows);sheet['!cols']=[{wch:20},{wch:23},{wch:45},{wch:14},{wch:20},{wch:16},{wch:20},{wch:18},{wch:15},{wch:12},{wch:14}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,sheet,'Productos');XLSX.writeFile(wb,name)}
 $('exportProducts').onclick=()=>{try{catalogExcel(catalogProducts.map(p=>({...Object.fromEntries(catalogFields.map(k=>[k,p[k]??''])),existencia:p.existencia})), 'VERASI_PC_Productos.xlsx')}catch(e){err(e)}};
-$('templateProducts').onclick=()=>{try{catalogExcel([{codigo:'EJEMPLO-001',codigo_barras:'',descripcion:'Artículo de ejemplo',tipo:'producto',categoria:'General',costo:100,precio_venta:150,stock_minimo:2,unidad:'pieza',activo:true}],'VERASI_PC_Plantilla_Productos.xlsx')}catch(e){err(e)}};
+$('templateProducts').onclick=()=>{try{catalogExcel([{codigo:'EJEMPLO-001',codigo_barras:'',descripcion:'Artículo de ejemplo',tipo:'producto',categoria:'General',costo:100,precio_venta:150,stock_minimo:2,unidad:'pieza',activo:true,existencia:20}],'VERASI_PC_Plantilla_Productos.xlsx')}catch(e){err(e)}};
 function parseCatalogBoolean(v){return v===false||v===0||String(v).trim().toLowerCase()==='false'||String(v).trim().toLowerCase()==='no'||String(v).trim()==='0'?false:true}
-$('importProducts').onchange=async ev=>{const file=ev.target.files?.[0];if(!file)return;try{if(!isAdmin())throw Error('Solo el administrador puede importar artículos.');if(!window.XLSX)throw Error('No se pudo cargar Excel.');const wb=XLSX.read(await file.arrayBuffer(),{type:'array'}),raw=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});if(!raw.length)throw Error('El archivo no tiene artículos.');if(raw.length>500)throw Error('Importa máximo 500 artículos por archivo.');const parsed=[],codes=new Set();for(let i=0;i<raw.length;i++){const x=raw[i],code=String(x.codigo||'').trim(),desc=String(x.descripcion||'').trim(),tipo=String(x.tipo||'producto').trim().toLowerCase(),cost=Number(x.costo||0),price=Number(x.precio_venta||0),min=Number(x.stock_minimo||0);if(!code||!desc||!['producto','servicio'].includes(tipo)||[cost,price,min].some(v=>!Number.isFinite(v)||v<0))throw Error(`Fila ${i+2}: revisa código, descripción, tipo y precios.`);if(codes.has(code))throw Error(`Código repetido dentro del archivo: ${code}`);codes.add(code);parsed.push({codigo:code,codigo_barras:String(x.codigo_barras||'').trim()||null,descripcion:desc,tipo,categoria:String(x.categoria||'').trim()||null,costo:cost,precio_venta:price,stock_minimo:tipo==='servicio'?0:min,unidad:String(x.unidad||'pieza').trim()||'pieza',activo:parseCatalogBoolean(x.activo)})}const existing=new Map(catalogProducts.map(p=>[p.codigo,p]));const nUpdated=parsed.filter(p=>existing.has(p.codigo)).length;if(!confirm(`Importar ${parsed.length} artículos (${nUpdated} existentes y ${parsed.length-nUpdated} nuevos)?
-
-Se actualizarán los datos por código, sin duplicar. Las EXISTENCIAS NO se importarán.
-
-La operación puede quedar parcialmente aplicada si hay un error. ¿Continuar?`))return;let done=0;for(const p of parsed){const old=existing.get(p.codigo);if(old&&old.tipo!==p.tipo&&Number(old.existencia)>0)throw Error(`No se puede cambiar el tipo de ${p.codigo} porque tiene existencias.`);const query=old?db.from('productos').update(p).eq('id',old.id):db.from('productos').insert({...p,creado_por:user.id});const {error}=await query;if(error)throw Error(`Artículo ${p.codigo}: ${error.message}`);done++}await loadProducts();flash(`Importación completada: ${done} artículos procesados. Existencias sin cambios.`)}catch(e){err(e);flash(`Importación detenida: ${e.message}. Revisa qué artículos se alcanzaron a guardar antes de repetir.`,true);await loadProducts().catch(console.error)}finally{ev.target.value=''}};
+$('importProducts').onchange=async ev=>{
+ const file=ev.target.files?.[0];if(!file)return;
+ try{
+  if(!isAdmin())throw Error('Solo el administrador puede importar artículos.');
+  if(!window.XLSX)throw Error('No se pudo cargar Excel.');
+  const wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
+  const raw=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
+  if(!raw.length)throw Error('El archivo no tiene artículos.');
+  if(raw.length>500)throw Error('Importa máximo 500 artículos por archivo.');
+  const hasStock=Object.prototype.hasOwnProperty.call(raw[0],'existencia');
+  const parsed=[],codes=new Set();
+  for(let i=0;i<raw.length;i++){
+   const x=raw[i],code=String(x.codigo||'').trim(),desc=String(x.descripcion||'').trim(),tipo=String(x.tipo||'producto').trim().toLowerCase();
+   const cost=Number(x.costo||0),price=Number(x.precio_venta||0),min=Number(x.stock_minimo||0);
+   const stock=hasStock?(x.existencia===''?null:Number(x.existencia)):null;
+   if(!code||!desc||!['producto','servicio'].includes(tipo)||[cost,price,min].some(v=>!Number.isFinite(v)||v<0))throw Error(`Fila ${i+2}: revisa código, descripción, tipo y precios.`);
+   if(stock!==null&&(!Number.isFinite(stock)||stock<0||Math.round(stock*1000)!==stock*1000))throw Error(`Fila ${i+2}: existencia inválida (máximo 3 decimales).`);
+   if(tipo==='servicio'&&stock!==null&&stock!==0)throw Error(`Fila ${i+2}: un servicio no puede tener existencias.`);
+   if(codes.has(code))throw Error(`Código repetido dentro del archivo: ${code}`);codes.add(code);
+   parsed.push({item:{codigo:code,codigo_barras:String(x.codigo_barras||'').trim()||null,descripcion:desc,tipo,categoria:String(x.categoria||'').trim()||null,costo:cost,precio_venta:price,stock_minimo:tipo==='servicio'?0:min,unidad:String(x.unidad||'pieza').trim()||'pieza',activo:parseCatalogBoolean(x.activo)},stock});
+  }
+  const existing=new Map(catalogProducts.map(p=>[p.codigo,p]));
+  const nUpdated=parsed.filter(p=>existing.has(p.item.codigo)).length;
+  const modeInput=prompt(`Archivo: ${parsed.length} artículos (${nUpdated} existentes, ${parsed.length-nUpdated} nuevos).\n\n¿Qué deseas importar?\n1 = Solo datos del catálogo (NO modifica existencias)\n2 = Reemplazar existencias por las cantidades de Excel\n3 = Sumar existencias de Excel a las actuales\n\nEscribe 1, 2 o 3:`, '1');
+  if(modeInput===null)return;
+  const mode=modeInput.trim();if(!['1','2','3'].includes(mode))throw Error('Elige 1, 2 o 3.');
+  if(mode!=='1'&&!hasStock)throw Error('Falta la columna existencia en Excel.');
+  if(mode!=='1'&&parsed.some(x=>x.item.tipo==='producto'&&x.stock===null))throw Error('Para importar inventario, llena existencia en todos los productos.');
+  if(mode==='2'&&parsed.some(x=>x.item.tipo==='producto'&&x.stock===0&&Number(existing.get(x.item.codigo)?.existencia||0)>0))throw Error('No se puede reemplazar una existencia positiva por 0 con la función actual. Usa Movimiento para ese ajuste; no se importó nada.');
+  if(mode==='3'&&!confirm('ATENCIÓN: SUMAR existencias agrega unidades cada vez que importes el mismo archivo. Si repites la importación, se volverán a sumar. ¿Continuar?'))return;
+  if(!confirm(`Se actualizarán los datos de ${parsed.length} artículos por código, sin duplicarlos.\nInventario: ${mode==='1'?'SIN CAMBIOS':mode==='2'?'REEMPLAZAR':'SUMAR'}.\n\nCada artículo se procesa por separado: si hay un error, pueden quedar algunos ya guardados. NO repitas una importación con SUMAR sin revisar existencias. ¿Confirmas?`))return;
+  let done=0,stockDone=0;
+  for(const {item,stock} of parsed){
+   const old=existing.get(item.codigo);
+   if(old&&old.tipo!==item.tipo&&Number(old.existencia)>0)throw Error(`No se puede cambiar el tipo de ${item.codigo} porque tiene existencias.`);
+   const query=old?db.from('productos').update(item).eq('id',old.id).select('id').single():db.from('productos').insert({...item,creado_por:user.id}).select('id').single();
+   const {data,error}=await query;if(error)throw Error(`Artículo ${item.codigo}: ${error.message}`);
+   done++;
+   if(mode!=='1'&&item.tipo==='producto'){
+    const current=Number(old?.existencia||0);
+    if((mode==='3'&&stock>0)||(mode==='2'&&stock!==current)){
+     const tipo=mode==='3'?'entrada':'ajuste';
+     const {error:movementError}=await db.rpc('registrar_movimiento_inventario',{p_producto_id:data.id,p_tipo:tipo,p_cantidad:stock,p_motivo:'Importación Excel ('+(mode==='2'?'reemplazar':'sumar')+')',p_referencia:file.name.slice(0,120)});
+     if(movementError)throw Error(`Inventario ${item.codigo}: ${movementError.message}. Revisa existencias antes de repetir.`);
+     stockDone++;
+    }
+   }
+  }
+  await loadProducts();flash(`Importación completada: ${done} artículos, ${stockDone} movimientos de inventario.`);
+ }catch(e){err(e);flash(`Importación detenida: ${e.message}. Revisa qué artículos se alcanzaron a guardar antes de repetir.`,true);await loadProducts().catch(console.error)}
+ finally{ev.target.value=''}
+};
 
 $('loginForm').onsubmit=async e=>{e.preventDefault();$('loginMsg').innerHTML='';const b=e.submitter;b.disabled=true;try{const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await init()}catch(e){$('loginMsg').innerHTML=`<div class="notice error">${esc(e.message)}</div>`}finally{b.disabled=false}};
 $('logout').onclick=async()=>{await db.auth.signOut();user=null;profile=null;await init()};
