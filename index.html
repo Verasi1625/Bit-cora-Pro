@@ -59,7 +59,7 @@ body:has(#login:not(.hide)):after{display:none!important}
 <section id="sec-ventas" class="section"><div class="row between"><h1>Notas de venta</h1><button class="btn" id="newSale">+ Nueva nota</button></div><div id="saleEditor" class="card hide"><h2>Nueva nota de venta</h2><form id="saleForm"><div class="formgrid"><div class="field"><label for="sClient">Cliente</label><select id="sClient" required></select><button type="button" class="btn alt small" id="sNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="sTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="sObs"></textarea></label></div><h2 style="margin-top:18px">Trabajos realizados</h2><div id="sLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addSLine">+ Partida</button><strong id="sPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar nota</button><button type="button" class="btn alt" id="cancelSale">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="salesBody"></tbody></table></div></section>
 <section id="sec-cobranza" class="section"><h1>Cuentas por cobrar</h1><div class="card tablewrap"><table><thead><tr><th>Nota</th><th>Fecha</th><th>Cliente</th><th>Venta</th><th>Abonado</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="debtsBody"></tbody></table></div></section>
 <section id="sec-historial" class="section"><h1>Reporte de cobranza</h1>
-<div class="card"><div class="row between"><h2>Filtros de cobranza</h2><button type="button" class="btn alt small" id="reportReload">Actualizar datos</button></div>
+<div class="card"><div class="row between"><h2>Filtros de cobranza</h2><div class="row" style="gap:8px;flex-wrap:wrap"><button type="button" class="btn small" id="reportPdf">📄 Exportar PDF</button><button type="button" class="btn small good" id="reportExcel">📊 Exportar Excel</button><button type="button" class="btn alt small" id="reportReload">Actualizar datos</button></div></div>
 <div class="formgrid">
 <label class="field">Periodo<select id="reportPeriod"><option value="hoy">Hoy</option><option value="ayer">Ayer</option><option value="semana">Esta semana</option><option value="mes">Este mes</option><option value="todos">Todo el historial</option><option value="rango">Rango personalizado</option></select></label>
 <label class="field">Cobrado por<select id="reportUser"><option value="">Todos los usuarios</option></select></label>
@@ -87,6 +87,7 @@ body:has(#login:not(.hide)):after{display:none!important}
 <div id="abonoModal" class="hide" style="position:fixed;inset:0;background:#000b;z-index:1001;display:grid;place-items:center;padding:16px;overflow:auto"><div class="card" style="width:min(480px,100%);margin:0"><h2>Registrar abono</h2><p class="muted">Nota <strong id="abonoFolio"></strong> · Saldo: <strong id="abonoSaldo"></strong></p><form id="abonoForm" class="formgrid"><label class="field full">Importe del abono<input id="abonoImporte" type="number" min="0.01" step="0.01" required></label><label class="field full">Forma de pago<select id="abonoMetodo" required><option value="efectivo">Efectivo</option><option value="tarjeta">Tarjeta</option><option value="transferencia">Transferencia</option><option value="otro">Otro</option></select></label><label class="field full hide" id="abonoOtroWrap">Especifica la forma de pago<input id="abonoOtro" maxlength="80" placeholder="Ej. cheque, depósito"></label><label class="field full">Referencia (opcional)<input id="abonoReferencia" maxlength="120"></label><div class="row field full"><button class="btn good" type="submit" id="abonoGuardar">Registrar abono</button><button class="btn alt" type="button" id="abonoCancelar">Cancelar</button></div></form></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 'use strict';
 const PROJECT_URL='https://awozpbdbahgrkuhbcgbj.supabase.co';
@@ -330,6 +331,71 @@ function renderReportResults(){
 }
 $('reportPeriod').onchange=renderReportResults;$('reportUser').onchange=renderReportResults;$('reportFrom').onchange=renderReportResults;$('reportTo').onchange=renderReportResults;
 $('reportReload').onclick=()=>refresh('historial');
+
+function reportExportData(){
+ const rows=reportFilteredPayments();
+ const methods=new Map(),users=new Map();let cents=0;
+ const details=rows.map(p=>{const n=paymentNotes.find(x=>x.id===p.nota_venta_id);const amt=Math.round(Number(p.importe||0)*100);cents+=amt;
+  const method=reportMethodName(p),who=reportUserName(p.registrado_por);
+  for(const [map,key] of [[methods,method],[users,who]]){const v=map.get(key)||{count:0,cents:0};v.count++;v.cents+=amt;map.set(key,v)}
+  return {fecha:reportDateOf(p.fecha_pago),nota:n?'#'+n.folio:'',cliente:n?clientNameForHistory(n.cliente_id):'',importe:amt/100,metodo:method,referencia:p.referencia||'',usuario:who};
+ });
+ const group=map=>[...map.entries()].sort((a,b)=>b[1].cents-a[1].cents).map(([name,v])=>({name,count:v.count,total:v.cents/100}));
+ const period=$('reportPeriod'),label=period.options[period.selectedIndex]?.text||'Periodo';
+ const from=$('reportFrom').value,to=$('reportTo').value;
+ const description=period.value==='rango'?`Del ${from||'inicio'} al ${to||'fin'}`:label;
+ const user=$('reportUser'),userLabel=user.options[user.selectedIndex]?.text||'Todos los usuarios';
+ return {details,methods:group(methods),users:group(users),total:cents/100,count:rows.length,description,userLabel};
+}
+function reportFileName(ext){return 'VERASI_PC_Cobranza_'+reportDateLocal(new Date())+'.'+ext}
+function exportReportExcel(){
+ try{
+  if(!window.XLSX)throw Error('No se pudo cargar la biblioteca Excel. Revisa tu conexión a Internet.');
+  const r=reportExportData(),book=XLSX.utils.book_new();
+  const summary=[['VERASI PC - REPORTE DE COBRANZA'],['Periodo',r.description],['Cobrado por',r.userLabel],['Movimientos',r.count],['Total cobrado (MXN)',r.total],[],['FORMA DE PAGO','MOVIMIENTOS','TOTAL (MXN)'],...r.methods.map(x=>[x.name,x.count,x.total]),[],['USUARIO','MOVIMIENTOS','TOTAL (MXN)'],...r.users.map(x=>[x.name,x.count,x.total])];
+  const sheet=XLSX.utils.aoa_to_sheet(summary);sheet['!cols']=[{wch:34},{wch:26},{wch:20}];
+  XLSX.utils.book_append_sheet(book,sheet,'Resumen');
+  const rows=r.details.map(x=>({'Fecha':x.fecha,'Nota':x.nota,'Cliente':x.cliente,'Importe (MXN)':x.importe,'Forma de pago':x.metodo,'Referencia':x.referencia,'Registrado por':x.usuario}));
+  const detailSheet=XLSX.utils.json_to_sheet(rows.length?rows:[{'Fecha':'Sin movimientos'}]);detailSheet['!cols']=[{wch:14},{wch:12},{wch:32},{wch:18},{wch:23},{wch:24},{wch:30}];
+  XLSX.utils.book_append_sheet(book,detailSheet,'Movimientos');XLSX.writeFile(book,reportFileName('xlsx'));flash('Reporte Excel descargado.');
+ }catch(e){err(e)}
+}
+function exportReportPDF(){
+ try{
+  if(!window.jspdf?.jsPDF)throw Error('No se pudo cargar la biblioteca PDF.');
+  const r=reportExportData(),pdf=new window.jspdf.jsPDF({unit:'mm',format:'letter'}),W=215.9,H=279.4,M=15,R=W-M;
+  let y=18,page=1;const blue=[27,94,194],dark=[21,37,64];
+  const line=(txt,x,yy,size=9,bold=false)=>{pdf.setFont('helvetica',bold?'bold':'normal');pdf.setFontSize(size);pdf.setTextColor(...dark);pdf.text(String(txt??''),x,yy)};
+  const footer=()=>{pdf.setFontSize(8);pdf.setTextColor(110,120,135);pdf.text('VERASI PC · SOLUCIONES INFORMÁTICAS',M,H-11);pdf.text('Página '+page,R,H-11,{align:'right'})};
+  const next=(need=8)=>{if(y+need>H-20){footer();pdf.addPage();page++;y=20}};
+  try{if(VERASI?.logo)pdf.addImage(VERASI.logo,'PNG',M,9,43,15)}catch(_){/* logo no disponible en navegador */}
+  pdf.setFillColor(...blue);pdf.rect(M,29,W-2*M,1.2,'F');y=39;
+  line('REPORTE DE COBRANZA',M,y,17,true);y+=9;
+  line('Periodo: '+r.description,M,y,9);y+=6;
+  line('Cobrado por: '+r.userLabel,M,y,9);y+=8;
+  line('Total cobrado: '+money(r.total)+'    |    Movimientos: '+r.count,M,y,11,true);y+=12;
+  const section=(title,items)=>{
+   next(17);pdf.setFillColor(231,239,251);pdf.rect(M,y-6,W-2*M,9,'F');line(title,M+3,y,10,true);y+=9;
+   if(!items.length){line('Sin movimientos en el periodo',M+3,y,9);y+=7;return}
+   for(const item of items){next(7);const name=pdf.splitTextToSize(item.name,98);line(name[0],M+3,y,9);line(String(item.count),R-48,y,9);pdf.text(money(item.total),R-2,y,{align:'right'});y+=7}
+   y+=5;
+  };
+  section('TOTAL POR FORMA DE PAGO',r.methods);section('TOTAL POR USUARIO',r.users);
+  next(20);pdf.setFillColor(231,239,251);pdf.rect(M,y-6,W-2*M,9,'F');line('DETALLE DE MOVIMIENTOS',M+3,y,10,true);y+=10;
+  const header=()=>{next(12);line('Fecha',M,y,8,true);line('Nota',M+23,y,8,true);line('Cliente',M+40,y,8,true);line('Importe',M+103,y,8,true);line('Método',M+129,y,8,true);line('Registró',M+154,y,8,true);y+=7};
+  header();
+  for(const d of r.details){
+   const client=pdf.splitTextToSize(d.cliente||'—',57)[0];const method=pdf.splitTextToSize(d.metodo||'—',24)[0];const user=pdf.splitTextToSize(d.usuario||'—',26)[0];
+   if(y+8>H-20){footer();pdf.addPage();page++;y=20;header()}
+   line(d.fecha,M,y,7);line(d.nota,M+23,y,7);line(client,M+40,y,7);line(money(d.importe),M+103,y,7);line(method,M+129,y,7);line(user,M+154,y,7);y+=7;
+  }
+  if(!r.details.length){line('Sin movimientos en el periodo',M,y,9)}
+  footer();pdf.save(reportFileName('pdf'));flash('Reporte PDF descargado.');
+ }catch(e){err(e)}
+}
+$('reportPdf').onclick=exportReportPDF;
+$('reportExcel').onclick=exportReportExcel;
+
 
 async function printDoc(table,lineTable,id){try{const {pdf}=await fetchDocumentPDF(table,id);const url=URL.createObjectURL(pdf.output('blob'));const w=window.open(url,'_blank');if(!w){pdf.save('VERASI_PC_documento.pdf');flash('El navegador bloqueó la ventana; se descargó el PDF.')}setTimeout(()=>URL.revokeObjectURL(url),120000)}catch(e){err(e)}}
 $('loginForm').onsubmit=async e=>{e.preventDefault();$('loginMsg').innerHTML='';const b=e.submitter;b.disabled=true;try{const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await init()}catch(e){$('loginMsg').innerHTML=`<div class="notice error">${esc(e.message)}</div>`}finally{b.disabled=false}};
