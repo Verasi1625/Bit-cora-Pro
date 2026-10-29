@@ -58,7 +58,18 @@ body:has(#login:not(.hide)):after{display:none!important}
 <section id="sec-cotizaciones" class="section"><div class="row between"><h1>Cotizaciones</h1><button class="btn" id="newQuote">+ Nueva cotización</button></div><div id="quoteEditor" class="card hide"><h2>Nueva cotización</h2><form id="quoteForm"><div class="formgrid"><div class="field"><label for="qClient">Cliente</label><select id="qClient" required></select><button type="button" class="btn alt small" id="qNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="qTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="qObs"></textarea></label></div><h2 style="margin-top:18px">Partidas</h2><div id="qLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addQLine">+ Partida</button><strong id="qPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar cotización</button><button type="button" class="btn alt" id="cancelQuote">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Cliente</th><th>Estado</th><th>Total</th><th>Acciones</th></tr></thead><tbody id="quotesBody"></tbody></table></div></section>
 <section id="sec-ventas" class="section"><div class="row between"><h1>Notas de venta</h1><button class="btn" id="newSale">+ Nueva nota</button></div><div id="saleEditor" class="card hide"><h2>Nueva nota de venta</h2><form id="saleForm"><div class="formgrid"><div class="field"><label for="sClient">Cliente</label><select id="sClient" required></select><button type="button" class="btn alt small" id="sNewClient" style="align-self:flex-start;margin-top:4px">+ Nuevo cliente</button></div><label class="field">IVA<select id="sTax"><option value="true">Sí · 16%</option><option value="false">No</option></select></label><label class="field full">Observaciones<textarea id="sObs"></textarea></label></div><h2 style="margin-top:18px">Trabajos realizados</h2><div id="sLines" class="lines"></div><div class="row" style="margin-top:12px"><button type="button" class="btn alt" id="addSLine">+ Partida</button><strong id="sPreview" style="margin-left:auto"></strong></div><div class="row" style="margin-top:18px"><button class="btn" type="submit">Guardar nota</button><button type="button" class="btn alt" id="cancelSale">Cancelar</button></div></form></div><div class="card tablewrap"><table><thead><tr><th>Folio</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Saldo</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="salesBody"></tbody></table></div></section>
 <section id="sec-cobranza" class="section"><h1>Cuentas por cobrar</h1><div class="card tablewrap"><table><thead><tr><th>Nota</th><th>Fecha</th><th>Cliente</th><th>Venta</th><th>Abonado</th><th>Saldo</th><th>Acciones</th></tr></thead><tbody id="debtsBody"></tbody></table></div></section>
-<section id="sec-historial" class="section"><h1>Historial de pagos</h1><div class="card tablewrap"><table><thead><tr><th>Fecha</th><th>Nota</th><th>Cliente</th><th>Importe</th><th>Método</th><th>Referencia</th><th>Registrado por</th></tr></thead><tbody id="paymentsBody"></tbody></table></div></section>
+<section id="sec-historial" class="section"><h1>Reporte de cobranza</h1>
+<div class="card"><div class="row between"><h2>Filtros de cobranza</h2><button type="button" class="btn alt small" id="reportReload">Actualizar datos</button></div>
+<div class="formgrid">
+<label class="field">Periodo<select id="reportPeriod"><option value="hoy">Hoy</option><option value="ayer">Ayer</option><option value="semana">Esta semana</option><option value="mes">Este mes</option><option value="todos">Todo el historial</option><option value="rango">Rango personalizado</option></select></label>
+<label class="field">Cobrado por<select id="reportUser"><option value="">Todos los usuarios</option></select></label>
+<label class="field" id="reportFromWrap" style="display:none">Desde<input type="date" id="reportFrom"></label>
+<label class="field" id="reportToWrap" style="display:none">Hasta<input type="date" id="reportTo"></label>
+</div><p class="help">Incluye anticipos y abonos efectivamente registrados. No suma cotizaciones ni saldos pendientes.</p></div>
+<div class="cards"><div class="card"><div class="muted">Total cobrado en el periodo</div><div class="metric" id="reportTotal">$0.00</div></div><div class="card"><div class="muted">Movimientos</div><div class="metric" id="reportCount">0</div></div></div>
+<div class="card"><h2>Total por forma de pago</h2><div class="tablewrap"><table><thead><tr><th>Forma de pago</th><th>Movimientos</th><th>Total cobrado</th></tr></thead><tbody id="reportMethods"></tbody></table></div></div>
+<div class="card"><h2>Detalle por usuario</h2><div class="tablewrap"><table><thead><tr><th>Usuario</th><th>Movimientos</th><th>Total cobrado</th></tr></thead><tbody id="reportUsers"></tbody></table></div></div>
+<h2>Historial de pagos filtrado</h2><div class="card tablewrap"><table><thead><tr><th>Fecha</th><th>Nota</th><th>Cliente</th><th>Importe</th><th>Método</th><th>Referencia</th><th>Registrado por</th></tr></thead><tbody id="paymentsBody"></tbody></table></div></section>
 <section id="sec-usuarios" class="section"><h1>Administración de usuarios</h1>
 <div class="card"><div class="row between"><h2>+ Nuevo usuario</h2><span class="tag">Solo administrador</span></div>
 <p class="muted smalltext">Crea una cuenta para un técnico o administrador. Comparte la contraseña inicial de forma privada y pide que la cambie al ingresar.</p>
@@ -284,7 +295,42 @@ $('abonoCancelar').onclick=()=>{$('abonoModal').classList.add('hide');abonoPendi
 async function pay(id){try{const {data:n,error}=await db.from('notas_venta').select('id,folio,saldo_pendiente,estado').eq('id',id).single();if(error)throw error;if(n.estado==='cancelada')throw Error('No se admiten pagos en notas canceladas');if(Number(n.saldo_pendiente)<=0)throw Error('Esta nota no tiene saldo pendiente.');abonoPendiente=n;$('abonoFolio').textContent='#'+n.folio;$('abonoSaldo').textContent=money(n.saldo_pendiente);$('abonoForm').reset();$('abonoImporte').max=Number(n.saldo_pendiente).toFixed(2);cambiarMetodoAbono();$('abonoModal').classList.remove('hide')}catch(e){err(e)}}
 $('abonoForm').onsubmit=async e=>{e.preventDefault();if(!abonoPendiente||busy)return;const n=abonoPendiente,amount=Number($('abonoImporte').value),method=$('abonoMetodo').value,other=$('abonoOtro').value.trim(),reference=$('abonoReferencia').value.trim();if(!Number.isFinite(amount)||amount<=0||amount>Number(n.saldo_pendiente))return err(Error('El importe debe ser mayor que cero y no superar el saldo.'));if(method==='otro'&&!other)return err(Error('Especifica la forma de pago.'));const ref=reference;const obs=method==='otro'?'Forma de pago: '+other:null;if(ref.length>120)return err(Error('La referencia es demasiado larga.'));if(!confirm(`¿Registrar ${money(amount)} por ${method==='otro'?other:method}?`))return;busy=true;$('abonoGuardar').disabled=true;try{const {error}=await db.from('pagos_nota_venta').insert({nota_venta_id:n.id,importe:amount,metodo_pago:method,referencia:ref||null,observaciones:obs,registrado_por:user.id});if(error)throw error;$('abonoModal').classList.add('hide');abonoPendiente=null;flash('Pago registrado correctamente');await refresh(section)}catch(e){err(e)}finally{busy=false;$('abonoGuardar').disabled=false}};
 
-function renderPayments(){$('paymentsBody').innerHTML=payments.map(p=>{const n=paymentNotes.find(x=>x.id===p.nota_venta_id);return `<tr><td>${fmtDate(p.fecha_pago)}</td><td>${n?'#'+esc(n.folio):'—'}</td><td>${n?clientNameForHistory(n.cliente_id):'—'}</td><td>${money(p.importe)}</td><td>${esc(p.metodo_pago==='otro'?(p.observaciones?.replace(/^Forma de pago:\s*/i,'')||'Otro'):p.metodo_pago)}</td><td>${esc(p.referencia||'—')}</td><td>${esc(paymentProfiles.find(u=>u.id===p.registrado_por)?.nombre||'No disponible')}</td></tr>`}).join('')||blankRow(7)}
+function reportDateLocal(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function reportDateOf(v){return String(v||'').slice(0,10)}
+function reportUserName(id){return paymentProfiles.find(u=>u.id===id)?.nombre||'No disponible'}
+function reportMethodName(p){return p.metodo_pago==='otro'?(p.observaciones?.replace(/^Forma de pago:\s*/i,'').trim()||'Otro'):({efectivo:'Efectivo',tarjeta:'Tarjeta',transferencia:'Transferencia'}[p.metodo_pago]||p.metodo_pago||'Sin especificar')}
+function reportFilteredPayments(){
+ const period=$('reportPeriod').value,who=$('reportUser').value;
+ const today=new Date();today.setHours(0,0,0,0);
+ let from='',to='';
+ if(period==='hoy'){from=to=reportDateLocal(today)}
+ if(period==='ayer'){const d=new Date(today);d.setDate(d.getDate()-1);from=to=reportDateLocal(d)}
+ if(period==='semana'){const d=new Date(today);d.setDate(d.getDate()-((d.getDay()+6)%7));from=reportDateLocal(d);to=reportDateLocal(today)}
+ if(period==='mes'){from=reportDateLocal(new Date(today.getFullYear(),today.getMonth(),1));to=reportDateLocal(today)}
+ if(period==='rango'){from=$('reportFrom').value;to=$('reportTo').value}
+ if(from&&to&&from>to){$('reportMethods').innerHTML=blankRow(3,'La fecha inicial es posterior a la final');return []}
+ return payments.filter(p=>{const day=reportDateOf(p.fecha_pago);return (!who||p.registrado_por===who)&&(!from||day>=from)&&(!to||day<=to)})
+}
+function renderPayments(){
+ const select=$('reportUser'),previous=select.value;
+ const people=[...new Map(payments.filter(p=>p.registrado_por).map(p=>[p.registrado_por,{id:p.registrado_por,nombre:reportUserName(p.registrado_por)}])).values()].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+ select.innerHTML='<option value="">Todos los usuarios</option>'+people.map(u=>`<option value="${esc(u.id)}">${esc(u.nombre)}</option>`).join('');
+ select.value=people.some(u=>u.id===previous)?previous:'';
+ renderReportResults();
+}
+function renderReportResults(){
+ const range=$('reportPeriod').value==='rango';$('reportFromWrap').style.display=range?'':'none';$('reportToWrap').style.display=range?'':'none';
+ const rows=reportFilteredPayments(),sumCents=rows.reduce((a,p)=>a+Math.round(Number(p.importe||0)*100),0);
+ $('reportTotal').textContent=money(sumCents/100);$('reportCount').textContent=String(rows.length);
+ const methods=new Map(),users=new Map();
+ for(const p of rows){const cents=Math.round(Number(p.importe||0)*100),method=reportMethodName(p),name=reportUserName(p.registrado_por);for(const [map,key] of [[methods,method],[users,name]]){const x=map.get(key)||{count:0,cents:0};x.count++;x.cents+=cents;map.set(key,x)}}
+ const groupRows=map=>[...map.entries()].sort((a,b)=>b[1].cents-a[1].cents).map(([name,v])=>`<tr><td>${esc(name)}</td><td>${v.count}</td><td>${money(v.cents/100)}</td></tr>`).join('')||blankRow(3,'Sin cobros en el periodo');
+ $('reportMethods').innerHTML=groupRows(methods);$('reportUsers').innerHTML=groupRows(users);
+ $('paymentsBody').innerHTML=rows.map(p=>{const n=paymentNotes.find(x=>x.id===p.nota_venta_id);return `<tr><td>${fmtDate(p.fecha_pago)}</td><td>${n?'#'+esc(n.folio):'—'}</td><td>${n?clientNameForHistory(n.cliente_id):'—'}</td><td>${money(p.importe)}</td><td>${esc(reportMethodName(p))}</td><td>${esc(p.referencia||'—')}</td><td>${esc(reportUserName(p.registrado_por))}</td></tr>`}).join('')||blankRow(7,'Sin cobros en el periodo');
+}
+$('reportPeriod').onchange=renderReportResults;$('reportUser').onchange=renderReportResults;$('reportFrom').onchange=renderReportResults;$('reportTo').onchange=renderReportResults;
+$('reportReload').onclick=()=>refresh('historial');
+
 async function printDoc(table,lineTable,id){try{const {pdf}=await fetchDocumentPDF(table,id);const url=URL.createObjectURL(pdf.output('blob'));const w=window.open(url,'_blank');if(!w){pdf.save('VERASI_PC_documento.pdf');flash('El navegador bloqueó la ventana; se descargó el PDF.')}setTimeout(()=>URL.revokeObjectURL(url),120000)}catch(e){err(e)}}
 $('loginForm').onsubmit=async e=>{e.preventDefault();$('loginMsg').innerHTML='';const b=e.submitter;b.disabled=true;try{const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await init()}catch(e){$('loginMsg').innerHTML=`<div class="notice error">${esc(e.message)}</div>`}finally{b.disabled=false}};
 $('logout').onclick=async()=>{await db.auth.signOut();user=null;profile=null;await init()};
